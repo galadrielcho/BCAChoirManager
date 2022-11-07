@@ -7,7 +7,7 @@ import { StatusService } from './shared/status.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'node-express-angular';
+  title = 'BCA Choir Manager';
   status = 'DOWN';
 
   constructor(private statusService: StatusService) { }
