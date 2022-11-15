@@ -30,3 +30,21 @@ var server = app.listen(process.env.PORT || 8080, function () {
 app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'soccerdb.calingaiy4id.us-east-2.rds.amazonaws.com',
+  user     : 'cho_vemuri',
+  password : 'd8qbfhxnWeYB',
+  database : 'bca_choir_manager'
+});
+connection.connect();
+
+connection.query('SELECT * FROM account', function(err, rows, fields) 
+{
+  if (err) throw err;
+
+  console.log(rows[0]);
+});
+
+connection.end();
