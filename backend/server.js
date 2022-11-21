@@ -31,6 +31,7 @@ app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
+
 var mysql      = require('mysql');
 var database = mysql.createConnection({
   host     : 'soccerdb.calingaiy4id.us-east-2.rds.amazonaws.com',
