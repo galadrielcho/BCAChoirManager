@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StatusService } from './services/status-service/status.service';
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
