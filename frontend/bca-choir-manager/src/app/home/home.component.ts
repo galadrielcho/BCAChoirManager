@@ -10,7 +10,6 @@ export class HomeComponent {
   submitClicked(){
     console.log(this.input?.nativeElement.value);
 
-    
   }
   
 }

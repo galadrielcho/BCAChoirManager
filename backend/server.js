@@ -71,8 +71,6 @@ database.query('SELECT * FROM account', function(err, rows, fields)
   console.log(rows);
 });
 
-
-app.post('/account', (req, res) => {
-  console.log("RECEIVED?");
-    
+app.post('/api/account', (req, res) => {
+  console.log("RECEIVED?");   
 });
