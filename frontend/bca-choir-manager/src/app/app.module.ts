@@ -8,19 +8,27 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { LoginButtonComponent } from './login-button/login-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    LoginButtonComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RoutingModule,
-    MaterialModule
+    MaterialModule,
+
+    AuthModule.forRoot({
+      domain: 'dev-4s47rktj.us.auth0.com',
+      clientId: 'NCrArCjDQio0PWP2hOTMf0cMRUduP6KE'
+    }),
   ],
   
   providers: [],
