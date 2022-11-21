@@ -61,10 +61,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bca-choir-manager:build:production"
+              "browserTarget": "bca-choir-manager:build:production",
+              "proxyConfig": "src/proxy.conf.json"
+
             },
             "development": {
-              "browserTarget": "bca-choir-manager:build:development"
+              "browserTarget": "bca-choir-manager:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

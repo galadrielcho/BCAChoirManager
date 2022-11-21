@@ -1,17 +1,35 @@
 //server.js
 var express = require('express');
+
+var bodyParser = require("body-parser");
+
 var app = express();
 
-// Define the JSON parser as a default way 
-// to consume and produce data through the 
-// exposed APIs
-var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 app.use('/', express.static('dist/bca-choir-manager'));
-var server = app.listen(8080, function() {
-    console.log("Backend Application listening at http://localhost:8080")
-})
+
+app.use(bodyParser.json());
+
+// Create link to Angular build directory
+// The `ng build` command will save the result
+// under the `dist` folder.
+var distDir = "'..\\frontend\\bca-choir-manager\\dist";
+app.use(express.static(distDir));
+
+// Init the server
+var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+});
+
+/*  "/api/status"
+ *   GET: Get server status
+ *   PS: it's just an example, not mandatory
+ */
+app.get("/api/status", function (req, res) {
+    res.status(200).json({ status: "UP" });
+});
 
 var mysql      = require('mysql');
 var database = mysql.createConnection({
