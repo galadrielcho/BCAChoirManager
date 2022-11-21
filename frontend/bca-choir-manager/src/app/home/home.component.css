@@ -1,0 +1,15 @@
+app-home{
+    height:100%;
+    width:100%;
+}
+
+#site-title{
+    position: fixed;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size:3.5rem;
+}
