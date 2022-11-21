@@ -54,17 +54,7 @@ database.query('SELECT * FROM account', function(err, rows, fields)
 });
 
 
-
 app.post('/account', (req, res) => {
   console.log("RECEIVED?");
-  const accountInfo = req.body;
-
-  database.add(accountInfo)
-    .then(account => {
-      res.status(201).json({ account })
-    })
-    .catch(err => {
-      res.status(500).json({ err })
-    });
     
 });
