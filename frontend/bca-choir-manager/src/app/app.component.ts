@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
         console.log("Retrieved status: " + data.status);
         this.status = data.status;
       }
-    });
+    }); 
   }
 
 }

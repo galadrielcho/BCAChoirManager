@@ -42,36 +42,16 @@ var database = mysql.createConnection({
 database.connect();
 
 
-const accountInfo = {
-  email: "abc@bergen.org",
-  first_name: "timothy",
-  last_name: "bezos",
-  prounouns: "he/him"
-};
-
-const email = 'Tommy';
-const first_name = 'Tommy';
-const last_name = 'Bezos';
-const pronouns = 'he/him';
-//sql = `UPDATE users SET name =${db.escape(name)} WHERE id = ${db.escape(id)}`
-sql = `INSERT INTO account (email, first_name, last_name, pronouns)
-VALUES (${database.escape(email)}, ${database.escape(first_name)}, ${database.escape(last_name)}, ${database.escape(pronouns)})`;
-
-database.query(sql, function(err, rows, fields) 
-{
-  if (err) throw err;
-
-  console.log(rows[0]);
-});
-
-database.query('SELECT * FROM account', function(err, rows, fields) 
-{
-  if (err) throw err;
-
-  //console.log(rows[0]);
-  console.log(rows);
-});
-
 app.post('/api/account', (req, res) => {
-  console.log("RECEIVED?");   
+  const accountInfo = req.body; 
+  sql = `INSERT INTO account (email, first_name, last_name, pronouns)
+  VALUES (${database.escape(accountInfo[0])}, ${database.escape(accountInfo[1])}, ${database.escape(accountInfo[2])}, ${database.escape(accountInfo[3])})`;
+
+    console.log("ACCOUNT TABLE OF DATABASE");
+    database.query('SELECT * FROM account', function(err, rows, fields) 
+    {
+      if (err) throw err;
+
+      console.log(rows);
+    });  
 });
