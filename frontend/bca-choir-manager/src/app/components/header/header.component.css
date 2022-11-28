@@ -1,0 +1,11 @@
+li {
+    padding:20px;
+    margin: auto;
+    display:inline;
+}
+
+
+ul {
+    align-items:center;
+    width:100%;
+}

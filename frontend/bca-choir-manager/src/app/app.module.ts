@@ -11,9 +11,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { RosterComponent } from './roster/roster.component';
-import { AdminComponent } from './admin/admin.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { RosterComponent } from './pages/roster/roster.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
