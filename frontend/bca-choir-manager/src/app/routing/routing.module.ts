@@ -2,8 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
+import { RosterComponent } from '../roster/roster.component';
+import { CalendarComponent } from '../calendar/calendar.component';
+import { AdminComponent } from '../admin/admin.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
+  { path: 'calendar', component: CalendarComponent},
+  { path: 'roster', component: RosterComponent},
+  { path: 'admin', component: AdminComponent},
+
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 @NgModule({

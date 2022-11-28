@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { RosterComponent } from './roster/roster.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     HeaderComponent,
     HomeComponent,
     AuthButtonComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CalendarComponent,
+    RosterComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
