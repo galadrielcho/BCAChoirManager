@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
-import { RosterComponent } from '../roster/roster.component';
-import { CalendarComponent } from '../calendar/calendar.component';
-import { AdminComponent } from '../admin/admin.component';
-
+import { HomeComponent } from '../pages/home/home.component';
+import { RosterComponent } from '../pages/roster/roster.component';
+import { CalendarComponent } from '../pages/calendar/calendar.component';
+import { AdminComponent } from '../pages/admin/admin.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'calendar', component: CalendarComponent},

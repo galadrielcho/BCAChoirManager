@@ -23,15 +23,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
     console.log("App now running on port", port);
 });
 
-/*  "/api/status"
- *   GET: Get server status
- *   PS: it's just an example, not mandatory
- */
-app.get("/api/status", function (req, res) {
-    res.status(200).json({ status: "UP" });
-});
-
-
 var mysql      = require('mysql');
 var database = mysql.createConnection({
   host     : 'soccerdb.calingaiy4id.us-east-2.rds.amazonaws.com',
@@ -40,6 +31,14 @@ var database = mysql.createConnection({
   database : 'bca_choir_manager'
 });
 database.connect();
+
+
+/*  "/api/status"
+ *   GET: Get server status
+ */
+app.get("/api/status", function (req, res) {
+    res.status(200).json({ status: "UP" });
+});
 
 
 app.post('/api/account', (req, res) => {
@@ -54,4 +53,12 @@ app.post('/api/account', (req, res) => {
 
       console.log(rows);
     });  
+});
+
+
+/*  "/api/login"
+ *   GET: Get server status
+ */
+app.get("/api/login", function (req, res) {
+  res.status(200).json({ status: "UP" });
 });

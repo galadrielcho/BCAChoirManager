@@ -12,7 +12,7 @@ import { DOCUMENT } from '@angular/common';
     </ng-container>
 
     <ng-template #loggedOut>
-      <button (click)="auth.loginWithRedirect()">Log in</button>
+      <button (click)="auth.loginWithPopup()">Log in</button>
     </ng-template>
   `,
   styles: [],

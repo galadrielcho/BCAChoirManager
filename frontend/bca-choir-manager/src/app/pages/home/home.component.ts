@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { AccountService} from '../services/account-service/account.service';
+import { AccountService} from '../../services/account-service/account.service';
 
 @Component({
   selector: 'app-home',

@@ -2,7 +2,7 @@
 
 This project is a choir management website custom built for the Bergen County Academies Choir.
 
-###### Features (implemented or to be implemented)
+## Features (implemented or to be implemented)
 
 * Event creation and available sign-up
 * Account creation and customizable settings
@@ -12,7 +12,7 @@ This project is a choir management website custom built for the Bergen County Ac
 * Music sheet music/audio files available
 
 
-###### Tech stack
+## Tech stack
 
 Angular, Express, MySQL database, Google Drive API
 
