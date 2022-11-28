@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './navigation/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './pages/home/home.component';
