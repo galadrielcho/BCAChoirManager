@@ -9,14 +9,16 @@ import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
 import { AuthModule } from '@auth0/auth0-angular';
-import { LoginButtonComponent } from './login-button/login-button.component';
+import { AuthButtonComponent } from './auth-button/auth-button.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    LoginButtonComponent
+    AuthButtonComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
