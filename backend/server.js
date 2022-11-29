@@ -45,7 +45,12 @@ app.post('/api/account', (req, res) => {
   const accountInfo = req.body; 
   sql = `INSERT INTO account (email, first_name, last_name, pronouns)
   VALUES (${database.escape(accountInfo[0])}, ${database.escape(accountInfo[1])}, ${database.escape(accountInfo[2])}, ${database.escape(accountInfo[3])})`;
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
 
+    console.log(rows);
+  });  
     console.log("ACCOUNT TABLE OF DATABASE");
     database.query('SELECT * FROM account', function(err, rows, fields) 
     {
