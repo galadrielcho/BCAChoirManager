@@ -32,22 +32,6 @@ var database = mysql.createConnection({
 });
 database.connect();
 
-/*
-sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, student.choir_type, student.grad_year, student.email
-FROM account
-INNER JOIN student
-ON account.email = student.email
-INNER JOIN voicepart
-ON student.voicepart_ID = voicepart.voicepart_ID;`
-database.query(sql, function(err, rows, fields) 
-    {
-      if (err) throw err;
-
-      console.log(rows);
-    });  
-*/
-
-
 /*  "/api/status"
  *   GET: Get server status
  */
@@ -56,6 +40,31 @@ app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
+app.get("/api/roster", function (req, res) {
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, student.choir_type, student.grad_year, student.email
+  FROM account
+  INNER JOIN student
+  ON account.email = student.email
+  INNER JOIN voicepart
+  ON student.voicepart_ID = voicepart.voicepart_ID;`
+  database.query(sql, function(err, rows, fields) 
+  {
+  if (err) throw err;
+
+  var roster = [];
+  for (let i = 0; i < rows.length; i++) {
+  var person = [];
+  person.push(rows[i].first_name);
+  person.push(rows[i].last_name);
+  person.push(rows[i].pronouns);
+  person.push(rows[i].name);
+  person.push(rows[i].choir_type);
+  person.push(rows[i].grad_year);
+  roster.push(person);
+  }
+  res.send({roster: JSON.stringify(roster)});
+  });
+});
 
 app.post('/api/account', (req, res) => {
   const accountInfo = req.body; 

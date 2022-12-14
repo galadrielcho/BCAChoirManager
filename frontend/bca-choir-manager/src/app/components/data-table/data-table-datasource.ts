@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
+
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
   first_name: string,
@@ -15,9 +16,8 @@ export interface DataTableItem {
   email: string
 }
 
-// TODO: replace this with real data from your application
 const EXAMPLE_DATA: DataTableItem[] = [
-  {first_name: "Lorien", last_name: "Cho", pronouns: "she/her", voicepart: "soprano", choir_type: "Concert", grad_year: 2023, email: "lorcho23@bergen.org"},
+  
   {first_name: "Galadriel", last_name: "Cho", pronouns: "she/her", voicepart: "alto", choir_type: "Concert", grad_year: 2023, email: "galcho23@bergen.org"},
   {first_name: "Satwika", last_name: "Vemuri", pronouns: "she/her", voicepart: "soprano", choir_type: "Chamber", grad_year: 2023, email: "satvem23@bergen.org"},
 ];
@@ -28,12 +28,14 @@ const EXAMPLE_DATA: DataTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = EXAMPLE_DATA;
+  data: DataTableItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor() {
+  constructor(roster: DataTableItem[]) {
     super();
+    this.data = roster;
+
   }
 
   /**
@@ -64,7 +66,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: DataTableItem[]): DataTableItem[] {
+  public getPagedData(data: DataTableItem[]): DataTableItem[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);
