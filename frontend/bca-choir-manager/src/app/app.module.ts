@@ -14,7 +14,11 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { RosterPageComponent } from './pages/roster-page/roster-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { MatTableModule } from '@angular/material/table';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     RosterPageComponent,
     AdminPageComponent,
     CalendarComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +44,9 @@ import { CalendarComponent } from './components/calendar/calendar.component';
       domain: 'dev-4s47rktj.us.auth0.com',
       clientId: 'NCrArCjDQio0PWP2hOTMf0cMRUduP6KE'
     }),
+      MatTableModule,
+      MatPaginatorModule,
+      MatSortModule,
   ],
   
   providers: [],
