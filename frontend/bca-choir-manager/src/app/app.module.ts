@@ -7,24 +7,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
-import { HomeComponent } from './pages/home/home.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
-import { RosterComponent } from './pages/roster/roster.component';
-import { AdminComponent } from './pages/admin/admin.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
+import { RosterPageComponent } from './pages/roster-page/roster-page.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent,
     AuthButtonComponent,
     UserProfileComponent,
+    HomePageComponent,
+    CalendarPageComponent,
+    RosterPageComponent,
+    AdminPageComponent,
     CalendarComponent,
-    RosterComponent,
-    AdminComponent
   ],
   imports: [
     BrowserModule,

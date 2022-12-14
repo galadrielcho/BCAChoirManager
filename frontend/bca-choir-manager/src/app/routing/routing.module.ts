@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from '../pages/home/home.component';
-import { RosterComponent } from '../pages/roster/roster.component';
-import { CalendarComponent } from '../pages/calendar/calendar.component';
-import { AdminComponent } from '../pages/admin/admin.component';
+import { HomePageComponent } from '../pages/home-page/home-page.component';
+import { RosterPageComponent } from '../pages/roster-page/roster-page.component';
+import { CalendarPageComponent } from '../pages/calendar-page/calendar-page.component';
+import { AdminPageComponent } from '../pages/admin-page/admin-page.component';
+
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: 'calendar', component: CalendarComponent},
-  { path: 'roster', component: RosterComponent},
-  { path: 'admin', component: AdminComponent},
+  { path: 'home', component: HomePageComponent},
+  { path: 'calendar', component: CalendarPageComponent},
+  { path: 'roster', component: RosterPageComponent},
+  { path: 'admin', component: AdminPageComponent},
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

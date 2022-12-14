@@ -40,7 +40,6 @@ app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
-
 app.post('/api/account', (req, res) => {
   const accountInfo = req.body; 
   sql = `INSERT INTO account (email, first_name, last_name, pronouns)
