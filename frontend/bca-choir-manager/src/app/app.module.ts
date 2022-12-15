@@ -7,13 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
-import { HomeComponent } from './pages/home/home.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
-import { RosterComponent } from './pages/roster/roster.component';
-import { AdminComponent } from './pages/admin/admin.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
+import { RosterPageComponent } from './pages/roster-page/roster-page.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { AdminEmailContainerComponent } from './components/admin-email-container/admin-email-container.component';
 
 
@@ -44,17 +47,13 @@ import { EmailRecipientsInputComponent } from './components/email-recipients-inp
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent,
     AuthButtonComponent,
-    UserProfileComponent,
-    CalendarComponent,
-    RosterComponent,
-    AdminComponent,
-    AdminEmailContainerComponent,
-    AdminGeneralContainerComponent,
-    AdminSettingsContainerComponent,
-    EmailRecipientsInputComponent,
-    ],
+    HomePageComponent,
+    CalendarPageComponent,
+    RosterPageComponent,
+    AdminPageComponent,
+    DataTableComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -82,6 +81,9 @@ import { EmailRecipientsInputComponent } from './components/email-recipients-inp
       domain: 'dev-4s47rktj.us.auth0.com',
       clientId: 'NCrArCjDQio0PWP2hOTMf0cMRUduP6KE'
     }),
+      MatTableModule,
+      MatPaginatorModule,
+      MatSortModule,
   ],
   
   providers: [],
