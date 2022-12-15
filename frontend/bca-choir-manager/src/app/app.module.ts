@@ -19,7 +19,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AdminEmailContainerComponent } from './components/admin-email-container/admin-email-container.component';
 
-
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -42,6 +41,8 @@ import { AdminGeneralContainerComponent } from './components/admin-general-conta
 import { AdminSettingsContainerComponent } from './components/admin-settings-container/admin-settings-container.component';
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
+import { CalendarComponent } from './components/calendar/calendar.component';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +53,12 @@ import { EmailRecipientsInputComponent } from './components/email-recipients-inp
     CalendarPageComponent,
     RosterPageComponent,
     AdminPageComponent,
-    DataTableComponent
+    DataTableComponent,
+    AdminEmailContainerComponent,
+    AdminGeneralContainerComponent,
+    AdminSettingsContainerComponent,
+    EmailRecipientsInputComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
