@@ -23,7 +23,11 @@ export class DataTableComponent implements AfterViewInit {
 
 
   constructor(private rosterService: RosterService) { 
-    var EXAMPLE_DATA: DataTableItem[] = [];
+    var EXAMPLE_DATA: DataTableItem[] = [
+  
+      {first_name: "Galadriel", last_name: "Cho", pronouns: "she/her", voicepart: "alto", choir_type: "Concert", grad_year: 2023, email: "galcho23@bergen.org"},
+      {first_name: "Satwika", last_name: "Vemuri", pronouns: "she/her", voicepart: "soprano", choir_type: "Chamber", grad_year: 2023, email: "satvem23@bergen.org"},
+    ]; 
 
    this.rosterService.getStatus().subscribe( resp => {
         /*
@@ -34,13 +38,9 @@ export class DataTableComponent implements AfterViewInit {
       for(let i = 0; i < data.length; i++){
         roster.push({first_name: data[i][0], last_name: data[i][1], pronouns: data[i][2], voicepart: data[i][3], choir_type: data[i][4], grad_year: data[i][5], email: data[i][6]});
       }
-        
-      EXAMPLE_DATA = [
-  
-        {first_name: "Galadriel", last_name: "Cho", pronouns: "she/her", voicepart: "alto", choir_type: "Concert", grad_year: 2023, email: "galcho23@bergen.org"},
-        {first_name: "Satwika", last_name: "Vemuri", pronouns: "she/her", voicepart: "soprano", choir_type: "Chamber", grad_year: 2023, email: "satvem23@bergen.org"},
-      ];  
-      */
+*/ 
+
+      
       console.log("here3") 
       
     });
