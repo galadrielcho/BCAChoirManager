@@ -15,6 +15,16 @@ export class CalendarService {
     return this.date;
   }
 
+  setMonthForward() : void {
+    this.date.setMonth(this.date.getMonth() + 1);
+    console.log(this.date);
+  }
+
+  setMonthBackward() : void {
+    this.date.setMonth(this.date.getMonth() - 1);
+    console.log(this.date);
+  }
+
   getLastDateOfCurrentMonth(){
    return new Date(this.date.getFullYear(), this.date.getMonth()+1, 0); 
   }
@@ -24,7 +34,7 @@ export class CalendarService {
   }
 
   getCalendarMonthArray(): number[][]{
-    let  month: number[][] = [[], [] , [], [], []]; // 5 weeks in calendar month
+    let  month: number[][] = []; 
     
     let firstDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
     let lastDatePrevious = this.getLastDateOfPreviousMonth().getDate();
@@ -33,25 +43,39 @@ export class CalendarService {
 
     let dayIndex = 0;
     let dayNum = 1;
+    console.log("Last day current "+ lastDayCurrent);
+    console.log("Day index: " + dayIndex);
+    console.log("Day num " + dayNum);
+    console.log("start of function: " + month);
 
+    month.push([]); // first week
     for (let i = 0; i < firstDayWeekday; i++){
+      console.log("Day index: " + dayIndex);
+      console.log("Day num " + dayNum);
       month[0].push(lastDatePrevious - (firstDayWeekday - i - 1));
       dayIndex++;
     }
 
     while (dayNum <= lastDayCurrent){
-      console.log(month);
+      console.log("Day index: " + dayIndex);
+      console.log("Day num " + dayNum);
+
+      if(Number.isInteger(dayIndex / 7)) {
+        month.push([]); // add week
+      }
       month[Math.floor(dayIndex / 7)].push(dayNum);
+
       dayIndex++;
       dayNum++;
     }
 
     dayNum = 1;
-    while(dayIndex < 35){
+    while(!Number.isInteger(dayIndex/7) && month[Math.floor(dayIndex / 7)].length != 7){
       month[Math.floor(dayIndex / 7)].push(dayNum);
       dayIndex++;
       dayNum++;
     }
+    console.log(month);
     return month;
   }
 

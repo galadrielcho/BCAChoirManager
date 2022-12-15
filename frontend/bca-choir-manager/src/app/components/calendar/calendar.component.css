@@ -17,5 +17,16 @@ table{
     flex-direction: column;
 
 }
-table td { border-left: 1px solid #000; }
+
+#controls{
+    display:flex;
+    flex-direction:row;
+}
+
+table td { 
+    border-left: 1px solid #000; 
+    width: 125px;
+    height: 75px;
+    vertical-align:top;
+}
 table td:first-child { border-left: none; }
