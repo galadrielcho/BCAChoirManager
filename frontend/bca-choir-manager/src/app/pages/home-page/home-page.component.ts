@@ -2,11 +2,12 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } fr
 import { AccountService} from '../../services/account-service/account.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.css']
 })
-export class HomeComponent {
+
+export class HomePageComponent {
   constructor(private accountService: AccountService) { }
 
   @ViewChild('username') input: ElementRef<HTMLInputElement> | undefined;  

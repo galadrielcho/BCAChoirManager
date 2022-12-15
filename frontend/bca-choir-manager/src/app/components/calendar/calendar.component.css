@@ -1,0 +1,21 @@
+tr{
+    border: 1px solid black;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+.center{
+    margin:auto;
+}
+
+#content{
+    display:flex;
+    justify-content: center;
+    justify-items:center;
+    flex-direction: column;
+
+}
+table td { border-left: 1px solid #000; }
+table td:first-child { border-left: none; }
