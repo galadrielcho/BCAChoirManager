@@ -17,12 +17,10 @@ export class CalendarService {
 
   setMonthForward() : void {
     this.date.setMonth(this.date.getMonth() + 1);
-    console.log(this.date);
   }
 
   setMonthBackward() : void {
     this.date.setMonth(this.date.getMonth() - 1);
-    console.log(this.date);
   }
 
   getLastDateOfCurrentMonth(){
@@ -31,6 +29,10 @@ export class CalendarService {
 
   getLastDateOfPreviousMonth(){
     return new Date(this.date.getFullYear(), this.date.getMonth(), 0); 
+  }
+
+  getCalendarTitle(){
+    return this.date.toLocaleString('default', { month: 'long' }) + " "+ this.getDate().getFullYear();
   }
 
   getCalendarMonthArray(): number[][]{

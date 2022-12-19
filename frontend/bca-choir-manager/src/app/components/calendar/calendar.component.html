@@ -1,6 +1,6 @@
 <div id="content">
 
-    <h1 class="center" [innerHTML]="calendarTitle"></h1>
+    <h1 class="center" [innerHTML]="getCalendarTitle()"></h1>
     <div class="center" id="controls">
         <div #back (click)="setMonthBackward()"> back </div>
             <mat-form-field appearance="fill" class="center">
@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let week of calendarMonth" >
+            <tr *ngFor="let week of getCalendarMonth()" >
                 <td *ngFor="let day of week">
                     {{day}}
                 </td>
