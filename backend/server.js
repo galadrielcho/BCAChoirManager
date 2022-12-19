@@ -62,7 +62,8 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].grad_year);
   roster.push(person);
   }
-  res.send({roster: JSON.stringify(roster)});
+
+  res.send({roster: roster});
   });
 });
 

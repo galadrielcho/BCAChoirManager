@@ -16,12 +16,6 @@ export interface DataTableItem {
   email: string
 }
 
-const EXAMPLE_DATA: DataTableItem[] = [
-  
-  {first_name: "Galadriel", last_name: "Cho", pronouns: "she/her", voicepart: "alto", choir_type: "Concert", grad_year: 2023, email: "galcho23@bergen.org"},
-  {first_name: "Satwika", last_name: "Vemuri", pronouns: "she/her", voicepart: "soprano", choir_type: "Chamber", grad_year: 2023, email: "satvem23@bergen.org"},
-];
-
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
