@@ -67,6 +67,27 @@ app.get("/api/roster", function (req, res) {
   });
 });
 
+app.get("/api/email-recipients-input", function (req, res) {
+  sql = `select account.first_name, account.last_name, account.email
+  FROM account;`
+  database.query(sql, function(err, rows, fields) 
+  {
+    console.log(rows);
+    if (err) throw err;
+    console.log("CALLED");
+
+    var emails = [];
+    for (let i = 0; i < rows.length; i++) {
+    var person = [];
+    person.push(rows[i].first_name);
+    person.push(rows[i].last_name);
+    person.push(rows[i].email);
+    emails.push(person);
+  }
+  res.send({emails: emails});
+  });
+});
+
 app.post('/api/account', (req, res) => {
   const accountInfo = req.body; 
   sql = `INSERT INTO account (email, first_name, last_name, pronouns)

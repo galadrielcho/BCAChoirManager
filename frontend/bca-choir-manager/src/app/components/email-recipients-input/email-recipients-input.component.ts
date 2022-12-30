@@ -5,6 +5,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {EmailRecipientsInputService} from '../../services/email-recipients-input-service/email-recipients-input.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class EmailRecipientsInputComponent {
 
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(private emailService: EmailRecipientsInputService) {
     this.filteredEmails = this.emailCtrl.valueChanges.pipe(
       startWith(null),
       map((email: string | null) => (email ? this._filter(email) : this.allEmails.slice())),
@@ -33,9 +34,29 @@ export class EmailRecipientsInputComponent {
 
     // Add our email
     if (value) {
-      this.emails.push(value);
-    }
+      this.emailService.getEmails().subscribe({
+        next: data => {
+          for(let i = 0; i < data.emails.length; i++){
+            if(data.emails[i][2] === value){
+              this.emails.push(value);
+              break;
+            }
+          }
 
+          if (value.includes(" ")) {
+            var split = value.split(" "); //split into first and last name
+            for(let i = 0; i < data.emails.length; i++){
+              if(data.emails[i][0] === split[0]){ //first names equal
+                if(data.emails[i][1] === split[1]){ //last names equal
+                  this.emails.push(data.emails[i][2]);
+                }
+              }
+            }
+          }
+
+        }
+      }); 
+    }
     // Clear the input value
     event.chipInput!.clear();
 
