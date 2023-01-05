@@ -60,6 +60,7 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].name);
   person.push(rows[i].choir_type);
   person.push(rows[i].grad_year);
+  person.push(rows[i].email);
   roster.push(person);
   }
 

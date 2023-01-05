@@ -19,7 +19,7 @@ export class DataTableComponent implements AfterViewInit {
   dataSource: DataTableDataSource | undefined;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email'];
+  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
 
 
   constructor(private rosterService: RosterService) { 
@@ -37,6 +37,7 @@ export class DataTableComponent implements AfterViewInit {
                       grad_year: data.roster[i][5],
                       email: data.roster[i][6]}
           );
+          
         }
         this.dataSource = new DataTableDataSource(roster);
         this.dataSource.sort = this.sort;
