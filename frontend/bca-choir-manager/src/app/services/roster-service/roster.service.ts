@@ -9,9 +9,13 @@ export class RosterService {
 
   constructor(private http: HttpClient) { }
 
-  getStatus() {
+  getRoster() {
     return this.http.get<any>(this.rosterUrl);
   }
 
+  deleteAccount(email: string[]){
+    console.log(email);
+    return this.http.post(this.rosterUrl, email).subscribe();
+  }
 
 }
