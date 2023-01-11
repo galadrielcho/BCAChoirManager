@@ -4,9 +4,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { RosterService} from '../../services/roster-service/roster.service';
-
-
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
 @Component({
+
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css']
@@ -18,6 +19,7 @@ export class DataTableComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
   dataSource: DataTableDataSource | undefined;
   rosterService: RosterService;
+  dialog: MatDialog;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
@@ -30,19 +32,20 @@ export class DataTableComponent implements AfterViewInit {
   }
   editClicked(email:string){
     console.log("edit clicked!")
+    this.dialog.open(RosterUpdateComponent);
   }
 
-  constructor(private rs: RosterService, private renderer:Renderer2) { 
+  constructor(private rs: RosterService, private md: MatDialog) { 
+    
     this.rosterService = rs;
+    this.dialog = md;
     var roster: DataTableItem[] = [];
 
     this.rosterService.getRoster().subscribe({
       next: data => {
 
         for(let i = 0; i < data.roster.length; i++){
-          const button= this.renderer.createElement('button');
-          const text = this.renderer.createText('Click me');
-          this.renderer.appendChild(button, text);
+          
           roster.push({first_name: data.roster[i][0], 
                       last_name: data.roster[i][1],
                       pronouns: data.roster[i][2],

@@ -37,12 +37,12 @@
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
-      <td mat-cell *matCellDef="let row">{{row.edit}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row"><button md-raised-button (click)="editClicked(row.email)">Edit</button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let row"><button md-raised-button (click)="deleteClicked(row.email)">Delete</button></td>
     </ng-container>
 
