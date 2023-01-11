@@ -23,10 +23,10 @@ export class DataTableComponent implements AfterViewInit {
   displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
   
   deleteClicked(email: string){
-    location.reload();
     let arr = [];
     arr.push(email);
     this.rosterService.deleteAccount(arr);
+    location.reload();
   }
   editClicked(email:string){
     console.log("edit clicked!")
