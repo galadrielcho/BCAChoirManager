@@ -43,7 +43,9 @@ import { EmailRecipientsInputComponent } from './components/email-recipients-inp
 
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
-
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RosterUpdateComponent } from './roster-update/roster-update.component';
+import { RosterUpdateService } from './services/roster-update/roster-update.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { CalendarEventComponent } from './components/calendar-event/calendar-eve
     AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
     CalendarComponent,
-    CalendarEventComponent
+    CalendarEventComponent,
+    RosterUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,8 @@ import { CalendarEventComponent } from './components/calendar-event/calendar-eve
     FormsModule,
     ReactiveFormsModule,
   MatAutocompleteModule,
+  MatDialogModule,
+  
 
     AuthModule.forRoot({
       domain: 'dev-4s47rktj.us.auth0.com',
@@ -94,7 +99,14 @@ import { CalendarEventComponent } from './components/calendar-event/calendar-eve
       MatSortModule,
   ],
   
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    RosterUpdateService,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [RosterUpdateComponent]
 })
 export class AppModule { }

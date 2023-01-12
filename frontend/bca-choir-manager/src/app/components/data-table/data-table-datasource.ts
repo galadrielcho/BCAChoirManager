@@ -13,7 +13,7 @@ export interface DataTableItem {
   voicepart: string,
   choir_type: string,
   grad_year: number,
-  email: string
+  email: string,
 }
 
 /**
@@ -37,6 +37,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
+  
   connect(): Observable<DataTableItem[]> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update

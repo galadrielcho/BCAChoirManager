@@ -31,7 +31,6 @@ var database = mysql.createConnection({
   database : 'bca_choir_manager'
 });
 database.connect();
-
 /*  "/api/status"
  *   GET: Get server status
  */
@@ -41,6 +40,7 @@ app.get("/api/status", function (req, res) {
 });
 
 app.get("/api/roster", function (req, res) {
+
   sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, student.choir_type, student.grad_year, student.email
   FROM account
   INNER JOIN student
@@ -60,6 +60,7 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].name);
   person.push(rows[i].choir_type);
   person.push(rows[i].grad_year);
+  person.push(rows[i].email);
   roster.push(person);
   }
 
@@ -85,7 +86,6 @@ app.get("/api/email-recipients-input", function (req, res) {
   {
     console.log(rows);
     if (err) throw err;
-    console.log("CALLED");
 
     var emails = [];
     for (let i = 0; i < rows.length; i++) {
@@ -116,6 +116,15 @@ app.post('/api/account', (req, res) => {
 
       console.log(rows);
     });  
+});
+
+app.post('/api/roster', (req, res) => {
+  const email = req.body;
+  sql = `DELETE FROM student WHERE email = ${database.escape(email[0])};`;
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+  });  
 });
 
 
