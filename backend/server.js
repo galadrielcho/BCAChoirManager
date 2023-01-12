@@ -67,6 +67,17 @@ app.get("/api/roster", function (req, res) {
   });
 });
 
+app.get("/api/get-calendar-events/:month:year", function(req, res){
+  let month = req.params.month;
+  let year = req.params.year;
+
+  let startOfMonth = new Date(year, month);
+
+  nextDay = new Date(this.date.getFullYear(), this.date.getMonth()+1, 1); 
+
+
+})
+
 app.get("/api/email-recipients-input", function (req, res) {
   sql = `select account.first_name, account.last_name, account.email
   FROM account;`

@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
 })
 
 export class CalendarService {
-  private date = new Date();
+  private date : Date = new Date();
 
   setDate(date : Date) :void{
     this.date = date;
   }
 
-  getDate() :Date{
+  getDate() : Date{
     return this.date;
   }
 
@@ -35,6 +35,13 @@ export class CalendarService {
     return this.date.toLocaleString('default', { month: 'long' }) + " "+ this.getDate().getFullYear();
   }
 
+  isInCurrentMonth(dayNum : number, weekNum : number){
+    if (weekNum < 1 && dayNum > 7) return false;  // previous month
+    if (weekNum > 1 && dayNum <= 7) return false; // following month
+
+    return true; // curent month
+  }
+
   getCalendarMonthArray(): number[][]{
     let  month: number[][] = []; 
     
@@ -45,22 +52,14 @@ export class CalendarService {
 
     let dayIndex = 0;
     let dayNum = 1;
-    console.log("Last day current "+ lastDayCurrent);
-    console.log("Day index: " + dayIndex);
-    console.log("Day num " + dayNum);
-    console.log("start of function: " + month);
 
     month.push([]); // first week
     for (let i = 0; i < firstDayWeekday; i++){
-      console.log("Day index: " + dayIndex);
-      console.log("Day num " + dayNum);
       month[0].push(lastDatePrevious - (firstDayWeekday - i - 1));
       dayIndex++;
     }
 
     while (dayNum <= lastDayCurrent){
-      console.log("Day index: " + dayIndex);
-      console.log("Day num " + dayNum);
 
       if(Number.isInteger(dayIndex / 7)) {
         month.push([]); // add week

@@ -42,6 +42,7 @@ import { AdminSettingsContainerComponent } from './components/admin-settings-con
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     AdminGeneralContainerComponent,
     AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
-    CalendarComponent
+    CalendarComponent,
+    CalendarEventComponent
   ],
   imports: [
     BrowserModule,

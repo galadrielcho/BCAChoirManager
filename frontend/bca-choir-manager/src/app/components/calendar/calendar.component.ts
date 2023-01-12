@@ -22,6 +22,10 @@ export class CalendarComponent implements OnInit{
     this.calendarService.setMonthBackward();
   }
 
+  isInCurrentMonth(dayNum : number, weekNum : number) : boolean{
+    return this.calendarService.isInCurrentMonth(dayNum, weekNum);
+
+  }
   getCalendarMonth() : number[][]{
     return this.calendarService.getCalendarMonthArray()
   }

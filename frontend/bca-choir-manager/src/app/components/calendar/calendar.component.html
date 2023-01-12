@@ -25,9 +25,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let week of getCalendarMonth()" >
-                <td *ngFor="let day of week">
+            <tr *ngFor="let week of getCalendarMonth(); index as weekIndex" >
+                <td *ngFor="let day of week" [ngClass]="isInCurrentMonth(day, weekIndex)? 'current-month' : 'other-month'">
                     {{day}}
+                    
                 </td>
             </tr>
         </tbody>

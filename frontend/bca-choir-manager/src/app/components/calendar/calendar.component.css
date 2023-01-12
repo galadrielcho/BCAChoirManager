@@ -29,4 +29,13 @@ table td {
     height: 75px;
     vertical-align:top;
 }
+
 table td:first-child { border-left: none; }
+
+.current-month{
+    color:black;
+}
+
+.other-month{
+    color:grey;
+}
