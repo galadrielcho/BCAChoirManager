@@ -68,10 +68,11 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
     AdminGeneralContainerComponent,
     AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
-    CalendarComponent
+    CalendarComponent,
+    CalendarDayComponent,
     EditEventDialogComponent,
     EventEditDialogComponent,
-    CalendarEventTabComponent
+    CalendarEventTabComponent,
     CalendarEventComponent,
     RosterUpdateComponent
 
