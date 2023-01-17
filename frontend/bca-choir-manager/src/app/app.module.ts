@@ -42,10 +42,17 @@ import { AdminSettingsContainerComponent } from './components/admin-settings-con
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarDayComponent } from './components/calendar-day/calendar-day.component';
+import { EditEventDialogComponent } from './components/edit-event-dialog/edit-event-dialog.component';
+import { EventEditDialogComponent } from './components/event-edit-dialog/event-edit-dialog.component';
+import { CalendarEventTabComponent } from './components/calendar-event-tab/calendar-event-tab.component';
 import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
+
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
+
+
 
 @NgModule({
   declarations: [
@@ -62,8 +69,14 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
     AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
     CalendarComponent,
+    CalendarDayComponent,
+    EditEventDialogComponent,
+    EventEditDialogComponent,
+    CalendarEventTabComponent,
     CalendarEventComponent,
     RosterUpdateComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -88,7 +101,6 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
     ReactiveFormsModule,
   MatAutocompleteModule,
   MatDialogModule,
-  
 
     AuthModule.forRoot({
       domain: 'dev-4s47rktj.us.auth0.com',

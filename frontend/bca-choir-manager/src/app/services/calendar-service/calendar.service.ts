@@ -55,6 +55,7 @@ export class CalendarService {
 
     month.push([]); // first week
     for (let i = 0; i < firstDayWeekday; i++){
+
       month[0].push(lastDatePrevious - (firstDayWeekday - i - 1));
       dayIndex++;
     }
