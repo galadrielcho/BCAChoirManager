@@ -69,13 +69,46 @@ app.get("/api/roster", function (req, res) {
 });
 
 app.get("/api/get-calendar-events/:month:year", function(req, res){
-  let month = req.params.month;
-  let year = req.params.year;
+  let currentMonth = req.params.month;
+  let currentYear = req.params.year;
 
-  let startOfMonth = new Date(year, month);
+  let startOfMonth = new Date(currentYear, currentMonth);
 
-  nextDay = new Date(this.date.getFullYear(), this.date.getMonth()+1, 1); 
+  let firstDayOfCalendar = new Date(startOfMonth.getTime());
+  let lastDayOfCalendar = new Date(startOfMonth.getTime());
 
+  firstDayOfCalendar.setDate(startOfMonth.getDate() - startOfMonth.getDay());
+  lastDayOfCalendar.setDate(startOfMonth.getDate() - startOfMonth.getDay()+6);
+  
+  
+  let queryStartMonth = firstDayOfCalendar.getMonth().getStringLocale('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  });
+  let queryEndMonth = lastDayOfCalendar.getMonth().getStringLocale('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  });
+
+  let sql = 
+  "select * from event where " +
+  `event.start_time >= '${firstDayOfCalendar.getFullYear()}-${queryStartMonth}-01 00:00:00'` +
+  `and event.end_time <= '${lastDayOfCalendar.getFullYear()}-${queryEndMonth}-20 23:59:59'`;
+
+  database.query(sql, function(err, rows, fields){
+    let events = [];
+
+    for (let i = 0; i< rows.length; i++){
+      let event = [];
+      event.push(rows[i].event_name);
+      event.push(rows[i].start_time);
+      event.push(rows[i].end_time);
+      event.push(rows[i].location);
+      event.push(rows[i].address);
+      events.push[event];
+    }
+    res.send({events:events});
+  });
 
 })
 
@@ -87,15 +120,15 @@ app.get("/api/email-recipients-input", function (req, res) {
     console.log(rows);
     if (err) throw err;
 
-    var emails = [];
+    let emails = [];
     for (let i = 0; i < rows.length; i++) {
-    var person = [];
-    person.push(rows[i].first_name);
-    person.push(rows[i].last_name);
-    person.push(rows[i].email);
-    emails.push(person);
-  }
-  res.send({emails: emails});
+      let person = [];
+      person.push(rows[i].first_name);
+      person.push(rows[i].last_name);
+      person.push(rows[i].email);
+      emails.push(person);
+    }
+    res.send({emails: emails});
   });
 });
 

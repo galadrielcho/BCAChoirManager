@@ -76,7 +76,6 @@ export class CalendarService {
       dayIndex++;
       dayNum++;
     }
-    console.log(month);
     return month;
   }
 
