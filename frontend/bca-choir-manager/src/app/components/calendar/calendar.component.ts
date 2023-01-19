@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { throwIfEmpty } from 'rxjs';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CalendarService } from '../../services/calendar-service/calendar.service';
+import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  
 })
 
 export class CalendarComponent implements OnInit{
@@ -43,7 +46,18 @@ export class CalendarComponent implements OnInit{
     this.calendarService.setDate(date);
   }
   
-  constructor(private calendarService : CalendarService){
+  openCreateEventDialog() : void {
+    const dialogRef = this.dialog.open(EventEditDialogComponent, {
+      width: '500px',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  
+  constructor(private calendarService : CalendarService, public dialog: MatDialog){
     this.calendarService.getEvents().subscribe({
       next: data=> {
         console.log(data.events);

@@ -47,11 +47,14 @@ import { EditEventDialogComponent } from './components/edit-event-dialog/edit-ev
 import { EventEditDialogComponent } from './components/event-edit-dialog/event-edit-dialog.component';
 import { CalendarEventTabComponent } from './components/calendar-event-tab/calendar-event-tab.component';
 import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
 import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-events/calendar-upcoming-events.component';
+import { EventDescriptionDialogComponent } from './components/event-description-dialog/event-description-dialog.component';
 
 
 
@@ -76,7 +79,8 @@ import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-
     CalendarEventTabComponent,
     CalendarEventComponent,
     RosterUpdateComponent,
-    CalendarUpcomingEventsComponent
+    CalendarUpcomingEventsComponent,
+    EventDescriptionDialogComponent
 
 
   ],
@@ -101,8 +105,9 @@ import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-  MatAutocompleteModule,
-  MatDialogModule,
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatMenuModule,
 
     AuthModule.forRoot({
       domain: 'dev-4s47rktj.us.auth0.com',

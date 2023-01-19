@@ -43,3 +43,10 @@ table td:first-child { border-left: none; }
 app-calendar-upcoming-events {
     width:300px
 }
+
+h1 {
+    font-size: 1.25cm;
+    font-weight: 500;
+    padding: .5cm;
+    padding-top: 1cm;
+}

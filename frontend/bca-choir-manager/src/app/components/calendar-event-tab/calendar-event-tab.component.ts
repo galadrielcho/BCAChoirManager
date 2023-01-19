@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
+import { EventDescriptionDialogComponent } from '../event-description-dialog/event-description-dialog.component';
 import { EventData } from 'src/app/models/event-data.model';
 
 @Component({
@@ -14,8 +14,8 @@ export class CalendarEventTabComponent {
   constructor(public dialog: MatDialog) {}
 
   openEventDialog(): void {
-    const dialogRef = this.dialog.open(EventEditDialogComponent, {
-      width: '250px',
+    const dialogRef = this.dialog.open(EventDescriptionDialogComponent, {
+      width: '500px',
       data: this.event
     });
 
