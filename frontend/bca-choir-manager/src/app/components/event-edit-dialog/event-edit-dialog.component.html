@@ -1,25 +1,26 @@
 <h1 mat-dialog-title>Create/Edit Event</h1>
 <div mat-dialog-content>
-    <b>Time</b>
+    <b>Choir Type</b>
+    <button mat-button [matMenuTriggerFor]="menu">Choir Type</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Chamber</button>
+      <button mat-menu-item>Concert</button>
+    </mat-menu>
+    <br>
+    <b>Event Time</b>
     <br>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Choose a start date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose a start date and time</mat-label>
+        <input type="datetime-local" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Choose an end date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose an end date and time</mat-label>
+        <input type="datetime-local" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>
-
-      
           <hr>
     
         <b>Location</b>
