@@ -1,0 +1,13 @@
+<mat-card class="center">
+    <mat-card-header>
+        <mat-card-title>
+            Upcoming events
+        </mat-card-title>
+
+    </mat-card-header>
+    <mat-card-content>
+        <calendar-event-tab *ngFor="let event of events" [event]="event">
+        </calendar-event-tab> 
+    </mat-card-content>
+</mat-card>
+

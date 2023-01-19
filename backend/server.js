@@ -68,33 +68,27 @@ app.get("/api/roster", function (req, res) {
   });
 });
 
-app.get("/api/get-calendar-events/:month:year", function(req, res){
-  let currentMonth = req.params.month;
-  let currentYear = req.params.year;
+app.get("/api/get-calendar-events/:starttime/:endtime", function(req, res){
 
-  let startOfMonth = new Date(currentYear, currentMonth);
-
-  let firstDayOfCalendar = new Date(startOfMonth.getTime());
-  let lastDayOfCalendar = new Date(startOfMonth.getTime());
-
-  firstDayOfCalendar.setDate(startOfMonth.getDate() - startOfMonth.getDay());
-  lastDayOfCalendar.setDate(startOfMonth.getDate() - startOfMonth.getDay()+6);
-  
-  
-  let queryStartMonth = firstDayOfCalendar.getMonth().getStringLocale('en-US', {
+  console.log(req.params.starttime);
+  startTimeDate = new Date(Number(req.params.starttime));
+  endTimeDate = new Date(Number(req.params.endtime));
+  console.log(startTimeDate);
+  let queryStartMonth = (startTimeDate.getMonth()+1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
   });
-  let queryEndMonth = lastDayOfCalendar.getMonth().getStringLocale('en-US', {
+  let queryEndMonth = (endTimeDate.getMonth()+1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
   });
 
   let sql = 
   "select * from event where " +
-  `event.start_time >= '${firstDayOfCalendar.getFullYear()}-${queryStartMonth}-01 00:00:00'` +
-  `and event.end_time <= '${lastDayOfCalendar.getFullYear()}-${queryEndMonth}-20 23:59:59'`;
+  `event.start_time >= '${startTimeDate.getFullYear()}-${queryStartMonth}-01 00:00:00' ` +
+  `and event.end_time <= '${endTimeDate.getFullYear()}-${queryEndMonth}-20 23:59:59'`;
 
+  console.log(sql);
   database.query(sql, function(err, rows, fields){
     let events = [];
 
@@ -105,8 +99,9 @@ app.get("/api/get-calendar-events/:month:year", function(req, res){
       event.push(rows[i].end_time);
       event.push(rows[i].location);
       event.push(rows[i].address);
-      events.push[event];
+      events.push(event);
     }
+    console.log(events);
     res.send({events:events});
   });
 

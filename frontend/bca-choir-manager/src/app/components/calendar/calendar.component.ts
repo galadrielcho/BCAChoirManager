@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { throwIfEmpty } from 'rxjs';
 import { CalendarService } from '../../services/calendar-service/calendar.service';
 
 @Component({
@@ -43,5 +44,10 @@ export class CalendarComponent implements OnInit{
   }
   
   constructor(private calendarService : CalendarService){
+    this.calendarService.getEvents().subscribe({
+      next: data=> {
+        console.log(data.events);
+      }
+    });
   }
 }
