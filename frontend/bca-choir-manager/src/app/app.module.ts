@@ -45,7 +45,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
-
+import {MatRadioModule} from '@angular/material/radio'
 
 @NgModule({
   declarations: [
@@ -85,9 +85,9 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-  MatAutocompleteModule,
-  MatDialogModule,
-  
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatRadioModule,
 
     AuthModule.forRoot({
       domain: 'dev-4s47rktj.us.auth0.com',

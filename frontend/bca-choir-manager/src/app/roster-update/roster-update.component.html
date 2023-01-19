@@ -5,13 +5,29 @@
         <span class="fill-space"></span>
     </mat-toolbar>
 </div>
-<form >
+<form [formGroup]="service.updateForm">
     <input type="hidden" formControlName="$key">
+    <mat-form-field>
+        <input formcontrolName="first_name" matInput placeholder="First Name">
+    </mat-form-field>
+    <mat-form-field>
+        <input formcontrolName="last_name" matInput placeholder="Last Name">
+    </mat-form-field>
+    <mat-form-field>
+        <input formcontrolName="pronouns" matInput placeholder="Pronouns">
+    </mat-form-field>
     <mat-form-field>
         <input formcontrolName="voicepart" matInput placeholder="Voice Part">
     </mat-form-field>
-    <mat-form-field>
-        <input formcontrolName="choirtype" matInput placeholder="Choir Type">
-    </mat-form-field>
-
+    <mat-radio-group formControlName = "choirtype">
+        <mat-radio-button value="chamber">Chamber</mat-radio-button>
+        <mat-radio-button value="concert">Concert</mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group formControlName = "grad_year">
+        <mat-radio-button value="1" ngModel>{{year1}}</mat-radio-button>
+        <mat-radio-button value="1">{{year2}}</mat-radio-button>
+        <mat-radio-button value="1">{{year3}}</mat-radio-button>
+        <mat-radio-button value="1">{{year4}}</mat-radio-button>
+        <mat-radio-button value="1">{{year5}}</mat-radio-button>
+    </mat-radio-group>
 </form>

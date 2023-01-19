@@ -5,12 +5,16 @@ import {FormGroup, FormControl} from "@angular/forms";
   providedIn: 'root'
 })
 export class RosterUpdateService {
-
-  constructor() { }
-
-  form: FormGroup = new FormGroup({
+  updateForm: FormGroup = new FormGroup({
     $key: new FormControl(null),//primary key to identify each student
+    first_name: new FormControl(' '),
+    last_name: new FormControl(' '),
+    pronouns: new FormControl(' '),
     voicepart: new FormControl(' '),
     choirtype: new FormControl(' '),
+    grad_year: new FormControl(' ')
   });
+
+  constructor() { 
+  }
 }
