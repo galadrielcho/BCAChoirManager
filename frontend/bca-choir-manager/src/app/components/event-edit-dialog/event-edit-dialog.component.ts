@@ -18,4 +18,8 @@ export class EventEditDialogComponent {
     this.dialogRef.close();
   }
 
+  createEvent(): void {
+    this.dialogRef.close();
+  }
+
 }

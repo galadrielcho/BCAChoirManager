@@ -2,7 +2,11 @@
 
     <h1 class="center" [innerHTML]="getCalendarTitle()"></h1>
     <div class="center" id="controls">
-        <div #back (click)="setMonthBackward()"> back </div>
+        <div #back (click)="setMonthBackward()">
+            <button mat-mini-fab color="primary" aria-label="Button to create an event">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
             <mat-form-field appearance="fill" class="center">
                 <mat-label>Choose a date</mat-label>
                 <input matInput>
@@ -15,7 +19,22 @@
                 <mat-datepicker #picker></mat-datepicker>
             
             </mat-form-field>
-        <div #forward (click)="setMonthForward()"> forward </div>
+        <div #forward (click)="setMonthForward()">
+            <button mat-mini-fab color="primary" aria-label="Button to create an event">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+
+
+        </div>
+
+        <button mat-fab extended color="primary"
+                aria-label="Button to create an event"
+                (click)="openCreateEventDialog()">
+            <mat-icon>edit</mat-icon>
+            Create Event
+        </button>
+
+        
     </div> 
 
     <table class="center">

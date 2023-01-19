@@ -39,3 +39,12 @@ table td:first-child { border-left: none; }
 .other-month{
     color:grey;
 }
+
+h1 {
+    font-size: 1.25cm;
+    font-weight: 500;
+    padding: .5cm;
+    padding-top: 1cm;
+
+
+}

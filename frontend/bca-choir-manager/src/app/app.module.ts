@@ -51,6 +51,7 @@ import { CalendarEventComponent } from './components/calendar-event/calendar-eve
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
+import { EventDescriptionDialogComponent } from './components/event-description-dialog/event-description-dialog.component';
 
 
 
@@ -74,7 +75,8 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
     EventEditDialogComponent,
     CalendarEventTabComponent,
     CalendarEventComponent,
-    RosterUpdateComponent
+    RosterUpdateComponent,
+    EventDescriptionDialogComponent
 
 
   ],
