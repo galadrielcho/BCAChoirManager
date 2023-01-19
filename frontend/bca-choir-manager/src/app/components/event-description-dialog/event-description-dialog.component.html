@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <b>Choir Type</b>
+  <p>Chamber Choir</p>
+
+
+    <b>Time</b>
+    <p>{{data.startTime}} - {{data.endTime}}</p>
+    <hr>
+        <b>Location</b>
+        <p>{{data.location}}</p>
+        <b class = "address">Address</b>
+        <p></p>{{data.address}}
+
+ 
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="editEvent()">Edit</button>
+  <button mat-raised-button color="warn">Delete Event</button>
+
+
+</div>

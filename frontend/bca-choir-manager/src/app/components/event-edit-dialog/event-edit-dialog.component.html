@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Create/Edit Event</h1>
+<div mat-dialog-content>
+    <b>Choir Type</b>
+    <button mat-button [matMenuTriggerFor]="menu">Choir Type</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Chamber</button>
+      <button mat-menu-item>Concert</button>
+    </mat-menu>
+    <br>
+    <b>Event Time</b>
+    <br>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose a start date and time</mat-label>
+        <input type="datetime-local" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose an end date and time</mat-label>
+        <input type="datetime-local" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
+    </mat-form-field>
+          <hr>
+    
+        <b>Location</b>
+        <mat-form-field>
+            <input matInput placeholder="Location">
+        </mat-form-field>
+        <br>
+        <b class = "address">Address</b>
+        <mat-form-field>
+            <input matInput placeholder="address">
+        </mat-form-field>
+
+ 
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="createEvent()">Create/Edit Event</button>
+
+
+</div>

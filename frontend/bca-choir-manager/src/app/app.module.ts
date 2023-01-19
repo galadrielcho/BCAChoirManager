@@ -42,10 +42,21 @@ import { AdminSettingsContainerComponent } from './components/admin-settings-con
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarDayComponent } from './components/calendar-day/calendar-day.component';
+import { EditEventDialogComponent } from './components/edit-event-dialog/edit-event-dialog.component';
+import { EventEditDialogComponent } from './components/event-edit-dialog/event-edit-dialog.component';
+import { CalendarEventTabComponent } from './components/calendar-event-tab/calendar-event-tab.component';
+import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
+import { MatMenuModule } from '@angular/material/menu';
+
+
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
 import {MatRadioModule} from '@angular/material/radio'
+import { EventDescriptionDialogComponent } from './components/event-description-dialog/event-description-dialog.component';
+
+
 
 @NgModule({
   declarations: [
@@ -62,7 +73,15 @@ import {MatRadioModule} from '@angular/material/radio'
     AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
     CalendarComponent,
-    RosterUpdateComponent
+    CalendarDayComponent,
+    EditEventDialogComponent,
+    EventEditDialogComponent,
+    CalendarEventTabComponent,
+    CalendarEventComponent,
+    RosterUpdateComponent,
+    EventDescriptionDialogComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -87,6 +106,7 @@ import {MatRadioModule} from '@angular/material/radio'
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatMenuModule,
     MatRadioModule,
 
     AuthModule.forRoot({
