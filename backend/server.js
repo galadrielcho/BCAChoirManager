@@ -41,12 +41,14 @@ app.get("/api/status", function (req, res) {
 
 app.get("/api/roster", function (req, res) {
 
-  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, student.choir_type, student.grad_year, student.email
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, choirtype.choir_name, student.grad_year, student.email
   FROM account
   INNER JOIN student
   ON account.email = student.email
   INNER JOIN voicepart
-  ON student.voicepart_ID = voicepart.voicepart_ID;`
+  ON student.voicepart_ID = voicepart.voicepart_ID
+  INNER JOIN choirtype
+  ON student.choirtype_ID = choirtype.choirtype_ID`
   database.query(sql, function(err, rows, fields) 
   {
   if (err) throw err;
@@ -58,7 +60,7 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].last_name);
   person.push(rows[i].pronouns);
   person.push(rows[i].name);
-  person.push(rows[i].choir_type);
+  person.push(rows[i].choir_name);
   person.push(rows[i].grad_year);
   person.push(rows[i].email);
   roster.push(person);
@@ -68,12 +70,10 @@ app.get("/api/roster", function (req, res) {
   });
 });
 
-app.get("/api/get-calendar-events/:starttime/:endtime", function(req, res){
-
-  console.log(req.params.starttime);
+app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
   startTimeDate = new Date(Number(req.params.starttime));
   endTimeDate = new Date(Number(req.params.endtime));
-  console.log(startTimeDate);
+
   let queryStartMonth = (startTimeDate.getMonth()+1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
@@ -83,12 +83,21 @@ app.get("/api/get-calendar-events/:starttime/:endtime", function(req, res){
     useGrouping: false
   });
 
+  let queryEndDay = (endTimeDate.getDate()).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  });
+
+  let queryStartDay = (startTimeDate.getDate()).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  });
+
   let sql = 
   "select * from event where " +
-  `event.start_time >= '${startTimeDate.getFullYear()}-${queryStartMonth}-01 00:00:00' ` +
-  `and event.end_time <= '${endTimeDate.getFullYear()}-${queryEndMonth}-20 23:59:59'`;
+  `event.start_time >= '${startTimeDate.getFullYear()}-${queryStartMonth}-${queryStartDay} 00:00:00' ` +
+  `and event.end_time <= '${endTimeDate.getFullYear()}-${queryEndMonth}-${queryEndDay} 23:59:59'`;
 
-  console.log(sql);
   database.query(sql, function(err, rows, fields){
     let events = [];
 
