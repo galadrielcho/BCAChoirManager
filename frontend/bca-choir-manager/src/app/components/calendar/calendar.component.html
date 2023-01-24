@@ -1,7 +1,6 @@
-<div id="content">
-
+<div class="flex-column">
     <h1 class="center" [innerHTML]="getCalendarTitle()"></h1>
-    <div class="center" id="controls">
+    <div class="center flex-row">
         <div #back (click)="setMonthBackward()">
             <button mat-mini-fab color="primary" aria-label="Button to create an event">
                 <mat-icon>keyboard_arrow_left</mat-icon>
@@ -37,20 +36,24 @@
         
     </div> 
 
-    <table class="center">
-        <thead>
-            <tr> 
-                <th *ngFor="let weekday of weekdays"> {{weekday}} </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let week of getCalendarMonth(); index as weekIndex" >
-                <td *ngFor="let day of week" [ngClass]="isInCurrentMonth(day, weekIndex)? 'current-month' : 'other-month'">
-                    {{day}}
-                    <calendar-day></calendar-day>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <main class="flex-row">
+        <table class="center">
+            <thead>
+                <tr> 
+                    <th *ngFor="let weekday of weekdays"> {{weekday}} </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let week of getCalendarMonth(); index as weekIndex" >
+                    <td *ngFor="let day of week" [ngClass]="isInCurrentMonth(day, weekIndex)? 'current-month' : 'other-month'">
+                        {{day}}
+                        <calendar-day></calendar-day>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
+        <app-calendar-upcoming-events>
+        </app-calendar-upcoming-events>
+    </main>
 </div>

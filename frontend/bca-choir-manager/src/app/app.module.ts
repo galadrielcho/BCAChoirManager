@@ -54,6 +54,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RosterUpdateComponent } from './roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
 import {MatRadioModule} from '@angular/material/radio'
+import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-events/calendar-upcoming-events.component';
 import { EventDescriptionDialogComponent } from './components/event-description-dialog/event-description-dialog.component';
 
 
@@ -79,6 +80,7 @@ import { EventDescriptionDialogComponent } from './components/event-description-
     CalendarEventTabComponent,
     CalendarEventComponent,
     RosterUpdateComponent,
+    CalendarUpcomingEventsComponent,
     EventDescriptionDialogComponent
 
 

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,11 @@ import { Injectable } from '@angular/core';
 })
 
 export class CalendarService {
-  private date : Date = new Date();
+  
+  private date : Date = new Date();   
+  private calendarURL = '/api/get-calendar-events/';
+
+  constructor(private http: HttpClient) {}
 
   setDate(date : Date) :void{
     this.date = date;
@@ -40,6 +45,26 @@ export class CalendarService {
     if (weekNum > 1 && dayNum <= 7) return false; // following month
 
     return true; // curent month
+  }
+      
+  getEvents() {
+    let url = `${this.calendarURL}/${this.getFirstDateOfCalendarMonth().getTime()}/${this.getLastDateOfCalendarMonth().getTime()}`; 
+    
+    return this.http.get<any>(url);
+  }
+
+  getFirstDateOfCalendarMonth() : Date {
+    let startOfMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+   
+    startOfMonth.setDate(startOfMonth.getDate() - startOfMonth.getDay());
+    return startOfMonth;
+  }
+
+  getLastDateOfCalendarMonth() : Date{
+    let lastOfMonth = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0);
+    lastOfMonth.setDate(lastOfMonth.getDate() - lastOfMonth.getDay()+6);
+
+    return lastOfMonth; 
   }
 
   getCalendarMonthArray(): number[][]{
@@ -80,5 +105,4 @@ export class CalendarService {
     return month;
   }
 
-  constructor() {}
 }
