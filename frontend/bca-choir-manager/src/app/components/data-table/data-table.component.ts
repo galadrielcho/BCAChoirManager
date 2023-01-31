@@ -6,6 +6,7 @@ import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { RosterService} from '../../services/roster-service/roster.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
+import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 @Component({
 
   selector: 'app-data-table',
@@ -19,6 +20,7 @@ export class DataTableComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
   dataSource: DataTableDataSource | undefined;
   rosterService: RosterService;
+  rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -33,11 +35,13 @@ export class DataTableComponent implements AfterViewInit {
   editClicked(email:string){
     console.log("edit clicked!")
     this.dialog.open(RosterUpdateComponent);
+    this.rosterUpdateService.setEmail(email);
   }
 
-  constructor(private rs: RosterService, private md: MatDialog) { 
+  constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService) { 
     
     this.rosterService = rs;
+    this.rosterUpdateService = rus;
     this.dialog = md;
     var roster: DataTableItem[] = [];
 

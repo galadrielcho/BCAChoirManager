@@ -5,29 +5,51 @@
         <span class="fill-space"></span>
     </mat-toolbar>
 </div>
-<form [formGroup]="service.updateForm">
+
+<form [formGroup]="service.form">
     <input type="hidden" formControlName="$key">
+    First Name
     <mat-form-field>
-        <input formcontrolName="first_name" matInput placeholder="First Name">
+        <input formcontrolName="first_name" matInput placeholder="First Name*">
+        <mat-error>This field is mandatory</mat-error>
     </mat-form-field>
+
+    Last Name
     <mat-form-field>
-        <input formcontrolName="last_name" matInput placeholder="Last Name">
+        <input formcontrolName="last_name" matInput placeholder="Last Name*">
+        <mat-error>This field is mandatory</mat-error>
     </mat-form-field>
+
+    Pronouns
     <mat-form-field>
         <input formcontrolName="pronouns" matInput placeholder="Pronouns">
     </mat-form-field>
-    <mat-form-field>
-        <input formcontrolName="voicepart" matInput placeholder="Voice Part">
-    </mat-form-field>
+
+    Voice Part Number
+    <mat-radio-group formControlName = "number">
+        <mat-radio-button>1</mat-radio-button>
+        <mat-radio-button>2</mat-radio-button>
+    </mat-radio-group>
+
+    Graduation Year
+    <mat-radio-group formControlName = "grad_year">
+        <mat-radio-button>{{year1}}</mat-radio-button>
+        <mat-radio-button>{{year2}}</mat-radio-button>
+        <mat-radio-button>{{year3}}</mat-radio-button>
+        <mat-radio-button>{{year4}}</mat-radio-button>
+        <mat-radio-button>{{year5}}</mat-radio-button>
+    </mat-radio-group>
+
+    Voice Part Number
+    <mat-radio-group formControlName = "number">
+        <mat-radio-button>1</mat-radio-button>
+        <mat-radio-button>2</mat-radio-button>
+    </mat-radio-group>
+
+    Choir Type
     <mat-radio-group formControlName = "choirtype">
         <mat-radio-button value="chamber">Chamber</mat-radio-button>
         <mat-radio-button value="concert">Concert</mat-radio-button>
     </mat-radio-group>
-    <mat-radio-group formControlName = "grad_year">
-        <mat-radio-button value="1" ngModel>{{year1}}</mat-radio-button>
-        <mat-radio-button value="1">{{year2}}</mat-radio-button>
-        <mat-radio-button value="1">{{year3}}</mat-radio-button>
-        <mat-radio-button value="1">{{year4}}</mat-radio-button>
-        <mat-radio-button value="1">{{year5}}</mat-radio-button>
-    </mat-radio-group>
+    <button mat-raised-button="primary" type="submit" [disabled]="service.form.invalid">Submit</button> 
 </form>
