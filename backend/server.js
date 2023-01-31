@@ -41,7 +41,7 @@ app.get("/api/status", function (req, res) {
 
 app.get("/api/roster", function (req, res) {
 
-  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, choirtype.choir_name, student.grad_year, student.email
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
   FROM account
   INNER JOIN student
   ON account.email = student.email
@@ -52,6 +52,7 @@ app.get("/api/roster", function (req, res) {
   database.query(sql, function(err, rows, fields) 
   {
   if (err) throw err;
+  console.log(rows);
 
   var roster = [];
   for (let i = 0; i < rows.length; i++) {
@@ -59,7 +60,8 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].first_name);
   person.push(rows[i].last_name);
   person.push(rows[i].pronouns);
-  person.push(rows[i].name);
+  person.push(rows[i].name); //voicepart
+  person.push(rows[i].number); //voicepart number
   person.push(rows[i].choir_name);
   person.push(rows[i].grad_year);
   person.push(rows[i].email);

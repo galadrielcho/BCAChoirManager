@@ -24,7 +24,7 @@ export class DataTableComponent implements AfterViewInit {
   dialog: MatDialog;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
+  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'number', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
   
   deleteClicked(email: string){
     let arr = [];
@@ -54,9 +54,10 @@ export class DataTableComponent implements AfterViewInit {
                       last_name: data.roster[i][1],
                       pronouns: data.roster[i][2],
                       voicepart: data.roster[i][3],
-                      choir_type: data.roster[i][4],
-                      grad_year: data.roster[i][5],
-                      email: data.roster[i][6]}
+                      number: data.roster[i][4],
+                      choir_type: data.roster[i][5],
+                      grad_year: data.roster[i][6],
+                      email: data.roster[i][7]}
                       
           );
           
