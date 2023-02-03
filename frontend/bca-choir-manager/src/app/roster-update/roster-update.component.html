@@ -8,23 +8,30 @@
 
 <form [formGroup]="service.form">
     <input type="hidden" formControlName="$key">
+    <p>
     First Name
     <mat-form-field>
         <input formcontrolName="first_name" matInput placeholder="First Name*" [value]="getFirstName()">
         <mat-error>This field is mandatory</mat-error>
     </mat-form-field>
+    </p>
 
+    <p>
     Last Name
     <mat-form-field>
         <input formcontrolName="last_name" matInput placeholder="Last Name*" [value]="getLastName()">
         <mat-error>This field is mandatory</mat-error>
     </mat-form-field>
+    </p>
 
+    <p>
     Pronouns
     <mat-form-field>
         <input formcontrolName="pronouns" matInput placeholder="Pronouns" [value]="getPronouns()">
     </mat-form-field>
+    </p>
 
+    <p>
     Graduation Year
     <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
         <mat-radio-button
@@ -35,7 +42,9 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
+    </p>
 
+    <p>
     Choir Type
     <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
         <mat-radio-button
@@ -46,7 +55,9 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
+    </p>
 
+    <p>
     Voice Part
     <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
         <mat-radio-button
@@ -57,7 +68,9 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
+    </p>
 
+    <p>
     Voice Part Number
     <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
         <mat-radio-button
@@ -68,5 +81,6 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
+    </p>
  
 </form>
