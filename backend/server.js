@@ -52,7 +52,6 @@ app.get("/api/roster", function (req, res) {
   database.query(sql, function(err, rows, fields) 
   {
   if (err) throw err;
-  console.log(rows);
 
   var roster = [];
   for (let i = 0; i < rows.length; i++) {
@@ -69,6 +68,37 @@ app.get("/api/roster", function (req, res) {
   }
 
   res.send({roster: roster});
+  });
+});
+
+app.get("/api/roster-update/:email", function (req, res) {
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
+  FROM account
+  INNER JOIN student
+  ON account.email = student.email
+  INNER JOIN voicepart
+  ON student.voicepart_ID = voicepart.voicepart_ID
+  INNER JOIN choirtype
+  ON student.choirtype_ID = choirtype.choirtype_ID
+  WHERE account.email = "${req.params.email}"`
+  database.query(sql, function(err, rows, fields) 
+  {
+  if (err) throw err;
+
+  
+  var details = [];
+  for (let i = 0; i < rows.length; i++) {
+  var person = [];
+  person.push(rows[i].first_name);
+  person.push(rows[i].last_name);
+  person.push(rows[i].pronouns);
+  person.push(rows[i].name); //voicepart
+  person.push(rows[i].number); //voicepart number
+  person.push(rows[i].choir_name);
+  person.push(rows[i].grad_year);
+  details.push(person);
+  }
+  res.send({details: details});
   });
 });
 
@@ -112,7 +142,6 @@ app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
       event.push(rows[i].address);
       events.push(event);
     }
-    console.log(events);
     res.send({events:events});
   });
 

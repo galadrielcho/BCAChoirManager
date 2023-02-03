@@ -33,7 +33,6 @@ export class DataTableComponent implements AfterViewInit {
     location.reload();
   }
   editClicked(email:string){
-    console.log("edit clicked!")
     this.dialog.open(RosterUpdateComponent);
     this.rosterUpdateService.setEmail(email);
   }
