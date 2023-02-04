@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -7,20 +7,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RosterUpdateService {
   private rosterUrl = '/api/roster-update';
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),//primary key to identify each student
-    first_name: new FormControl(' ', Validators.required),
-    last_name: new FormControl(' ', Validators.required),
-    pronouns: new FormControl(' ', Validators.required),
-    voicepart: new FormControl(' ', Validators.required),
-    number: new FormControl(' ', Validators.required),
-    one: new FormControl(' '),
-    two: new FormControl(' '),
-    choirtype: new FormControl(' ', Validators.required),
-    concert: new FormControl(' '),
-    chamber: new FormControl(' '),
-    grad_year: new FormControl(' ', Validators.required)
-  });
 
   email = "";
   details = "";
@@ -41,5 +27,8 @@ export class RosterUpdateService {
     return this.http.get<any>(url);
   }
 
+  public updateDetails(updatedDetails: any[]){
+    this.http.post(this.rosterUrl, updatedDetails).subscribe();
+  }
 
 }

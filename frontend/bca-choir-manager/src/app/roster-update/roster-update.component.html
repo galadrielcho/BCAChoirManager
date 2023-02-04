@@ -6,34 +6,24 @@
     </mat-toolbar>
 </div>
 
-<form [formGroup]="service.form">
-    <input type="hidden" formControlName="$key">
-    <p>
+<p>
     First Name
-    <mat-form-field>
-        <input formcontrolName="first_name" matInput placeholder="First Name*" [value]="getFirstName()">
-        <mat-error>This field is mandatory</mat-error>
-    </mat-form-field>
-    </p>
+    <input matInput placeholder="First Name*" [value]="getFirstName()" ngModel #firstname>
+</p>
 
-    <p>
+<p>
     Last Name
-    <mat-form-field>
-        <input formcontrolName="last_name" matInput placeholder="Last Name*" [value]="getLastName()">
-        <mat-error>This field is mandatory</mat-error>
-    </mat-form-field>
-    </p>
+    <input matInput placeholder="Last Name*" [value]="getLastName()" ngModel #lastname>
+</p>
 
-    <p>
+<p>
     Pronouns
-    <mat-form-field>
-        <input formcontrolName="pronouns" matInput placeholder="Pronouns" [value]="getPronouns()">
-    </mat-form-field>
-    </p>
+    <input matInput placeholder="Pronouns" [value]="getPronouns()" ngModel #pronouns>
+</p>
 
-    <p>
+<p>
     Graduation Year
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="yearPos">
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of years"
@@ -42,11 +32,11 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
-    </p>
+</p>
 
-    <p>
+<p>
     Choir Type
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="choirtypePos">
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of choirtypes"
@@ -55,11 +45,11 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
-    </p>
+</p>
 
-    <p>
+<p>
     Voice Part
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPPos">
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of voiceparts"
@@ -68,11 +58,11 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
-    </p>
+</p>
 
-    <p>
+<p>
     Voice Part Number
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group">
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPNPos">
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of voicePartNumbers"
@@ -81,6 +71,5 @@
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
-    </p>
- 
-</form>
+</p>
+<button type="submit" (click)="submit()">Submit</button> 

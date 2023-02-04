@@ -101,6 +101,58 @@ app.get("/api/roster-update/:email", function (req, res) {
   res.send({details: details});
   });
 });
+app.post("/api/roster-update", function (req, res) {
+  console.log(req.body);
+  sql=`UPDATE account
+  SET first_name = ${database.escape(req.body[1])}, last_name = ${database.escape(req.body[2])}, pronouns = ${database.escape(req.body[3])}
+  WHERE email = ${database.escape(req.body[0])};`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+  });  
+  sql=`UPDATE student
+  SET grad_year = ${database.escape(req.body[7])}
+  WHERE email = ${database.escape(req.body[0])};`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+  });  
+
+  sql=`SELECT voicepart_ID from voicepart 
+  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+    sql=`UPDATE student
+    SET voicepart_ID = ${database.escape(rows[0].voicepart_ID)}
+    WHERE email = ${database.escape(req.body[0])};`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      console.log(rows);
+    });  
+  }); 
+
+  sql=`SELECT choirtype_ID from choirtype
+  WHERE choir_name = ${database.escape(req.body[6])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+    sql=`UPDATE student
+    SET choirtype_ID = ${database.escape(rows[0].choirtype_ID)}
+    WHERE email = ${database.escape(req.body[0])};`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      console.log(rows);
+    });  
+  }); 
+
+});
 
 app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
   startTimeDate = new Date(Number(req.params.starttime));
