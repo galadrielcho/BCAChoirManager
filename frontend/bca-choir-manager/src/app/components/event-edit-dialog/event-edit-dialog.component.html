@@ -1,37 +1,50 @@
-<h1 mat-dialog-title>Create/Edit Event</h1>
+<h1 mat-dialog-title>{{eventAction}} Event</h1>
 <div mat-dialog-content>
-    <b>Choir Type</b>
-    <button mat-button [matMenuTriggerFor]="menu">Choir Type</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>Chamber</button>
-      <button mat-menu-item>Concert</button>
-    </mat-menu>
-    <br>
-    <b>Event Time</b>
-    <br>
+  <mat-form-field class="long-input">
+      <input matInput placeholder="Event Name">
+  </mat-form-field>
+  <mat-form-field class="long-input" >
+      <input matInput placeholder="Location Name">
+  </mat-form-field>
+  <mat-form-field class="long-input">
+      <input matInput placeholder="Address">
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Choose a start date and time</mat-label>
-        <input type="datetime-local" matInput>
-        <mat-icon matSuffix>insert_invitation</mat-icon>    
-    </mat-form-field>
+  <h2>Choir Type</h2>
+  <mat-radio-group aria-label="Select a choir type">
+    <mat-radio-button value="1">Concert</mat-radio-button>
+    <mat-radio-button value="2">Chamber</mat-radio-button>
+  </mat-radio-group>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Choose an end date and time</mat-label>
-        <input type="datetime-local" matInput>
-        <mat-icon matSuffix>insert_invitation</mat-icon>    
+  <div>
+    <mat-form-field appearance="fill" class="datepicker">
+      <mat-label>Choose a start date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-          <hr>
-    
-        <b>Location</b>
-        <mat-form-field>
-            <input matInput placeholder="Location">
-        </mat-form-field>
-        <br>
-        <b class = "address">Address</b>
-        <mat-form-field>
-            <input matInput placeholder="address">
-        </mat-form-field>
+    <mat-form-field class="timepicker">
+        <mat-label>Choose a start time</mat-label>
+        <input type="time" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
+    </mat-form-field>    
+  </div>
+
+  <div>
+    <mat-form-field appearance="fill" class="datepicker">
+      <mat-label>Choose an end date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="timepicker">
+        <mat-label>Choose an end time</mat-label>
+        <input type="time" matInput>
+        <mat-icon matSuffix>insert_invitation</mat-icon>    
+    </mat-form-field>    
+  </div>
 
  
 </div>

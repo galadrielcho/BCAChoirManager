@@ -1,23 +1,28 @@
-<h1 mat-dialog-title>{{data.name}}</h1>
+<h1 mat-dialog-title>{{event.name}}</h1>
+<mat-chip-listbox aria-label="Event info">
+  <mat-chip>Chamber</mat-chip>
+</mat-chip-listbox>
 <div mat-dialog-content>
-  <b>Choir Type</b>
-  <p>Chamber Choir</p>
+  <th>Time</th>
+  <p>
+  {{event.startTime}} - {{event.endTime}}
+  </p>
 
-
-    <b>Time</b>
-    <p>{{data.startTime}} - {{data.endTime}}</p>
-    <hr>
+    <p>{{event.startTime}} - {{event.endTime}}</p> 
+      <div class = "location">   
         <b>Location</b>
-        <p>{{data.location}}</p>
-        <b class = "address">Address</b>
-        <p></p>{{data.address}}
+        <p>{{event.location}}</p>
+        <b>Address</b>
+        <p>{{event.address}}</p>
+      </div>  
+      <hr>
 
  
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="editEvent()">Edit</button>
-  <button mat-raised-button color="warn">Delete Event</button>
+  <button mat-button (click)="close()">Close</button>
+  <button mat-button (click)="moreInfo()">Open Event</button>
+  <button mat-raised-button color="warn" (click)="deleteEvent()">Delete Event</button>
 
 
 </div>

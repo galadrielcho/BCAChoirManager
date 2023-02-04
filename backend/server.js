@@ -254,3 +254,12 @@ app.post('/api/roster', (req, res) => {
 app.get("/api/login", function (req, res) {
   res.status(200).json({ status: "UP" });
 });
+
+
+
+/*  "/api/getEvents"
+ *   GET: Get list of all events
+ */
+app.get("/api/getEvents", function (req, res) {
+  res.status(200).json({ status: "UP" });
+});
