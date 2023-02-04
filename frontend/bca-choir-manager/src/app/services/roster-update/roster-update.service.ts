@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class RosterUpdateService {
 
   email = "";
   details = "";
+  dialog!: MatDialog;
+  location!: Location;
 
   constructor(private http: HttpClient) { 
   }
@@ -29,6 +32,16 @@ export class RosterUpdateService {
 
   public updateDetails(updatedDetails: any[]){
     this.http.post(this.rosterUrl, updatedDetails).subscribe();
+  }
+
+  public send(dialog: MatDialog, location: Location){
+    this.dialog = dialog;
+    this.location = location;
+  }
+
+  public closeEdit(){
+    this.dialog.closeAll();
+    this.location.reload();
   }
 
 }

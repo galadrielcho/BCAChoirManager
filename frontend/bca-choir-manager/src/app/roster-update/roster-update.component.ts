@@ -157,6 +157,8 @@ export class RosterUpdateComponent {
     updatedDetails.push(this.isValidRadioButton(choirtype) ? choirtype.name : this.details[5]);
     updatedDetails.push(this.isValidRadioButton(grad_year) ? grad_year.name : this.details[6]);    
     this.service.updateDetails(updatedDetails);
+
+    this.service.closeEdit();
   }
   
   public isValidString(s : String){

@@ -35,6 +35,7 @@ export class DataTableComponent implements AfterViewInit {
   editClicked(email:string){
     this.dialog.open(RosterUpdateComponent);
     this.rosterUpdateService.setEmail(email);
+    this.rosterUpdateService.send(this.dialog, location);
   }
 
   constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService) { 
