@@ -1,5 +1,10 @@
+<mat-form-field>
+  <mat-label>Search for an event...</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
+</mat-form-field>
+
 <div class="mat-elevation-z8 data-table">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+  <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
     <!-- First Name Column -->
     <ng-container matColumnDef="event_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -32,6 +37,11 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No events match search "{{input.value}}"</td>
+    </tr>
   </table>
 
   <mat-paginator #paginator
