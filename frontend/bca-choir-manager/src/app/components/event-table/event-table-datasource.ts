@@ -6,7 +6,7 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 
 
 export interface EventTableItem {
-  name: string,
+  event_name: string,
   type: string,
   start_time: string,
   end_time: string
@@ -78,7 +78,7 @@ export class EventTableDataSource extends DataSource<EventTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'name': return compare(a.event_name, b.event_name, isAsc);
         case 'type': return compare(a.type, b.type, isAsc);
         case 'start_time': return compare(a.start_time, b.start_time, isAsc);
         case 'end_time': return compare(a.end_time, b.end_time, isAsc);

@@ -7,6 +7,7 @@ import { RosterService} from '../../services/roster-service/roster.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
 import { EventService } from 'src/app/services/event-service/event.service';
+import { EventData } from 'src/app/models/event-data.model';
 @Component({
 
   selector: 'app-event-table',
@@ -23,9 +24,9 @@ export class EventTableComponent implements AfterViewInit {
   dialog: MatDialog;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'type', 'start_time', 'end_time', 'expand'];
+  displayedColumns = ['event_name', 'type', 'start_time', 'end_time', 'expand'];
   
-  expandEvent(name: string, start_time: string){
+  expandEvent(event_name: string, start_time: string){
 
 
   }
@@ -36,22 +37,27 @@ export class EventTableComponent implements AfterViewInit {
     this.eventService = es;
     this.dialog = md;
     var events: EventTableItem[] = [];
+    
+    let event : EventData;
+
 
     this.eventService.getEvents().subscribe({
       next: data => {
+        console.log(data);
 
-        for(let i = 0; i < data.events.length; i++){
+        // for(let i = 0; i < data.events.length; i++){
+        //   event = data[i];
           
-          events.push({name: data.events[i][0], 
-                      type: data.events[i][1],
-                      start_time: data.events[i][2],
-                      end_time: data.events[i][3]
-          }
+        //   events.push({event_name: data.events[i][0], 
+        //               type: data.events[i][1],
+        //               start_time: data.events[i][2],
+        //               end_time: data.events[i][3]
+        //   }
                       
-          );
+        //   );
           
-        }
-        this.dataSource = new EventTableDataSource(events);
+        // }
+        this.dataSource = new EventTableDataSource(data.events);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.table.dataSource = this.dataSource;   

@@ -9,12 +9,11 @@ import { Component } from '@angular/core';
 })
 export class CalendarDayComponent {
   public events = [
-    {name : "Performance",
-    startTime : "1:00pm",
-    endTime : "3:00pm",
+    {event_name : "Performance",
+    start_time : "1:00pm",
+    end_time : "3:00pm",
     location : "BCA",
-    address : "600 Hackeintnsack",
-    id : "Performance1:00pm"
+    address : "600 Hackeintnsack"
     }
 
   ];  

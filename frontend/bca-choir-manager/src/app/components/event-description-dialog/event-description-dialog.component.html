@@ -1,14 +1,14 @@
-<h1 mat-dialog-title>{{event.name}}</h1>
+<h1 mat-dialog-title>{{event.event_name}}</h1>
 <mat-chip-listbox aria-label="Event info">
   <mat-chip>Chamber</mat-chip>
 </mat-chip-listbox>
 <div mat-dialog-content>
   <th>Time</th>
   <p>
-  {{event.startTime}} - {{event.endTime}}
+  {{event.start_time}} - {{event.end_time}}
   </p>
 
-    <p>{{event.startTime}} - {{event.endTime}}</p> 
+    <p>{{event.start_time}} - {{event.end_time}}</p> 
       <div class = "location">   
         <b>Location</b>
         <p>{{event.location}}</p>

@@ -233,8 +233,6 @@ app.post('/api/account', (req, res) => {
     database.query('SELECT * FROM account', function(err, rows, fields) 
     {
       if (err) throw err;
-
-      console.log(rows);
     });  
 });
 
@@ -258,8 +256,14 @@ app.get("/api/login", function (req, res) {
 
 
 /*  "/api/getEvents"
- *   GET: Get list of all events
+ *   GET: Retrieves all events
  */
 app.get("/api/getEvents", function (req, res) {
-  res.status(200).json({ status: "UP" });
-});
+
+  sql = `SELECT * FROM event`
+  database.query(sql, function(err, events, fields) 
+  {
+  if (err) throw err;
+
+  res.send({events : events});
+  });});
