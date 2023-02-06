@@ -12,22 +12,6 @@ export class CalendarUpcomingEventsComponent {
   public events : EventData[]= []; 
 
   constructor(private cs: CalendarService) { 
-    this.events = []    
-    cs.getEvents().subscribe({
-      next: data => {
-
-        for(let i = 0; i < data.events.length; i++){
-          
-          this.events.push({name: data.events[i][0], 
-                      startTime: data.events[i][1],
-                      endTime: data.events[i][2],
-                      location: data.events[i][3],
-                      address: data.events[i][4]
-                      }
-          );
-        } 
-      }      
-    }); 
+    this.events = cs.getEvents();
   }
-
 }

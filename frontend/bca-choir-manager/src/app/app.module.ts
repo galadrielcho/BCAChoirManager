@@ -56,8 +56,6 @@ import { RosterUpdateService } from './services/roster-update/roster-update.serv
 import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-events/calendar-upcoming-events.component';
 import { EventDescriptionDialogComponent } from './components/event-description-dialog/event-description-dialog.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,8 +78,7 @@ import { EventDescriptionDialogComponent } from './components/event-description-
     CalendarEventComponent,
     RosterUpdateComponent,
     CalendarUpcomingEventsComponent,
-    EventDescriptionDialogComponent
-
+    EventDescriptionDialogComponent,
 
   ],
   imports: [

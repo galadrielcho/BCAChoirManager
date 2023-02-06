@@ -101,6 +101,7 @@ app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
   database.query(sql, function(err, rows, fields){
     let events = [];
 
+    console.log(rows);
     for (let i = 0; i< rows.length; i++){
       let event = [];
       event.push(rows[i].event_name);

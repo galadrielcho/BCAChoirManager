@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { EventData} from '../../models/event-data.model';
+import { CalendarDayData} from '../../models/calendar-day-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +11,8 @@ export class CalendarService {
   
   private date : Date = new Date();   
   private calendarURL = '/api/get-calendar-events/';
-
-  constructor(private http: HttpClient) {}
+  private calendarMonth : CalendarDayData[][] = []; 
+  private events : EventData[]= []; 
 
   setDate(date : Date) :void{
     this.date = date;
@@ -48,9 +50,7 @@ export class CalendarService {
   }
       
   getEvents() {
-    let url = `${this.calendarURL}/${this.getFirstDateOfCalendarMonth().getTime()}/${this.getLastDateOfCalendarMonth().getTime()}`; 
-    
-    return this.http.get<any>(url);
+    return this.events;
   }
 
   getFirstDateOfCalendarMonth() : Date {
@@ -67,42 +67,114 @@ export class CalendarService {
     return lastOfMonth; 
   }
 
-  getCalendarMonthArray(): number[][]{
-    let  month: number[][] = []; 
-    
-    let firstDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
-    let lastDatePrevious = this.getLastDateOfPreviousMonth().getDate();
-    let lastDayCurrent = this.getLastDateOfCurrentMonth().getDate();
-    let firstDayWeekday = firstDate.getDay();
-
-    let dayIndex = 0;
-    let dayNum = 1;
-
-    month.push([]); // first week
-    for (let i = 0; i < firstDayWeekday; i++){
-
-      month[0].push(lastDatePrevious - (firstDayWeekday - i - 1));
-      dayIndex++;
-    }
-
-    while (dayNum <= lastDayCurrent){
-
-      if(Number.isInteger(dayIndex / 7)) {
-        month.push([]); // add week
-      }
-      month[Math.floor(dayIndex / 7)].push(dayNum);
-
-      dayIndex++;
-      dayNum++;
-    }
-
-    dayNum = 1;
-    while(!Number.isInteger(dayIndex/7) && month[Math.floor(dayIndex / 7)].length != 7){
-      month[Math.floor(dayIndex / 7)].push(dayNum);
-      dayIndex++;
-      dayNum++;
-    }
-    return month;
+  getCalendarMonthArray() : CalendarDayData[][]{
+    return this.calendarMonth;
   }
 
+  checkEventHasDate(eventData : EventData, date : Date) : boolean{
+    let eventStartDate = new Date(eventData.startTime);
+    let eventEndDate = new Date(eventData.endTime);
+
+    console.log("testing!!");
+    console.log(eventStartDate);
+    console.log(eventEndDate);
+    console.log(date);
+    console.log(eventStartDate.getTime());
+    console.log(eventEndDate.getTime());
+    console.log(date.getTime());
+    console.log((eventStartDate.getTime() <= date.getTime() 
+    && eventEndDate.getTime() >= date.getTime()));
+
+    return (eventStartDate.getTime() <= date.getTime() 
+            && eventEndDate.getTime() >= date.getTime());
+
+  }
+
+  getEventOverlap(date : Date) : EventData[]{
+    let eventOverlap : EventData[] = [];
+    for (let i = 0; i < this.events.length; i++){
+      if (this.checkEventHasDate(this.events[i], date)){
+        eventOverlap.push(this.events[i])
+      }
+    }
+    console.log(eventOverlap)
+    return eventOverlap;
+  }
+  
+  goThroughCalendarMonth() : void{
+    
+    let events = this.events.slice();
+    this.calendarMonth = []; 
+    
+    let firstDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+    let lastDatePreviousMonth = this.getLastDateOfPreviousMonth();
+    let lastDateCurrentMonth = this.getLastDateOfCurrentMonth();
+    let firstDayWeekday = firstDate.getDay();
+    
+    let dayIndex = 0;
+    let dayNum = 0;
+
+    this.calendarMonth.push([]); // first week, adding days in past month that fit in calendar
+    for (let i = 0; i < firstDayWeekday; i++){
+      let dayNum = lastDatePreviousMonth.getDate() - (firstDayWeekday - i - 1);
+
+      let date = new Date(lastDatePreviousMonth)
+      date.setDate(dayNum);
+      this.calendarMonth[0].push({date: dayNum, events:this.getEventOverlap(date)});
+      dayIndex++;
+    }
+
+
+    dayNum = 1;
+    while (dayNum <= lastDateCurrentMonth.getDate()){
+      if(Number.isInteger(dayIndex / 7)) {
+        this.calendarMonth.push([]); // add week
+      }
+      let date = new Date(this.date)
+      date.setDate(dayNum);
+
+      this.calendarMonth[Math.floor(dayIndex / 7)].push({date: dayNum, events:this.getEventOverlap(date)});
+
+      dayIndex++;
+      dayNum++;
+    }
+
+    // last week, adding days in next month that fit in calendar
+    dayNum = 1;
+    while(!Number.isInteger(dayIndex/7) && this.calendarMonth[Math.floor(dayIndex / 7)].length != 7){
+      
+      let date = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 1);
+      this.calendarMonth[Math.floor(dayIndex / 7)].push({date: dayNum, events:this.getEventOverlap(date)});
+      dayIndex++;
+      dayNum++;
+    }
+  }
+
+  constructor(private http: HttpClient){
+
+    let url = `${this.calendarURL}/${this.getFirstDateOfCalendarMonth().getTime()}/${this.getLastDateOfCalendarMonth().getTime()}`; 
+    http.get<any>(url).subscribe({
+      next: data => {
+
+        for(let i = 0; i < data.events.length; i++){
+        
+          let event : EventData =  {name: data.events[i][0], 
+            startTime: data.events[i][1],
+            endTime: data.events[i][2],
+            location: data.events[i][3],
+            address: data.events[i][4]
+            }
+          this.events.push(event);
+
+        } 
+        this.goThroughCalendarMonth();
+      },
+      error: error=>{
+        this.goThroughCalendarMonth();
+      }
+      }
+      
+
+    );
+  }
 }

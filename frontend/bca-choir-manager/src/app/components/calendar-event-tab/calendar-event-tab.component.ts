@@ -14,13 +14,25 @@ export class CalendarEventTabComponent {
   constructor(public dialog: MatDialog) {}
 
   openEventDialog(): void {
-    const dialogRef = this.dialog.open(EventDescriptionDialogComponent, {
-      width: '500px',
-      data: this.event
-    });
+    if (this.event  != null){
+      let endTime = new Date(this.event.endTime).toLocaleString();
+      let startTime = new Date(this.event.startTime).toLocaleString();
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+      const dialogRef = this.dialog.open(EventDescriptionDialogComponent, {
+        width: '500px',
+        data: { name : this.event.name,
+                startTime : startTime,
+                endTime : endTime,
+                location: this.event.location,
+                address : this.event.address
+  
+              }});
+      
+
+              dialogRef.afterClosed().subscribe(result => {
+                console.log('The dialog was closed');
+              });
+    }
+
   }
 }
