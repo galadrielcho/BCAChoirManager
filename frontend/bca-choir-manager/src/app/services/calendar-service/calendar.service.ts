@@ -72,8 +72,8 @@ export class CalendarService {
   }
 
   checkEventHasDate(eventData : EventData, date : Date) : boolean{
-    let eventStartDate = new Date(eventData.startTime);
-    let eventEndDate = new Date(eventData.endTime);
+    let eventStartDate = new Date(eventData.start_time);
+    let eventEndDate = new Date(eventData.end_time);
 
     console.log("testing!!");
     console.log(eventStartDate);
@@ -158,9 +158,9 @@ export class CalendarService {
 
         for(let i = 0; i < data.events.length; i++){
         
-          let event : EventData =  {name: data.events[i][0], 
-            startTime: data.events[i][1],
-            endTime: data.events[i][2],
+          let event : EventData =  {event_name: data.events[i][0], 
+            start_time: data.events[i][1],
+            end_time: data.events[i][2],
             location: data.events[i][3],
             address: data.events[i][4]
             }

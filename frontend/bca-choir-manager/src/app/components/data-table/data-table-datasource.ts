@@ -11,6 +11,7 @@ export interface DataTableItem {
   last_name: string,
   pronouns: string,
   voicepart: string,
+  number: number,
   choir_type: string,
   grad_year: number,
   email: string,
@@ -86,6 +87,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
         case 'last_name': return compare(a.last_name, b.last_name, isAsc);
         case 'pronouns': return compare(a.pronouns, b.pronouns, isAsc);
         case 'voicepart': return compare(a.voicepart, b.voicepart, isAsc);
+        case 'number': return compare(+a.number, +b.number, isAsc);
         case 'choir_type': return compare(a.choir_type, b.choir_type, isAsc);
         case 'grad_year': return compare(+a.grad_year, +b.grad_year, isAsc);
         case 'email': return compare(a.email, b.email, isAsc);

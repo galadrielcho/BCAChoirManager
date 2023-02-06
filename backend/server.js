@@ -41,7 +41,7 @@ app.get("/api/status", function (req, res) {
 
 app.get("/api/roster", function (req, res) {
 
-  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, choirtype.choir_name, student.grad_year, student.email
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
   FROM account
   INNER JOIN student
   ON account.email = student.email
@@ -59,7 +59,8 @@ app.get("/api/roster", function (req, res) {
   person.push(rows[i].first_name);
   person.push(rows[i].last_name);
   person.push(rows[i].pronouns);
-  person.push(rows[i].name);
+  person.push(rows[i].name); //voicepart
+  person.push(rows[i].number); //voicepart number
   person.push(rows[i].choir_name);
   person.push(rows[i].grad_year);
   person.push(rows[i].email);
@@ -68,6 +69,89 @@ app.get("/api/roster", function (req, res) {
 
   res.send({roster: roster});
   });
+});
+
+app.get("/api/roster-update/:email", function (req, res) {
+  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
+  FROM account
+  INNER JOIN student
+  ON account.email = student.email
+  INNER JOIN voicepart
+  ON student.voicepart_ID = voicepart.voicepart_ID
+  INNER JOIN choirtype
+  ON student.choirtype_ID = choirtype.choirtype_ID
+  WHERE account.email = "${req.params.email}"`
+  database.query(sql, function(err, rows, fields) 
+  {
+  if (err) throw err;
+
+  
+  var details = [];
+  for (let i = 0; i < rows.length; i++) {
+  var person = [];
+  person.push(rows[i].first_name);
+  person.push(rows[i].last_name);
+  person.push(rows[i].pronouns);
+  person.push(rows[i].name); //voicepart
+  person.push(rows[i].number); //voicepart number
+  person.push(rows[i].choir_name);
+  person.push(rows[i].grad_year);
+  details.push(person);
+  }
+  res.send({details: details});
+  });
+});
+app.post("/api/roster-update", function (req, res) {
+  console.log(req.body);
+  sql=`UPDATE account
+  SET first_name = ${database.escape(req.body[1])}, last_name = ${database.escape(req.body[2])}, pronouns = ${database.escape(req.body[3])}
+  WHERE email = ${database.escape(req.body[0])};`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+  });  
+  sql=`UPDATE student
+  SET grad_year = ${database.escape(req.body[7])}
+  WHERE email = ${database.escape(req.body[0])};`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+  });  
+
+  sql=`SELECT voicepart_ID from voicepart 
+  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+    sql=`UPDATE student
+    SET voicepart_ID = ${database.escape(rows[0].voicepart_ID)}
+    WHERE email = ${database.escape(req.body[0])};`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      console.log(rows);
+    });  
+  }); 
+
+  sql=`SELECT choirtype_ID from choirtype
+  WHERE choir_name = ${database.escape(req.body[6])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    console.log(rows);
+    sql=`UPDATE student
+    SET choirtype_ID = ${database.escape(rows[0].choirtype_ID)}
+    WHERE email = ${database.escape(req.body[0])};`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      console.log(rows);
+    });  
+  }); 
+
 });
 
 app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
@@ -111,7 +195,6 @@ app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
       event.push(rows[i].address);
       events.push(event);
     }
-    console.log(events);
     res.send({events:events});
   });
 
@@ -151,8 +234,6 @@ app.post('/api/account', (req, res) => {
     database.query('SELECT * FROM account', function(err, rows, fields) 
     {
       if (err) throw err;
-
-      console.log(rows);
     });  
 });
 
@@ -172,3 +253,18 @@ app.post('/api/roster', (req, res) => {
 app.get("/api/login", function (req, res) {
   res.status(200).json({ status: "UP" });
 });
+
+
+
+/*  "/api/getEvents"
+ *   GET: Retrieves all events
+ */
+app.get("/api/getEvents", function (req, res) {
+
+  sql = `SELECT * FROM event`
+  database.query(sql, function(err, events, fields) 
+  {
+  if (err) throw err;
+
+  res.send({events : events});
+  });});

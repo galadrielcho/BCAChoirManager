@@ -10,9 +10,9 @@ import { EventData} from '../../models/event-data.model';
 })
 export class CalendarDayComponent {
   @Input('events')  events : EventData[] = [
-    {name : "Performance",
-    startTime : "1:00pm",
-    endTime : "3:00pm",
+    {event_name : "Performance",
+    start_time : "1:00pm",
+    end_time : "3:00pm",
     location : "BCA",
     address : "600 Hackeintnsack",
     }

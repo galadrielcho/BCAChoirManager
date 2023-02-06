@@ -6,6 +6,7 @@ import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { RosterService} from '../../services/roster-service/roster.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
+import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 @Component({
 
   selector: 'app-data-table',
@@ -19,10 +20,11 @@ export class DataTableComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
   dataSource: DataTableDataSource | undefined;
   rosterService: RosterService;
+  rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
+  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'number', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
   
   deleteClicked(email: string){
     let arr = [];
@@ -31,13 +33,15 @@ export class DataTableComponent implements AfterViewInit {
     location.reload();
   }
   editClicked(email:string){
-    console.log("edit clicked!")
     this.dialog.open(RosterUpdateComponent);
+    this.rosterUpdateService.setEmail(email);
+    this.rosterUpdateService.send(this.dialog, location);
   }
 
-  constructor(private rs: RosterService, private md: MatDialog) { 
+  constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService) { 
     
     this.rosterService = rs;
+    this.rosterUpdateService = rus;
     this.dialog = md;
     var roster: DataTableItem[] = [];
 
@@ -50,9 +54,10 @@ export class DataTableComponent implements AfterViewInit {
                       last_name: data.roster[i][1],
                       pronouns: data.roster[i][2],
                       voicepart: data.roster[i][3],
-                      choir_type: data.roster[i][4],
-                      grad_year: data.roster[i][5],
-                      email: data.roster[i][6]}
+                      number: data.roster[i][4],
+                      choir_type: data.roster[i][5],
+                      grad_year: data.roster[i][6],
+                      email: data.roster[i][7]}
                       
           );
           

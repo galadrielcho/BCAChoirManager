@@ -1,16 +1,47 @@
 import { Injectable } from '@angular/core';
-import {FormGroup, FormControl} from "@angular/forms";
+import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
+import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RosterUpdateService {
+  private rosterUrl = '/api/roster-update';
 
-  constructor() { }
+  email = "";
+  details = "";
+  dialog!: MatDialog;
+  location!: Location;
 
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),//primary key to identify each student
-    voicepart: new FormControl(' '),
-    choirtype: new FormControl(' '),
-  });
+  constructor(private http: HttpClient) { 
+  }
+
+  public setEmail(email: string){
+    this.email = email;
+  }
+
+  public setDetails(detail: string){
+    this.details = detail;
+  }
+
+  public getAccountDetails(email: string){
+    let url = `${this.rosterUrl}/${email}`;
+    return this.http.get<any>(url);
+  }
+
+  public updateDetails(updatedDetails: any[]){
+    this.http.post(this.rosterUrl, updatedDetails).subscribe();
+  }
+
+  public send(dialog: MatDialog, location: Location){
+    this.dialog = dialog;
+    this.location = location;
+  }
+
+  public closeEdit(){
+    this.dialog.closeAll();
+    this.location.reload();
+  }
+
 }

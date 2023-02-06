@@ -15,14 +15,14 @@ export class CalendarEventTabComponent {
 
   openEventDialog(): void {
     if (this.event  != null){
-      let endTime = new Date(this.event.endTime).toLocaleString();
-      let startTime = new Date(this.event.startTime).toLocaleString();
+      let endTime = new Date(this.event.end_time).toLocaleString();
+      let startTime = new Date(this.event.start_time).toLocaleString();
 
       const dialogRef = this.dialog.open(EventDescriptionDialogComponent, {
         width: '500px',
-        data: { name : this.event.name,
-                startTime : startTime,
-                endTime : endTime,
+        data: { event_name : this.event.event_name,
+                start_time : startTime,
+                end_Time : endTime,
                 location: this.event.location,
                 address : this.event.address
   

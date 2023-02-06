@@ -7,3 +7,22 @@ input {
     margin: 0;
     padding: 0;
 }
+
+.long-input {
+    width: 100%;
+}
+
+.datepicker {
+    width: 50%;
+
+}
+.timepicker {
+    width: 40%;
+    margin-left: 2%;
+}
+
+h2 {
+    font-size: medium;
+    display: inline-block;
+    font-weight: bold;
+}
