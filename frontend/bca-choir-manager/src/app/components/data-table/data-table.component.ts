@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { RosterService} from '../../services/roster-service/roster.service';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 @Component({
