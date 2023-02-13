@@ -58,6 +58,7 @@ import { EventDescriptionDialogComponent } from './components/event-description-
 import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { EventDeleteDialogComponent } from './components/event-delete-dialog/event-delete-dialog.component';
 import { EventTableComponent } from './components/event-table/event-table.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 
@@ -84,7 +85,8 @@ import { EventTableComponent } from './components/event-table/event-table.compon
     EventDescriptionDialogComponent,
     EventsPageComponent,
     EventDeleteDialogComponent,
-    EventTableComponent
+    EventTableComponent,
+    SignUpComponent
 
 
 
@@ -116,8 +118,8 @@ import { EventTableComponent } from './components/event-table/event-table.compon
     MatRadioModule,
 
     AuthModule.forRoot({
-      domain: 'dev-4s47rktj.us.auth0.com',
-      clientId: 'NCrArCjDQio0PWP2hOTMf0cMRUduP6KE'
+      domain: 'bca-choir-manager.us.auth0.com',
+      clientId: 'rfDAbzcqSurbXNtz8kczhkkJU7fwiGr7'
     }),
       MatTableModule,
       MatPaginatorModule,
