@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CalendarService} from '../../services/calendar-service/calendar.service';
-import { EventData} from '../../models/event-data.model';
 
 @Component({
   selector: 'app-calendar-upcoming-events',
@@ -8,10 +7,6 @@ import { EventData} from '../../models/event-data.model';
   styleUrls: ['./calendar-upcoming-events.component.css']
 })
 export class CalendarUpcomingEventsComponent {
-  
-  public events : EventData[]= []; 
-
-  constructor(private cs: CalendarService) { 
-    this.events = cs.getEvents();
+  constructor(public cs: CalendarService) { 
   }
 }

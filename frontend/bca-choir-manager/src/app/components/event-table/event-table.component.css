@@ -1,9 +1,28 @@
-.data-table{
-  width:80%;
-  margin: 20px auto;
+table {
+  width: 100%;
 }
 
+tr.event-detail-row {
+  height: 0;
+}
 
-/* td.mat-mdc-cell :hover {
-  background-color: whitesmoke;
-} */
+tr.event-row:not(.event-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.event-row:not(.event-expanded-row):active {
+  background: #efefef;
+}
+
+.event-row td {
+  border-bottom-width: 0;
+}
+
+.event-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.event-detail-row {
+  height: 0;
+}

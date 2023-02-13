@@ -101,23 +101,22 @@ app.get("/api/roster-update/:email", function (req, res) {
   res.send({details: details});
   });
 });
+
 app.post("/api/roster-update", function (req, res) {
-  console.log(req.body);
   sql=`UPDATE account
   SET first_name = ${database.escape(req.body[1])}, last_name = ${database.escape(req.body[2])}, pronouns = ${database.escape(req.body[3])}
   WHERE email = ${database.escape(req.body[0])};`
   database.query(sql, function(err, rows, fields) 
-  {
-    if (err) throw err;
-    console.log(rows);
-  });  
+    {
+      if (err) throw err;
+    });  
+  
   sql=`UPDATE student
   SET grad_year = ${database.escape(req.body[7])}
   WHERE email = ${database.escape(req.body[0])};`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
-    console.log(rows);
   });  
 
   sql=`SELECT voicepart_ID from voicepart 
@@ -125,14 +124,12 @@ app.post("/api/roster-update", function (req, res) {
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
-    console.log(rows);
     sql=`UPDATE student
     SET voicepart_ID = ${database.escape(rows[0].voicepart_ID)}
     WHERE email = ${database.escape(req.body[0])};`
     database.query(sql, function(err, rows, fields) 
     {
       if (err) throw err;
-      console.log(rows);
     });  
   }); 
 
@@ -141,51 +138,29 @@ app.post("/api/roster-update", function (req, res) {
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
-    console.log(rows);
     sql=`UPDATE student
     SET choirtype_ID = ${database.escape(rows[0].choirtype_ID)}
     WHERE email = ${database.escape(req.body[0])};`
     database.query(sql, function(err, rows, fields) 
     {
       if (err) throw err;
-      console.log(rows);
     });  
   }); 
 
 });
 
-app.get("/api/get-calendar-events/:starttime/:endtime/", function(req, res){
+app.get("/api/events/get-events-in-range/:starttime/:endtime/", function(req, res){
   startTimeDate = new Date(Number(req.params.starttime));
   endTimeDate = new Date(Number(req.params.endtime));
 
-  let queryStartMonth = (startTimeDate.getMonth()+1).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false
-  });
-  let queryEndMonth = (endTimeDate.getMonth()+1).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false
-  });
-
-  let queryEndDay = (endTimeDate.getDate()).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false
-  });
-
-  let queryStartDay = (startTimeDate.getDate()).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false
-  });
-
   let sql = 
   "select * from event where " +
-  `event.start_time >= '${startTimeDate.getFullYear()}-${queryStartMonth}-${queryStartDay} 00:00:00' ` +
-  `and event.end_time <= '${endTimeDate.getFullYear()}-${queryEndMonth}-${queryEndDay} 23:59:59'`;
-
+  `event.start_time >= '${startTimeDate.toISOString()}' ` +
+  `and event.end_time <= '${endTimeDate.toISOString()}'`;
+  
   database.query(sql, function(err, rows, fields){
     let events = [];
 
-    console.log(rows);
     for (let i = 0; i< rows.length; i++){
       let event = [];
       event.push(rows[i].event_name);
@@ -205,7 +180,6 @@ app.get("/api/email-recipients-input", function (req, res) {
   FROM account;`
   database.query(sql, function(err, rows, fields) 
   {
-    console.log(rows);
     if (err) throw err;
 
     let emails = [];
@@ -223,15 +197,14 @@ app.get("/api/email-recipients-input", function (req, res) {
 app.post('/api/account', (req, res) => {
   const accountInfo = req.body; 
   sql = `INSERT INTO account (email, first_name, last_name, pronouns)
-  VALUES (${database.escape(accountInfo[0])}, ${database.escape(accountInfo[1])}, ${database.escape(accountInfo[2])}, ${database.escape(accountInfo[3])})`;
+  VALUES (${database.escape(accountInfo[0])}, ${database.escape(accountInfo[1])}, 
+    ${database.escape(accountInfo[2])}, ${database.escape(accountInfo[3])})`;
   database.query(sql, function(err, rows, fields) 
-  {
-    if (err) throw err;
+    {
+      if (err) throw err;
+    });  
 
-    console.log(rows);
-  });  
-    console.log("ACCOUNT TABLE OF DATABASE");
-    database.query('SELECT * FROM account', function(err, rows, fields) 
+  database.query('SELECT * FROM account', function(err, rows, fields) 
     {
       if (err) throw err;
     });  
@@ -246,6 +219,23 @@ app.post('/api/roster', (req, res) => {
   });  
 });
 
+app.delete('/api/events/:name/:starttime/:endtime/', (req, res) => {
+  const startTimeDate = new Date(Number(req.params.starttime))
+    .toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
+  const endTimeDate = new Date(Number(req.params.endtime))
+    .toLocaleString('sv').replace(' ', 'T');
+    
+  let sql = `DELETE FROM event 
+      WHERE event.event_name = '${req.params.name}' and ` +
+      `event.start_time = '${startTimeDate}'` +
+      `and event.end_time = '${endTimeDate}'`;
+      
+  console.log(sql);
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+  });  
+});
 
 /*  "/api/login"
  *   GET: Get server status
@@ -254,13 +244,10 @@ app.get("/api/login", function (req, res) {
   res.status(200).json({ status: "UP" });
 });
 
-
-
-/*  "/api/getEvents"
+/*  "/api/get-all-events"
  *   GET: Retrieves all events
  */
-app.get("/api/getEvents", function (req, res) {
-
+app.get("/api/events/get-all-events", function (req, res) {
   sql = `SELECT * FROM event`
   database.query(sql, function(err, events, fields) 
   {

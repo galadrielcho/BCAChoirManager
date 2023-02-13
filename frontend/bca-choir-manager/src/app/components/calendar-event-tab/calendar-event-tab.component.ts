@@ -22,7 +22,7 @@ export class CalendarEventTabComponent {
         width: '500px',
         data: { event_name : this.event.event_name,
                 start_time : startTime,
-                end_Time : endTime,
+                end_time : endTime,
                 location: this.event.location,
                 address : this.event.address
   

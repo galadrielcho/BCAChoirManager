@@ -14,7 +14,6 @@ export class RosterService {
   }
 
   deleteAccount(email: string[]){
-    console.log(email);
     return this.http.post(this.rosterUrl, email).subscribe();
   }
 

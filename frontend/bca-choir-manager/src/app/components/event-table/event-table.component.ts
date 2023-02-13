@@ -1,20 +1,32 @@
-import { AfterViewInit, Component, ElementRef, ViewChild , Renderer2} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import {  MatTableDataSource } from '@angular/material/table';
 // import { EventTableDataSource, EventTableItem } from './event-table-datasource';
-import {MatDialog,} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { EventService } from 'src/app/services/event-service/event.service';
 import { EventData } from 'src/app/models/event-data.model';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
 @Component({
 
   selector: 'app-event-table',
   templateUrl: './event-table.component.html',
-  styleUrls: ['./event-table.component.css']
+  styleUrls: ['./event-table.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class EventTableComponent {
-  displayedColumns = ['event_name', 'type', 'start_time', 'end_time', 'expand'];
+  displayedColumns = ['event_name', 'type', 'start_time', 'end_time'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  expandedEvent : EventData | null = null;
+  
   private events : EventData[] = [];
   dataSource: MatTableDataSource<EventData> = new MatTableDataSource<EventData>([]);
 
@@ -22,9 +34,9 @@ export class EventTableComponent {
   @ViewChild(MatSort) sort!: MatSort;
   eventService: EventService;
 
-  constructor(private es: EventService, private md: MatDialog) { 
+  constructor(private es: EventService) { 
     this.eventService = es;
-    this.eventService.getEvents().subscribe({
+    this.eventService.getAllEvents().subscribe({
       next: data => {
         this.events = data.events;
         this.setupTable();
@@ -47,7 +59,8 @@ export class EventTableComponent {
 
   }
 
-  expandEvent(event_name: string, start_time: string){
+  expandEvent(event : EventData | null){
+    console.log(event);
 
 
   }
