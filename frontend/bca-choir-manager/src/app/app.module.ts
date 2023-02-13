@@ -116,8 +116,8 @@ import { EventTableComponent } from './components/event-table/event-table.compon
     MatRadioModule,
 
     AuthModule.forRoot({
-      domain: 'dev-4s47rktj.us.auth0.com',
-      clientId: 'NCrArCjDQio0PWP2hOTMf0cMRUduP6KE'
+      domain: 'bca-choir-manager.us.auth0.com',
+      clientId: 'rfDAbzcqSurbXNtz8kczhkkJU7fwiGr7'
     }),
       MatTableModule,
       MatPaginatorModule,
