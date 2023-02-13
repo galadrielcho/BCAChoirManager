@@ -45,7 +45,6 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { CalendarDayComponent } from './components/calendar-day/calendar-day.component';
 import { EventEditDialogComponent } from './components/event-edit-dialog/event-edit-dialog.component';
 import { CalendarEventTabComponent } from './components/calendar-event-tab/calendar-event-tab.component';
-import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
 import { MatMenuModule } from '@angular/material/menu';
 
 
@@ -80,7 +79,6 @@ import { EventTableComponent } from './components/event-table/event-table.compon
     CalendarDayComponent,
     EventEditDialogComponent,
     CalendarEventTabComponent,
-    CalendarEventComponent,
     RosterUpdateComponent,
     CalendarUpcomingEventsComponent,
     EventDescriptionDialogComponent,

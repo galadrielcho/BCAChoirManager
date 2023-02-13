@@ -24,7 +24,7 @@ export class EventTableComponent {
 
   constructor(private es: EventService, private md: MatDialog) { 
     this.eventService = es;
-    this.eventService.getEvents().subscribe({
+    this.eventService.getAllEvents().subscribe({
       next: data => {
         this.events = data.events;
         this.setupTable();

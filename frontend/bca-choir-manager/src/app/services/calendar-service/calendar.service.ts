@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventData} from '../../models/event-data.model';
 import { CalendarDayData} from '../../models/calendar-day-data.model';
+import { EventService } from '../event-service/event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ import { CalendarDayData} from '../../models/calendar-day-data.model';
 export class CalendarService {
   
   private date : Date = new Date();   
-  private calendarURL = '/api/get-calendar-events/';
   private calendarMonth : CalendarDayData[][] = []; 
   private events : EventData[]= []; 
 
   setDate(date : Date) :void{
     this.date = date;
+    this.loadCalendarEvents();
   }
 
   getDate() : Date{
@@ -24,10 +25,12 @@ export class CalendarService {
 
   setMonthForward() : void {
     this.date.setMonth(this.date.getMonth() + 1);
+    this.loadCalendarEvents();
   }
 
   setMonthBackward() : void {
     this.date.setMonth(this.date.getMonth() - 1);
+    this.loadCalendarEvents();
   }
 
   getLastDateOfCurrentMonth(){
@@ -75,16 +78,6 @@ export class CalendarService {
     let eventStartDate = new Date(eventData.start_time);
     let eventEndDate = new Date(eventData.end_time);
 
-    console.log("testing!!");
-    console.log(eventStartDate);
-    console.log(eventEndDate);
-    console.log(date);
-    console.log(eventStartDate.getTime());
-    console.log(eventEndDate.getTime());
-    console.log(date.getTime());
-    console.log((eventStartDate.getTime() <= date.getTime() 
-    && eventEndDate.getTime() >= date.getTime()));
-
     return (eventStartDate.getTime() <= date.getTime() 
             && eventEndDate.getTime() >= date.getTime());
 
@@ -97,13 +90,10 @@ export class CalendarService {
         eventOverlap.push(this.events[i])
       }
     }
-    console.log(eventOverlap)
     return eventOverlap;
   }
   
   goThroughCalendarMonth() : void{
-    
-    let events = this.events.slice();
     this.calendarMonth = []; 
     
     let firstDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
@@ -150,31 +140,36 @@ export class CalendarService {
     }
   }
 
-  constructor(private http: HttpClient){
+  loadCalendarEvents(){
+    console.log("run");
+    let endDateRange : Date = new Date(this.getLastDateOfCalendarMonth());
+    endDateRange.setHours(23, 59, 59, 0);
+    this.eventService.getEventsInRange(this.getFirstDateOfCalendarMonth(), endDateRange)
+      .subscribe({
+        next: data => {
+          this.events = [];
+          for(let i = 0; i < data.events.length; i++){
+          
+            let event : EventData =  {
+              event_name: data.events[i][0], 
+              start_time: data.events[i][1],
+              end_time: data.events[i][2],
+              location: data.events[i][3],
+              address: data.events[i][4]
+              }
+            this.events.push(event);
 
-    let url = `${this.calendarURL}/${this.getFirstDateOfCalendarMonth().getTime()}/${this.getLastDateOfCalendarMonth().getTime()}`; 
-    http.get<any>(url).subscribe({
-      next: data => {
+          } 
+          this.goThroughCalendarMonth();
+        },
+        error: error=>{
+          this.goThroughCalendarMonth();
+        }
+      });
+  }
 
-        for(let i = 0; i < data.events.length; i++){
-        
-          let event : EventData =  {event_name: data.events[i][0], 
-            start_time: data.events[i][1],
-            end_time: data.events[i][2],
-            location: data.events[i][3],
-            address: data.events[i][4]
-            }
-          this.events.push(event);
-
-        } 
-        this.goThroughCalendarMonth();
-      },
-      error: error=>{
-        this.goThroughCalendarMonth();
-      }
-      }
-      
-
-    );
+  constructor(private http: HttpClient, private eventService : EventService){
+    this.eventService.setCalendarService(this);
+    this.loadCalendarEvents();
   }
 }
