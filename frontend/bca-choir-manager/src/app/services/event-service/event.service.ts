@@ -6,7 +6,7 @@ import { EventData} from '../../models/event-data.model';
   providedIn: 'root'
 })
 export class EventService {
-  private eventURL = 'api/events/'
+  private eventURL = 'api/event/'
   private calendarService : any;
 
   constructor(private http: HttpClient) { }
@@ -16,11 +16,11 @@ export class EventService {
   }
 
   getAllEvents() {
-    return this.http.get<any>('/api/events/get-all-events/');
+    return this.http.get<any>('/api/event/get-all-events/');
   }
 
   getEventsInRange(startDate : Date, endDate: Date){
-    return this.http.get<any>(`/api/events/get-events-in-range/${startDate.getTime()}/${endDate.getTime()}/`);
+    return this.http.get<any>(`/api/event/get-events-in-range/${startDate.getTime()}/${endDate.getTime()}/`);
 
   }
   
@@ -34,4 +34,14 @@ export class EventService {
     this.calendarService.loadCalendarEvents();
     return obs;
   }
+
+  editEvent(origEvent : EventData, newEvent : EventData){
+    let events = {
+      orig_event : origEvent,
+      new_event : newEvent
+    }
+    return this.http.post<any>('/api/event/event-edit/', events);
+    
+  }
+
 }

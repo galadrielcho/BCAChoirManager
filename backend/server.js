@@ -102,6 +102,31 @@ app.get("/api/roster-update/:email", function (req, res) {
   });
 });
 
+app.post("api/event/event-edit/", function(req, res) {
+  const orig_event = req.body.orig_event;
+  const new_event = req.body.new_event;
+  sql = `UPDATE event 
+        SET event_name=${new_event.event_name}, 
+            start_time=${new_event.start_time},
+            end_time=${new_event.end_time},
+            location=${new_event.location},
+            address=${new_event.address}
+        WHERE 
+            event_name=${orig_event.event_name} and
+            start_time=${orig_event.start_time} and
+            end_time=${orig_event.end_time} and
+            location=${orig_event.location} and
+            address=${orig_event.address}`;
+
+  database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+    }
+  );  
+                
+}
+);
+
 app.post("/api/roster-update", function (req, res) {
   sql=`UPDATE account
   SET first_name = ${database.escape(req.body[1])}, last_name = ${database.escape(req.body[2])}, pronouns = ${database.escape(req.body[3])}
@@ -149,7 +174,7 @@ app.post("/api/roster-update", function (req, res) {
 
 });
 
-app.get("/api/events/get-events-in-range/:starttime/:endtime/", function(req, res){
+app.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res){
   startTimeDate = new Date(Number(req.params.starttime));
   endTimeDate = new Date(Number(req.params.endtime));
 
@@ -219,7 +244,7 @@ app.post('/api/roster', (req, res) => {
   });  
 });
 
-app.delete('/api/events/:name/:starttime/:endtime/', (req, res) => {
+app.delete('/api/event/:name/:starttime/:endtime/', (req, res) => {
   const startTimeDate = new Date(Number(req.params.starttime))
     .toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
   const endTimeDate = new Date(Number(req.params.endtime))
@@ -247,7 +272,7 @@ app.get("/api/login", function (req, res) {
 /*  "/api/get-all-events"
  *   GET: Retrieves all events
  */
-app.get("/api/events/get-all-events", function (req, res) {
+app.get("/api/event/get-all-events", function (req, res) {
   sql = `SELECT * FROM event`
   database.query(sql, function(err, events, fields) 
   {

@@ -1,32 +1,32 @@
 <h1 mat-dialog-title>{{eventAction}} Event</h1>
 <div mat-dialog-content>
   <mat-form-field class="long-input">
-      <input matInput placeholder="Event Name">
+      <input matInput placeholder="Event Name" [value]="getEventName()">
   </mat-form-field>
   <mat-form-field class="long-input" >
-      <input matInput placeholder="Location Name">
+      <input matInput placeholder="Location Name" [value]="getLocation()">
   </mat-form-field>
   <mat-form-field class="long-input">
-      <input matInput placeholder="Address">
+      <input matInput placeholder="Address" [value]="getAddress()">
   </mat-form-field>
 
   <h2>Choir Type</h2>
   <mat-radio-group aria-label="Select a choir type">
-    <mat-radio-button value="1">Concert</mat-radio-button>
-    <mat-radio-button value="2">Chamber</mat-radio-button>
+    <mat-radio-button [checked]="isChoirType(1)" value="1">Concert</mat-radio-button>
+    <mat-radio-button [checked]="isChoirType(2)" value="2">Chamber</mat-radio-button>
   </mat-radio-group>
 
   <div>
     <mat-form-field appearance="fill" class="datepicker">
       <mat-label>Choose a start date</mat-label>
-      <input matInput [matDatepicker]="picker">
+      <input matInput [matDatepicker]="startpicker" [value]="getStartDate()" >
       <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
+      <mat-datepicker #startpicker ></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="timepicker">
         <mat-label>Choose a start time</mat-label>
-        <input type="time" matInput>
+        <input type="time" matInput [value]="getStartTime()">
         <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>    
   </div>
@@ -34,14 +34,14 @@
   <div>
     <mat-form-field appearance="fill" class="datepicker">
       <mat-label>Choose an end date</mat-label>
-      <input matInput [matDatepicker]="picker">
+      <input matInput [matDatepicker]="endpicker" [value]="getEndDate()">
       <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
+      <mat-datepicker #endpicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="timepicker">
         <mat-label>Choose an end time</mat-label>
-        <input type="time" matInput>
+        <input type="time" matInput [value]="getEndTime()">
         <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>    
   </div>
@@ -50,7 +50,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="createEvent()">Create/Edit Event</button>
+  <button mat-button (click)="editEvent()">Create/Edit Event</button>
 
 
 </div>
