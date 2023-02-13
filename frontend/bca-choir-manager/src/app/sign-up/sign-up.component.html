@@ -1,0 +1,71 @@
+<div class = "container">
+    <mat-toolbar>
+        <span class="fill-space"></span>
+        <span> Sign Up</span>
+        <span class="fill-space"></span>
+    </mat-toolbar>
+</div>
+
+
+<p>
+    First Name
+    <input matInput placeholder="First Name*" ngModel #firstname>
+</p>
+
+<p>
+    Last Name
+    <input matInput placeholder="Last Name*" ngModel #lastname>
+</p>
+
+<p>
+    Pronouns
+    <input matInput placeholder="Pronouns" ngModel #pronouns>
+</p>
+<p>
+    Graduation Year
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="yearPos">
+        <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let option of years"
+        [value]="option.value">
+        {{option.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</p>
+
+<p>
+    Choir Type
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="choirtypePos">
+        <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let option of choirtypes"
+        [value]="option.value">
+        {{option.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</p>
+
+<p>
+    Voice Part
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPPos">
+        <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let option of voiceparts"
+        [value]="option.value">
+        {{option.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</p>
+
+<p>
+    Voice Part Number
+    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPNPos">
+        <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let option of voicePartNumbers"
+        [value]="option.value">
+        {{option.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</p>
+<button type="submit" (click)="submit()" [disabled]="disableSubmit()">Submit</button> 

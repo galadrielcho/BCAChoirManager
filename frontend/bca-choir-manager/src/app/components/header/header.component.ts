@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
+import { SignUpComponent } from 'src/app/sign-up/sign-up.component';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  dialog: MatDialog;
+  signUpService: SignUpService
 
-  constructor() { }
+  constructor(private md: MatDialog, private sus: SignUpService) { 
+    this.dialog = md;
+    this.signUpService = sus;
+  }
 
   ngOnInit(): void {
+  }
+
+  signUp(){
+    this.dialog.open(SignUpComponent);
+    this.signUpService.send(this.dialog, location);
   }
 
 }

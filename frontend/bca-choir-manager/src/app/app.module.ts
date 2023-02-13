@@ -58,6 +58,7 @@ import { EventDescriptionDialogComponent } from './components/event-description-
 import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { EventDeleteDialogComponent } from './components/event-delete-dialog/event-delete-dialog.component';
 import { EventTableComponent } from './components/event-table/event-table.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 
@@ -84,7 +85,8 @@ import { EventTableComponent } from './components/event-table/event-table.compon
     EventDescriptionDialogComponent,
     EventsPageComponent,
     EventDeleteDialogComponent,
-    EventTableComponent
+    EventTableComponent,
+    SignUpComponent
 
 
 
