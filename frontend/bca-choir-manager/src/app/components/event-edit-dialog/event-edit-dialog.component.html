@@ -12,8 +12,8 @@
 
   <h2>Choir Type</h2>
   <mat-radio-group aria-label="Select a choir type">
-    <mat-radio-button [checked]="isChoirType(1)" value="1">Concert</mat-radio-button>
-    <mat-radio-button [checked]="isChoirType(2)" value="2">Chamber</mat-radio-button>
+    <mat-radio-button [checked]='isChoirType("Concert")' value="1">Concert</mat-radio-button>
+    <mat-radio-button [checked]='isChoirType("Chamber")' value="2">Chamber</mat-radio-button>
   </mat-radio-group>
 
   <div>

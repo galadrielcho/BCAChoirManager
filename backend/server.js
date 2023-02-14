@@ -193,6 +193,8 @@ app.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res
       event.push(rows[i].end_time);
       event.push(rows[i].location);
       event.push(rows[i].address);
+      event.push(rows[i].choirtype_ID);
+
       events.push(event);
     }
     res.send({events:events});

@@ -81,7 +81,9 @@ export class EventEditDialogComponent {
     }
   }
 
-  isChoirType(choirType : number){
-    return choirType == this.event.choir_type_id;
+  isChoirType(choirType : string){
+    console.log("CHoir type! " + choirType);
+    console.log("This.event. choir ttype " + this.event.choir_type);
+    return choirType == this.event.choir_type;
   }
 }
