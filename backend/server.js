@@ -85,10 +85,10 @@ app.get("/api/roster", function (req, res) {
 app.get("/api/get-student/:email", function (req, res) {
   sql = `CALL getStudent("${req.params.email}");`
 
-  database.query(sql, function(err, rows, fields) 
+  database.query(sql, function(err, student, fields) 
   
   {
-  let result = Object.values(JSON.parse(JSON.stringify(rows[0])))[0];
+  let result = Object.values(JSON.parse(JSON.stringify(student[0])))[0];
   if (err) throw err;
   res.send({details: result});
   });
@@ -264,10 +264,12 @@ app.get("/api/login", function (req, res) {
  *   GET: Retrieves all events
  */
 app.get("/api/event/get-all-events", function (req, res) {
-  sql = `SELECT * FROM event`
+  sql = `	SELECT event_name, start_time, end_time, location, address, choir_type.choir_name
+	FROM event
+	INNER JOIN choir_type
+	ON event.choir_type_id = choir_type.choir_type_id`
   database.query(sql, function(err, events, fields) 
   {
   if (err) throw err;
-
   res.send({events : events});
   });});
