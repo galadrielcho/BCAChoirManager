@@ -158,7 +158,7 @@ export class CalendarService {
               end_time: data.events[i][2],
               location: data.events[i][3],
               address: data.events[i][4],
-              choir_type: data.events[i][5] == 1? "Concert" : "Chamber"
+              choir_type: "Chamber"
               }
             this.events.push(event);
 

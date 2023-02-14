@@ -1,5 +1,7 @@
 import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { RosterUpdateService } from '../services/roster-update/roster-update.service';
+import { StudentData } from 'src/app/models/student-data.model';
+
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -14,7 +16,7 @@ export class RosterUpdateComponent {
   year = new Date().getFullYear();
   
   email = "";
-  details = [];
+  private details : StudentData | null = null;
   voicePartNumbers: Option[] = [{name: String(1), value: 0},
                                 {name: String(2), value: 1}];
   choirtypes: Option[] = [{name: "Chamber", value: 0},
@@ -63,27 +65,27 @@ export class RosterUpdateComponent {
   ngOnInit() {
     this.service.getAccountDetails(this.email).subscribe({
       next: data => {
-        this.details = data.details[0];
+        this.details = data.details;
       }      
     }); 
     
   }
 
   public getFirstName(){
-    return this.details[0];
+    return this.details?.first_name;
   }
 
   public getLastName(){
-    return this.details[1];
+    return this.details?.last_name;
   }
 
   public getPronouns(){
-    return this.details[2];
+    return this.details?.pronouns;
   }
 
   public isChoirtypeChecked(value : number){
     let choirtype = (value == 0) ? 'Chamber' : 'Concert';
-    if(this.details[5] == choirtype){
+    if(this.details?.choir_name == choirtype){
       return true;
     }
     return false;
@@ -106,7 +108,7 @@ export class RosterUpdateComponent {
     else{
       year = this.year + 4;
     }
-    if(this.details[6] == year){
+    if(this.details?.grad_year == year){
       return true;
     }
     return false;
@@ -127,14 +129,14 @@ export class RosterUpdateComponent {
       vp = "bass";
     }
 
-    if(this.details[3] == vp){
+    if(this.details?.name == vp){
       return true;
     }
     return false;
   }
 
   public isVPNChecked(value : number){
-    if(this.details[4] == (value + 1)){
+    if(this.details?.number == (value + 1)){
       return true;
     }
     return false;
@@ -149,13 +151,13 @@ export class RosterUpdateComponent {
     const VPN = this.voicePartNumbers[Number(this.VPNPos)];
     const choirtype = this.choirtypes[Number(this.choirtypePos)];
     const grad_year = this.years[Number(this.yearPos)];
-    updatedDetails.push((this.isValidString(first_name) ? first_name : this.details[0]));
-    updatedDetails.push(this.isValidString(last_name) ? last_name : this.details[1]);
-    updatedDetails.push(this.isValidString(pronouns) ? pronouns : this.details[2]);
-    updatedDetails.push(this.isValidRadioButton(VP) ? VP.name : this.details[3]);
-    updatedDetails.push(this.isValidRadioButton(VPN) ? VPN.name : this.details[4]);
-    updatedDetails.push(this.isValidRadioButton(choirtype) ? choirtype.name : this.details[5]);
-    updatedDetails.push(this.isValidRadioButton(grad_year) ? grad_year.name : this.details[6]);    
+    updatedDetails.push((this.isValidString(first_name) ? first_name : this.details?.first_name));
+    updatedDetails.push(this.isValidString(last_name) ? last_name : this.details?.last_name);
+    updatedDetails.push(this.isValidString(pronouns) ? pronouns : this.details?.pronouns);
+    updatedDetails.push(this.isValidRadioButton(VP) ? VP.name : this.details?.name);
+    updatedDetails.push(this.isValidRadioButton(VPN) ? VPN.name : this.details?.number);
+    updatedDetails.push(this.isValidRadioButton(choirtype) ? choirtype.name : this.details?.choir_name);
+    updatedDetails.push(this.isValidRadioButton(grad_year) ? grad_year.name : this.details?.grad_year);    
     this.service.updateDetails(updatedDetails);
 
     this.service.closeEdit();
