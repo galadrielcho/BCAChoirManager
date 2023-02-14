@@ -43,14 +43,11 @@ export class EventDescriptionDialogComponent {
 
   editEvent() : void {
 
-    
+    this.close();
     const dialogRef = this.dialog.open(EventEditDialogComponent, {
       width: '500px',
       data: this.event
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 }

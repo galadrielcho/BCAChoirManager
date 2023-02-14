@@ -94,27 +94,42 @@ app.get("/api/get-student/:email", function (req, res) {
   });
 });
 
-app.post("api/event/event-edit/", function(req, res) {
+app.post("/api/event/event-edit/", function(req, res) {
   const orig_event = req.body.orig_event;
   const new_event = req.body.new_event;
-  sql = `UPDATE event 
-        SET event_name=${new_event.event_name}, 
-            start_time=${new_event.start_time},
-            end_time=${new_event.end_time},
-            location=${new_event.location},
-            address=${new_event.address}
-        WHERE 
-            event_name=${orig_event.event_name} and
-            start_time=${orig_event.start_time} and
-            end_time=${orig_event.end_time} and
-            location=${orig_event.location} and
-            address=${orig_event.address}`;
 
+  const orig_startTimeDate = new Date(orig_event.start_time)
+  .toLocaleString('sv').replace(' ', 'T'); 
+  const orig_endTimeDate = new Date(orig_event.end_time)
+  .toLocaleString('sv').replace(' ', 'T');
+  const new_startTimeDate = new Date(new_event.start_time)
+  .toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
+  const new_endTimeDate = new Date(new_event.end_time)
+  .toLocaleString('sv').replace(' ', 'T');
+
+
+  sql = `UPDATE event 
+        SET event_name="${new_event.event_name}", 
+            start_time='${orig_startTimeDate}',
+            end_time='${orig_endTimeDate}',
+            location="${new_event.location}",
+            address="${new_event.address}",
+            choir_type_id=${new_event.choir_type == "Concert"? 1: 2 }
+        WHERE 
+            event_name="${orig_event.event_name}" and
+            start_time='${new_startTimeDate}' and
+            end_time='${new_endTimeDate}' and
+            location="${orig_event.location}" and
+            address="${orig_event.address}" and
+            choir_type_id=${orig_event.choir_type == "Concert" ? 1: 2}
+            `;
+
+  console.log(sql);
   database.query(sql, function(err, rows, fields) 
-    {
-      if (err) throw err;
-    }
-  );  
+      {
+        if (err) throw err;
+      }
+    );  
                 
 }
 );
@@ -171,10 +186,15 @@ app.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res
   endTimeDate = new Date(Number(req.params.endtime));
 
   let sql = 
-  "select * from event where " +
-  `event.start_time >= '${startTimeDate.toISOString()}' ` +
-  `and event.end_time <= '${endTimeDate.toISOString()}'`;
-  
+    `SELECT event_name, start_time, end_time, location, address,
+    choir_type.choir_name FROM event 
+    INNER JOIN choir_type
+    ON event.choir_type_id = choir_type.choir_type_id
+    WHERE 
+    event.start_time >= '${startTimeDate.toISOString()}'
+    AND event.end_time <= '${endTimeDate.toISOString()}'`;
+
+
   database.query(sql, function(err, rows, fields){
     let events = [];
 
@@ -185,7 +205,7 @@ app.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res
       event.push(rows[i].end_time);
       event.push(rows[i].location);
       event.push(rows[i].address);
-      event.push(rows[i].choirtype_ID);
+      event.push(rows[i].choir_name);
 
       events.push(event);
     }

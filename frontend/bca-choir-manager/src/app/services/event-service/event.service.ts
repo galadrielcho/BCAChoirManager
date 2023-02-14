@@ -40,7 +40,8 @@ export class EventService {
       orig_event : origEvent,
       new_event : newEvent
     }
-    return this.http.post<any>('/api/event/event-edit/', events);
+
+    return this.http.post<any>('/api/event/event-edit/', events).subscribe();
     
   }
 

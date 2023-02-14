@@ -151,14 +151,13 @@ export class CalendarService {
         next: data => {
           this.events = [];
           for(let i = 0; i < data.events.length; i++){
-            console.log("Choir typr! " + data.events[i]);
             let event : EventData =  {
               event_name: data.events[i][0], 
               start_time: data.events[i][1],
               end_time: data.events[i][2],
               location: data.events[i][3],
               address: data.events[i][4],
-              choir_type: "Chamber"
+              choir_type: data.events[i][5]
               }
             this.events.push(event);
 

@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>{{eventAction}} Event</h1>
-<div mat-dialog-content>
+<div mat-dialog-content >
   <mat-form-field class="long-input">
-      <input matInput placeholder="Event Name" [value]="getEventName()">
+      <input matInput placeholder="Event Name" [(ngModel)]="new_event.event_name" [value]="getEventName()">
   </mat-form-field>
   <mat-form-field class="long-input" >
-      <input matInput placeholder="Location Name" [value]="getLocation()">
+      <input matInput placeholder="Location Name"[(ngModel)]="new_event.location" [value]="getLocation()">
   </mat-form-field>
   <mat-form-field class="long-input">
-      <input matInput placeholder="Address" [value]="getAddress()">
+      <input matInput placeholder="Address" [(ngModel)]="new_event.address" [value]="getAddress()">
   </mat-form-field>
 
   <h2>Choir Type</h2>
@@ -19,14 +19,14 @@
   <div>
     <mat-form-field appearance="fill" class="datepicker">
       <mat-label>Choose a start date</mat-label>
-      <input matInput [matDatepicker]="startpicker" [value]="getStartDate()" >
+      <input matInput [matDatepicker]="startpicker" [value]="getStartDate()" [(ngModel)]="new_event.event_name" >
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
       <mat-datepicker #startpicker ></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="timepicker">
         <mat-label>Choose a start time</mat-label>
-        <input type="time" matInput [value]="getStartTime()">
+        <input type="time" matInput  [(ngModel)]="newStartTime" [value]="getStartTime()">
         <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>    
   </div>
@@ -34,14 +34,14 @@
   <div>
     <mat-form-field appearance="fill" class="datepicker">
       <mat-label>Choose an end date</mat-label>
-      <input matInput [matDatepicker]="endpicker" [value]="getEndDate()">
+      <input matInput [matDatepicker]="endpicker" [value]="getEndDate()" [(ngModel)]="new_event.end_time">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
       <mat-datepicker #endpicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="timepicker">
         <mat-label>Choose an end time</mat-label>
-        <input type="time" matInput [value]="getEndTime()">
+        <input [(ngModel)]="newEndTime" type="time" matInput [value]="getEndTime()">
         <mat-icon matSuffix>insert_invitation</mat-icon>    
     </mat-form-field>    
   </div>
@@ -50,7 +50,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="editEvent()">Create/Edit Event</button>
+  <button mat-button (click)="updateEvent()">Create/Edit Event</button>
 
 
 </div>

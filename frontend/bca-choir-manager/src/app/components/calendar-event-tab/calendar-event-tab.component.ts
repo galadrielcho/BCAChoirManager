@@ -20,13 +20,7 @@ export class CalendarEventTabComponent {
 
       const dialogRef = this.dialog.open(EventDescriptionDialogComponent, {
         width: '500px',
-        data: { event_name : this.event.event_name,
-                start_time : startTime,
-                end_time : endTime,
-                location: this.event.location,
-                address : this.event.address
-  
-              }});
+        data: this.event});
       
 
               dialogRef.afterClosed().subscribe(result => {
