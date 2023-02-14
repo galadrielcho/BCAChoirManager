@@ -286,7 +286,7 @@ app.get("/api/login", function (req, res) {
  *   GET: Retrieves all events
  */
 app.get("/api/event/get-all-events", function (req, res) {
-  sql = `	SELECT event_name, start_time, end_time, location, address, choir_type.choir_name
+  sql = `	SELECT event_name, start_time, end_time, location, address, choir_type.choir_name as choir_type
 	FROM event
 	INNER JOIN choir_type
 	ON event.choir_type_id = choir_type.choir_type_id`
@@ -295,3 +295,30 @@ app.get("/api/event/get-all-events", function (req, res) {
   if (err) throw err;
   res.send({events : events});
   });});
+
+
+  /*  "/api/get-student/:email"
+ *   GET: Gets the data of a student.
+ *   Retrieves the following infromation:
+ *      first name, last name, pronouns, voice part name, 
+ *      voice part number, choir type, grad_year
+ */
+
+
+app.get("/api/get-event-registrees/:eventname/:starttime", function (req, res) {
+  sql = `CALL getEventRegistrees("${req.params.eventname}", "${req.params.starttime}");`
+
+  console.log(sql);
+  database.query(sql, function(err, registrees, fields) 
+  
+  {
+  let result = Object.values(JSON.parse(JSON.stringify(registrees[0])));
+
+  console.log("Test!")
+  console.log(registrees)
+
+  console.log(result);
+  if (err) throw err;
+  res.send({registrees: result});
+  });
+});

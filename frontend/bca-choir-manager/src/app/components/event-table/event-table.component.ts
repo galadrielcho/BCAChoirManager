@@ -3,10 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {  MatTableDataSource } from '@angular/material/table';
 // import { EventTableDataSource, EventTableItem } from './event-table-datasource';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventService } from 'src/app/services/event-service/event.service';
 import { EventData } from 'src/app/models/event-data.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
+import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event-registrees-dialog.component';
+
 
 @Component({
 
@@ -23,7 +26,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 
 export class EventTableComponent {
-  displayedColumns = ['event_name', 'type', 'start_time', 'end_time'];
+  displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedEvent : EventData | null = null;
   
@@ -34,7 +37,11 @@ export class EventTableComponent {
   @ViewChild(MatSort) sort!: MatSort;
   eventService: EventService;
 
-  constructor(private es: EventService) { 
+  constructor(private es: EventService,
+              public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
+              public dialog: MatDialog
+    
+    ) { 
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
       next: data => {
@@ -61,8 +68,6 @@ export class EventTableComponent {
 
   expandEvent(event : EventData | null){
     console.log(event);
-
-
   }
 
   applyFilter(event: Event) {
@@ -71,5 +76,32 @@ export class EventTableComponent {
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
   }
+
+
+  openDeleteEventDialog(event : EventData): void {
+    const dialogRef = this.dialog.open(EventDeleteDialogComponent, {
+      width: '300px',
+      data: event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        window.location.reload();
+
+      }
+    });
+  }
+
+  openEventRegistrees(event : EventData): void {
+    const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
+      width: '500',
+      data: event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("Done");
+    });
+  }
+
 
 }

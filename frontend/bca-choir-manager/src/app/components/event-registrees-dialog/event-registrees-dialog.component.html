@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{event.event_name}}</h1>
+<mat-chip-listbox aria-label="Event Registrees">
+  <mat-chip>{{event.choir_type}}</mat-chip>
+</mat-chip-listbox>
+<div mat-dialog-content>
+ 
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+  <button mat-button (click)="editMode()">Edit Registrees</button>
+
+</div>

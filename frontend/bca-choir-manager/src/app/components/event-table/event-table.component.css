@@ -26,3 +26,11 @@ tr.event-row:not(.event-expanded-row):active {
 tr.event-detail-row {
   height: 0;
 }
+
+
+.event-location, .event-address, .event-heading {
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px;
+}
+

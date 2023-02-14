@@ -60,6 +60,9 @@ import { EventDeleteDialogComponent } from './components/event-delete-dialog/eve
 import { EventTableComponent } from './components/event-table/event-table.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
+import { EventRegistreesDialogComponent } from './components/event-registrees-dialog/event-registrees-dialog.component';
+
+
 
 
 @NgModule({
@@ -86,7 +89,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     EventsPageComponent,
     EventDeleteDialogComponent,
     EventTableComponent,
-    SignUpComponent
+    SignUpComponent,
+    EventRegistreesDialogComponent
 
 
 
