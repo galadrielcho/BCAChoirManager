@@ -26,7 +26,7 @@ export class RosterUpdateService {
   }
 
   public getAccountDetails(email: string){
-    let url = `${this.rosterUrl}/${email}`;
+    let url = `/api/get-student/${email}`;
     return this.http.get<any>(url);
   }
 

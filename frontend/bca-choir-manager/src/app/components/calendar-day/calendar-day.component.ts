@@ -15,6 +15,7 @@ export class CalendarDayComponent {
     end_time : "3:00pm",
     location : "BCA",
     address : "600 Hackeintnsack",
+    choir_type: "Chamber"
     }
 
   ];  

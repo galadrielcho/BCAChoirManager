@@ -31,74 +31,66 @@ var database = mysql.createConnection({
   database : 'bca_choir_manager'
 });
 database.connect();
+
+
 /*  "/api/status"
  *   GET: Get server status
  */
-
 app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
 });
 
-app.get("/api/roster", function (req, res) {
+/*  "/api/roster"
+ *   GET: Gets roster of all registered students.
+ *   Retrieves the following infromation:
+ *      first name, last name, pronouns, voice part name, 
+ *      voice part number, choir type, grad_year, email
+ */
 
-  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
-  FROM account
-  INNER JOIN student
-  ON account.email = student.email
-  INNER JOIN voicepart
-  ON student.voicepart_ID = voicepart.voicepart_ID
-  INNER JOIN choirtype
-  ON student.choirtype_ID = choirtype.choirtype_ID`
+app.get("/api/roster", function (req, res) {
+  sql = `CALL getStudentRoster();`
   database.query(sql, function(err, rows, fields) 
   {
   if (err) throw err;
 
   var roster = [];
-  for (let i = 0; i < rows.length; i++) {
-  var person = [];
-  person.push(rows[i].first_name);
-  person.push(rows[i].last_name);
-  person.push(rows[i].pronouns);
-  person.push(rows[i].name); //voicepart
-  person.push(rows[i].number); //voicepart number
-  person.push(rows[i].choir_name);
-  person.push(rows[i].grad_year);
-  person.push(rows[i].email);
-  roster.push(person);
+  for (let r = 0; r < rows[0].length; r++) {    
+    let student = [];
+    student.push(rows[0][r].first_name);    // First name
+    student.push(rows[0][r].last_name);     // Last name
+    student.push(rows[0][r].pronouns);      // Pronouns
+    student.push(rows[0][r].name);          // Voice part name
+    student.push(rows[0][r].number);        // Voice part number
+    student.push(rows[0][r].choir_name);    // Choir type
+    student.push(rows[0][r].grad_year);     // Graduation year
+    student.push(rows[0][r].email);         // Email
+
+    roster.push(student);
   }
 
   res.send({roster: roster});
   });
+
+
 });
 
-app.get("/api/roster-update/:email", function (req, res) {
-  sql = `select account.first_name, account.last_name, account.pronouns, voicepart.name, voicepart.number, choirtype.choir_name, student.grad_year, student.email
-  FROM account
-  INNER JOIN student
-  ON account.email = student.email
-  INNER JOIN voicepart
-  ON student.voicepart_ID = voicepart.voicepart_ID
-  INNER JOIN choirtype
-  ON student.choirtype_ID = choirtype.choirtype_ID
-  WHERE account.email = "${req.params.email}"`
-  database.query(sql, function(err, rows, fields) 
-  {
-  if (err) throw err;
+/*  "/api/get-student/:email"
+ *   GET: Gets the data of a student.
+ *   Retrieves the following infromation:
+ *      first name, last name, pronouns, voice part name, 
+ *      voice part number, choir type, grad_year
+ */
 
+
+app.get("/api/get-student/:email", function (req, res) {
+  sql = `CALL getStudent("${req.params.email}");`
+
+  database.query(sql, function(err, rows, fields) 
   
-  var details = [];
-  for (let i = 0; i < rows.length; i++) {
-  var person = [];
-  person.push(rows[i].first_name);
-  person.push(rows[i].last_name);
-  person.push(rows[i].pronouns);
-  person.push(rows[i].name); //voicepart
-  person.push(rows[i].number); //voicepart number
-  person.push(rows[i].choir_name);
-  person.push(rows[i].grad_year);
-  details.push(person);
-  }
-  res.send({details: details});
+  {
+  let result = Object.values(JSON.parse(JSON.stringify(rows[0])))[0];
+  if (err) throw err;
+  res.send({details: result});
   });
 });
 
@@ -144,13 +136,13 @@ app.post("/api/roster-update", function (req, res) {
     if (err) throw err;
   });  
 
-  sql=`SELECT voicepart_ID from voicepart 
+  sql=`SELECT voicepart_id from voicepart 
   WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
     sql=`UPDATE student
-    SET voicepart_ID = ${database.escape(rows[0].voicepart_ID)}
+    SET voicepart_id = ${database.escape(rows[0].voicepart_id)}
     WHERE email = ${database.escape(req.body[0])};`
     database.query(sql, function(err, rows, fields) 
     {
@@ -158,13 +150,13 @@ app.post("/api/roster-update", function (req, res) {
     });  
   }); 
 
-  sql=`SELECT choirtype_ID from choirtype
+  sql=`SELECT choir_type_id from choir_type
   WHERE choir_name = ${database.escape(req.body[6])}`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
     sql=`UPDATE student
-    SET choirtype_ID = ${database.escape(rows[0].choirtype_ID)}
+    SET choir_type_id = ${database.escape(rows[0].choir_type_id)}
     WHERE email = ${database.escape(req.body[0])};`
     database.query(sql, function(err, rows, fields) 
     {
@@ -255,7 +247,6 @@ app.delete('/api/event/:name/:starttime/:endtime/', (req, res) => {
       `event.start_time = '${startTimeDate}'` +
       `and event.end_time = '${endTimeDate}'`;
       
-  console.log(sql);
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;

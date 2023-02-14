@@ -155,7 +155,8 @@ export class CalendarService {
               start_time: data.events[i][1],
               end_time: data.events[i][2],
               location: data.events[i][3],
-              address: data.events[i][4]
+              address: data.events[i][4],
+              choir_type: "Chamber"
               }
             this.events.push(event);
 
