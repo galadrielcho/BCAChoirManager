@@ -306,7 +306,7 @@ app.get("/api/event/get-all-events", function (req, res) {
 
 
 app.get("/api/get-event-registrees/:eventname/:starttime", function (req, res) {
-  sql = `CALL getEventRegistrees("${req.params.eventname}", "${req.params.starttime}");`
+  sql = `CALL getEventRegistrees("${req.params.eventname}", "2023-02-02 00:00:00");`
 
   console.log(sql);
   database.query(sql, function(err, registrees, fields) 
