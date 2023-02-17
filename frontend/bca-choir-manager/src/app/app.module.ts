@@ -13,7 +13,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { RosterPageComponent } from './pages/roster-page/roster-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
+import { RosterTableComponent } from './components/roster-table/roster-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -74,7 +74,7 @@ import { EventRegistreesDialogComponent } from './components/event-registrees-di
     CalendarPageComponent,
     RosterPageComponent,
     AdminPageComponent,
-    DataTableComponent,
+    RosterTableComponent,
     AdminEmailContainerComponent,
     AdminGeneralContainerComponent,
     AdminSettingsContainerComponent,

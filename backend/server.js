@@ -49,26 +49,14 @@ app.get("/api/status", function (req, res) {
 
 app.get("/api/roster", function (req, res) {
   sql = `CALL getStudentRoster();`
-  database.query(sql, function(err, rows, fields) 
+  database.query(sql, function(err, roster, fields) 
   {
   if (err) throw err;
 
-  var roster = [];
-  for (let r = 0; r < rows[0].length; r++) {    
-    let student = [];
-    student.push(rows[0][r].first_name);    // First name
-    student.push(rows[0][r].last_name);     // Last name
-    student.push(rows[0][r].pronouns);      // Pronouns
-    student.push(rows[0][r].name);          // Voice part name
-    student.push(rows[0][r].number);        // Voice part number
-    student.push(rows[0][r].choir_name);    // Choir type
-    student.push(rows[0][r].grad_year);     // Graduation year
-    student.push(rows[0][r].email);         // Email
 
-    roster.push(student);
-  }
-
-  res.send({roster: roster});
+  let result = Object.values(JSON.parse(JSON.stringify(roster[0])));
+ 
+  res.send({roster: result});
   });
 
 
@@ -80,7 +68,6 @@ app.get("/api/roster", function (req, res) {
  *      first name, last name, pronouns, voice part name, 
  *      voice part number, choir type, grad_year
  */
-
 
 app.get("/api/get-student/:email", function (req, res) {
   sql = `CALL getStudent("${req.params.email}");`
