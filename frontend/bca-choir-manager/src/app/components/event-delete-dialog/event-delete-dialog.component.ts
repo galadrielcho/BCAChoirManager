@@ -14,7 +14,8 @@ export class EventDeleteDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
-    public dialog: MatDialog, private eventService : EventService,
+    public dialog: MatDialog,
+    private eventService : EventService,
     private calendarService : CalendarService,
   ) {}
 
@@ -26,7 +27,7 @@ export class EventDeleteDialogComponent {
 
   deleteEvent() : void {
     this.eventService.deleteEvent(this.event);
-    this.dialogRef.close();
+    this.dialogRef.close(true);
 
   }
 

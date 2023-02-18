@@ -13,7 +13,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { RosterPageComponent } from './pages/roster-page/roster-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
+import { RosterTableComponent } from './components/roster-table/roster-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -60,6 +60,9 @@ import { EventDeleteDialogComponent } from './components/event-delete-dialog/eve
 import { EventTableComponent } from './components/event-table/event-table.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
+import { EventRegistreesDialogComponent } from './components/event-registrees-dialog/event-registrees-dialog.component';
+
+
 
 
 @NgModule({
@@ -71,7 +74,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     CalendarPageComponent,
     RosterPageComponent,
     AdminPageComponent,
-    DataTableComponent,
+    RosterTableComponent,
     AdminEmailContainerComponent,
     AdminGeneralContainerComponent,
     AdminSettingsContainerComponent,
@@ -86,7 +89,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     EventsPageComponent,
     EventDeleteDialogComponent,
     EventTableComponent,
-    SignUpComponent
+    SignUpComponent,
+    EventRegistreesDialogComponent
 
 
 

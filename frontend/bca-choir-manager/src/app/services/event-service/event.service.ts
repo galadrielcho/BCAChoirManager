@@ -51,4 +51,8 @@ export class EventService {
     return this.http.post<any>('/api/event/event-create', event).subscribe();
   }
 
+  getEventRegistrees(e : EventData){
+    return this.http.get<any>(`/api/get-event-registrees/${e.event_name}/${e.start_time}/`);
+  }
+
 }
