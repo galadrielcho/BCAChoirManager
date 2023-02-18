@@ -75,11 +75,16 @@ export class CalendarService {
   }
 
   checkEventHasDate(eventData : EventData, date : Date) : boolean{
-    let eventStartDate = new Date(eventData.start_time);
-    let eventEndDate = new Date(eventData.end_time);
+    const eventStartDate = new Date(eventData.start_time);
+    const eventEndDate = new Date(eventData.end_time);
 
-    return (eventStartDate.getTime() <= date.getTime() 
-            && eventEndDate.getTime() >= date.getTime());
+    date.setHours(0, 0, 0, 0);
+    const startDate = new Date(date.getTime());
+    date.setHours(23, 59, 59, 0);
+    const endDate = new Date(date.getTime());
+
+    return eventStartDate.getTime() >= startDate.getTime() 
+        && eventEndDate.getTime() <= endDate.getTime();
 
   }
 

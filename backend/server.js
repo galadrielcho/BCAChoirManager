@@ -94,6 +94,27 @@ app.get("/api/get-student/:email", function (req, res) {
   });
 });
 
+app.post("/api/event/event-create/", function(req, res){
+  const event = req.body;
+  const startTimeDate = new Date(event.start_time)
+  .toLocaleString('sv').replace(' ', 'T'); 
+  const endTimeDate = new Date(event.end_time)
+  .toLocaleString('sv').replace(' ', 'T'); 
+
+
+  sql = `
+    INSERT INTO event(event_name, start_time, end_time, location, address)
+    VALUES ("${event.event_name}", '${startTimeDate}', '${endTimeDate}', "${event.location}", "${event.address}")`;
+
+  console.log(sql);
+  database.query(sql, function(err, rows, fields) 
+      {
+        if (err) throw err;
+      }
+    );  
+            
+
+})
 app.post("/api/event/event-edit/", function(req, res) {
   const orig_event = req.body.orig_event;
   const new_event = req.body.new_event;
@@ -110,15 +131,15 @@ app.post("/api/event/event-edit/", function(req, res) {
 
   sql = `UPDATE event 
         SET event_name="${new_event.event_name}", 
-            start_time='${orig_startTimeDate}',
-            end_time='${orig_endTimeDate}',
+            start_time='${new_startTimeDate}',
+            end_time='${new_endTimeDate}',
             location="${new_event.location}",
             address="${new_event.address}",
             choir_type_id=${new_event.choir_type == "Concert"? 1: 2 }
         WHERE 
             event_name="${orig_event.event_name}" and
-            start_time='${new_startTimeDate}' and
-            end_time='${new_endTimeDate}' and
+            start_time='${orig_startTimeDate}' and
+            end_time='${orig_endTimeDate}' and
             location="${orig_event.location}" and
             address="${orig_event.address}" and
             choir_type_id=${orig_event.choir_type == "Concert" ? 1: 2}
