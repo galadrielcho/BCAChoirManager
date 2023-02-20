@@ -1,8 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {  MatTableDataSource } from '@angular/material/table';
-// import { EventTableDataSource, EventTableItem } from './event-table-datasource';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventService } from 'src/app/services/event-service/event.service';
 import { EventData } from 'src/app/models/event-data.model';

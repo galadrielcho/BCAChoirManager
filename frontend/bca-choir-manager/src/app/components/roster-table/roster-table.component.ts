@@ -1,31 +1,35 @@
-import { AfterViewInit, Component, ElementRef, ViewChild , Renderer2} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { DataTableDataSource, DataTableItem } from './data-table-datasource';
+import { MatTable, MatTableDataSource} from '@angular/material/table';
 import { RosterService} from '../../services/roster-service/roster.service';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
+import { StudentData } from 'src/app/models/student-data.model';
 @Component({
 
-  selector: 'app-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.css']
+  selector: 'roster-table',
+  templateUrl: './roster-table.component.html',
+  styleUrls: ['./roster-table.component.css']
 })
 
-export class DataTableComponent implements AfterViewInit {
+export class RosterTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<DataTableItem>;
-  dataSource: DataTableDataSource | undefined;
+  @ViewChild(MatTable) table!: MatTable<StudentData>;
+  dataSource: MatTableDataSource<StudentData> = new MatTableDataSource<StudentData>([]);
+
   rosterService: RosterService;
   rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
 
+  private roster: StudentData[] = [];
+
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['first_name', 'last_name', 'pronouns', 'voicepart', 'number', 'choir_type', 'grad_year', 'email', 'edit', 'delete'];
-  
+  dataColumns = ['first_name', 'last_name', 'pronouns', 'name', 'number', 'choir_name', 'grad_year', 'email'];
+  allColumns = [...this.dataColumns, 'edit', 'delete'];
+
   deleteClicked(email: string){
     let arr = [];
     arr.push(email);
@@ -43,26 +47,12 @@ export class DataTableComponent implements AfterViewInit {
     this.rosterService = rs;
     this.rosterUpdateService = rus;
     this.dialog = md;
-    var roster: DataTableItem[] = [];
 
     this.rosterService.getRoster().subscribe({
       next: data => {
-
-        for(let i = 0; i < data.roster.length; i++){
-          
-          roster.push({first_name: data.roster[i][0], 
-                      last_name: data.roster[i][1],
-                      pronouns: data.roster[i][2],
-                      voicepart: data.roster[i][3],
-                      number: data.roster[i][4],
-                      choir_type: data.roster[i][5],
-                      grad_year: data.roster[i][6],
-                      email: data.roster[i][7]}
-                      
-          );
-          
-        }
-        this.dataSource = new DataTableDataSource(roster);
+        this.roster = data.roster;
+        
+        this.dataSource = new MatTableDataSource(this.roster);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.table.dataSource = this.dataSource;   
