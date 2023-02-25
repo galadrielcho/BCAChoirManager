@@ -2,6 +2,8 @@ import { Component, Input, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 import { EventData } from 'src/app/models/event-data.model';
+import { EventService } from '../../services/event-service/event.service';
+
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 
 @Component({
@@ -13,7 +15,8 @@ export class EventDescriptionDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public eventService : EventService
   ) {}
 
   openDeleteEventDialog(): void {

@@ -5,10 +5,11 @@
 <div mat-dialog-content>
   <th>Time</th>
   <p>
-  {{event.start_time}} - {{event.end_time}}
+  {{eventService.dateISOToLocale(event.start_time)}} - 
+  {{eventService.dateISOToLocale(event.end_time)}}
   </p>
 
-    <p>{{event.start_time}} - {{event.end_time}}</p> 
+    <p>{{eventService.dateISOToLocale(event.start_time)}} - {{eventService.dateISOToLocale(event.end_time)}}</p> 
       <div class = "location">   
         <b>Location</b>
         <p>{{event.location}}</p>

@@ -14,18 +14,18 @@ import {CalendarService} from '../../services/calendar-service/calendar.service'
 export class EventEditDialogComponent {
   myControl = new FormControl('');
   public newStartTime : string = this.getStartTime();
-  public newEndTime : string = this.getEndTime();
+  public newEndTime : string;
 
   
   choirTypes : string[] = ['Chamber', 'Concert'];
   eventAction : string;
   public new_event : EventData = {
-    start_time: this.orig_event.start_time,
-    end_time: this.orig_event.end_time,
-    location: this.orig_event.location,
-    address: this.orig_event.address,
-    event_name: this.orig_event.event_name,
-    choir_type: this.orig_event.choir_type
+    start_time: new Date().toString(),
+    end_time: new Date().toString(),
+    location: "",
+    address: "",
+    event_name: "",
+    choir_type: "Chamber",
   };
 
 
@@ -40,6 +40,38 @@ export class EventEditDialogComponent {
       } else {
         this.eventAction = "Edit";
       }
+
+      if (this.eventAction == "Edit"){
+        console.log("edit");
+        console.log(this.orig_event.start_time);
+        this.new_event = {
+          start_time: this.orig_event.start_time,
+          end_time: this.orig_event.end_time,
+          location: this.orig_event.location,
+          address: this.orig_event.address,
+          event_name: this.orig_event.event_name,
+          choir_type: this.orig_event.choir_type
+        }
+      }
+      else {
+        const startTime = new Date();
+        startTime.setHours(0, 0, 0, 0);
+        const endTime = new Date();
+        endTime.setHours(11, 59, 0, 0);
+        console.log("create");
+        console.log(startTime.toISOString());
+        this.new_event = {
+          start_time : startTime.toISOString(),
+          end_time : endTime.toISOString(),
+          location : "",
+          address: "",
+          event_name : "",
+          choir_type : "Chamber"
+        }
+      }
+      this.newStartTime = this.getStartTime();
+      this.newEndTime = this.getEndTime();
+
     }
 
   onNoClick(): void {
@@ -55,38 +87,20 @@ export class EventEditDialogComponent {
     this.dialogRef.close();
   }
 
-  getEventName(){
-    return this.orig_event == null? "" : this.orig_event.event_name;
-  }
-
-  getLocation(){
-    return this.orig_event == null? "" : this.orig_event.location;
-  }
-
-  getAddress(){
-    return this.orig_event == null? "" : this.orig_event.address;
-  }
-
-  getStartDate(){
-    return this.orig_event == null? new Date() : new Date(this.orig_event.start_time);
-  }
-
-  getEndDate(){
-    return this.orig_event == null? new Date() : new Date(this.orig_event.end_time);
-  }
-
   getEndTime(){
-    if (this.orig_event != null){
+    if (this.eventAction == "Edit"){
+      console.log(new Date(this.orig_event.end_time));
       const date = new Date(this.orig_event.end_time);
+      console.log(date.toLocaleTimeString(['en-us'], {hourCycle: 'h23', hour: "2-digit", minute: "2-digit"}));
       return date.toLocaleTimeString(['en-us'], {hourCycle: 'h23', hour: "2-digit", minute: "2-digit"});
     }
     else{
-      return "00:00";
+      return "11:59";
     }
   }
 
   getStartTime(){
-    if (this.orig_event != null){
+    if (this.eventAction == "Edit"){
       const date = new Date(this.orig_event.start_time);
       const starttime= date.toLocaleTimeString(['en-us'], { hourCycle: 'h23', hour: "2-digit", minute: "2-digit"});
       return starttime;
@@ -97,17 +111,34 @@ export class EventEditDialogComponent {
   }
 
   isChoirType(choirType : string){
-    return choirType == this.orig_event.choir_type;
+    return choirType == this.new_event.choir_type;
   }
 
   updateEvent(){
-
+    if (this.eventAction == "Edit"){
     const endTimes = this.newEndTime.split(":");
     const startTimes = this.newStartTime.split(":");
+
+    let startDate = new Date(this.new_event.start_time)
+    startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
+    this.new_event.start_time = startDate.toString();
+
+    let endDate = new Date(this.new_event.end_time)
+    endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
+    this.new_event.end_time = endDate.toString();
 
     this.eventService.editEvent(this.orig_event, this.new_event);
     this.dialogRef.close();
     this.calendarService.loadCalendarEvents();
+    }  
 
+    else {
+      console.log("New event!");
+      console.log(this.new_event);
+      this.eventService.createEvent(this.new_event);
+      this.dialogRef.close();
+      this.calendarService.loadCalendarEvents();
+
+    }
   }
 }

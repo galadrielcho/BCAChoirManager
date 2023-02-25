@@ -35,14 +35,20 @@ export class EventService {
     return obs;
   }
 
+  dateISOToLocale(iso : string){
+    return new Date(iso).toLocaleString('en-us');
+  }
+
   editEvent(origEvent : EventData, newEvent : EventData){
     let events = {
       orig_event : origEvent,
       new_event : newEvent
     }
-
     return this.http.post<any>('/api/event/event-edit/', events).subscribe();
-    
+  }
+
+  createEvent(event : EventData){
+    return this.http.post<any>('/api/event/event-create', event).subscribe();
   }
 
   getEventRegistrees(e : EventData){
