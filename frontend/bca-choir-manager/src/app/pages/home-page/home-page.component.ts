@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AccountService} from '../../services/account-service/account.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-home-page',
@@ -8,7 +9,7 @@ import { AccountService} from '../../services/account-service/account.service';
 })
 
 export class HomePageComponent {
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, public auth: AuthService) { }
 
   @ViewChild('username') input: ElementRef<HTMLInputElement> | undefined;  
   submitClicked(){
