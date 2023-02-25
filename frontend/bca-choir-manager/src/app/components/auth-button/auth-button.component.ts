@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
-import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'auth-button',
   templateUrl: './auth-button.component.html',
