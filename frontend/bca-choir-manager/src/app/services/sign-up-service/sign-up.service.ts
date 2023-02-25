@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,7 +9,7 @@ export class SignUpService {
   dialog!: MatDialog;
   location!: Location;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public send(dialog: MatDialog, location: Location){
     this.dialog = dialog;
@@ -19,4 +20,10 @@ export class SignUpService {
     this.dialog.closeAll();
     this.location.reload();
   }
+
+  public getEmail(email : string|undefined){
+    let url = `/api/get-student/${email}`;
+    return this.http.get<any>(url);
+  }
+
 }
