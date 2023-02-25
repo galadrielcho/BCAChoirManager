@@ -34,7 +34,7 @@ export class SignUpService {
   }
 
   public getEmail(email : string|undefined){
-    let url = `/api/get-student/${email}`;
+    let url = `/api/get-account/${email}`;
     return this.http.get<any>(url);
   }
 

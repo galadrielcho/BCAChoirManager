@@ -81,6 +81,18 @@ app.get("/api/get-student/:email", function (req, res) {
   });
 });
 
+app.get("/api/get-account/:email", function (req, res) {
+  sql = `CALL getAccount("${req.params.email}");`
+
+  database.query(sql, function(err, account, fields) 
+  
+  {
+  let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
+  if (err) throw err;
+  res.send({details: result});
+  });
+});
+
 app.post("/api/event/event-create/", function(req, res){
   const event = req.body;
   const startTimeDate = new Date(event.start_time)
@@ -299,7 +311,7 @@ app.post('/api/account', (req, res) => {
 
 app.post('/api/roster', (req, res) => {
   const email = req.body;
-  sql = `DELETE FROM student WHERE email = ${database.escape(email[0])};`;
+  sql = `DELETE FROM account WHERE email = ${database.escape(email[0])};`;
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
