@@ -20,9 +20,4 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signUp(){
-    this.dialog.open(SignUpComponent);
-    this.signUpService.send(this.dialog, location);
-  }
-
 }

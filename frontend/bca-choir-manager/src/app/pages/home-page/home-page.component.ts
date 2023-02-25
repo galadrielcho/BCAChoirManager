@@ -48,7 +48,7 @@ export class HomePageComponent {
     if(this.isUnaccounted){ 
       this.isUnaccounted = false;
       this.dialog.open(SignUpComponent);
-      this.signUpService.send(this.dialog, location);
+      this.signUpService.send(this.dialog, location, email);
     }
   }
   

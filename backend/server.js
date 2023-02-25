@@ -189,6 +189,46 @@ app.post("/api/roster-update", function (req, res) {
 
 });
 
+app.post("/api/sign-up", function (req, res) {
+  
+  // insert into account
+  sql = `INSERT INTO account (email, first_name, last_name, pronouns) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])});`
+  database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+    }); 
+  
+
+  // figure out voicepart_id
+  sql=`SELECT voicepart_id from voicepart 
+  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    let voicepart_id = rows[0].voicepart_id;
+    // THEN figure out choirtype_id
+    sql=`SELECT choir_type_id from choir_type
+    WHERE choir_name = ${database.escape(req.body[6])}`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      choir_type_id = rows[0].choir_type_id;
+      // THEN insert into student
+      sql = `INSERT INTO student (email, voicepart_id, grad_year, choir_type_id) VALUES (${database.escape(req.body[0])}, ${database.escape(voicepart_id)}, ${database.escape(req.body[7])}, ${database.escape(choir_type_id)});`
+      database.query(sql, function(err, rows, fields) 
+        {
+          if (err) throw err;
+        });  
+      
+    }); 
+    
+  }); 
+  
+  
+  
+
+});
+
 app.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res){
   startTimeDate = new Date(Number(req.params.starttime));
   endTimeDate = new Date(Number(req.params.endtime));
