@@ -61,6 +61,7 @@ import { EventTableComponent } from './components/event-table/event-table.compon
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { EventRegistreesDialogComponent } from './components/event-registrees-dialog/event-registrees-dialog.component';
+import { EventSignupDialogComponent } from './components/event-signup-dialog/event-signup-dialog.component';
 
 
 
@@ -90,7 +91,8 @@ import { EventRegistreesDialogComponent } from './components/event-registrees-di
     EventDeleteDialogComponent,
     EventTableComponent,
     SignUpComponent,
-    EventRegistreesDialogComponent
+    EventRegistreesDialogComponent,
+    EventSignupDialogComponent
 
 
 

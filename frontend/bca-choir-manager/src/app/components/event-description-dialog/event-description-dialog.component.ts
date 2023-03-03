@@ -5,6 +5,7 @@ import { EventData } from 'src/app/models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
 
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
+import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-dialog.component';
 
 @Component({
   selector: 'app-event-description-dialog',
@@ -12,6 +13,12 @@ import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-
   styleUrls: ['./event-description-dialog.component.css']
 })
 export class EventDescriptionDialogComponent {
+  public voiceparts : string[] = ["Soprano", "Alto", "Tenor", "Bass"];
+  public numbers : number[] = [1, 2, 3, 4];
+
+  public partNumber = 1;
+  public voicepart = "Soprano";
+
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
@@ -30,6 +37,22 @@ export class EventDescriptionDialogComponent {
     });
   }
 
+  
+  openSignupEventDialog(): void {
+    const dialogRef = this.dialog.open(EventSignupDialogComponent, {
+      width: '300px',
+      data:{event: this.event,
+            signupAction : "signup",
+            voicepart : "soprano",
+            partnumber : 4
+          }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  
   close(): void {
     this.dialogRef.close();
   }
@@ -43,6 +66,18 @@ export class EventDescriptionDialogComponent {
     this.openDeleteEventDialog();
 
   }
+
+  confirmSignupEvent() : void {
+    this.close();
+    const dialogRef = this.dialog.open(EventSignupDialogComponent, {
+      width: '500px',
+      data: {
+            event: this.event,
+            partnumber: this.partNumber,
+            signupAction: "signup",
+            voicepart: this.voicepart}
+    });    
+  } 
 
   editEvent() : void {
 

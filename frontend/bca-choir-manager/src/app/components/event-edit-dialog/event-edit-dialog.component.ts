@@ -42,8 +42,6 @@ export class EventEditDialogComponent {
       }
 
       if (this.eventAction == "Edit"){
-        console.log("edit");
-        console.log(this.orig_event.start_time);
         this.new_event = {
           start_time: this.orig_event.start_time,
           end_time: this.orig_event.end_time,
@@ -58,8 +56,7 @@ export class EventEditDialogComponent {
         startTime.setHours(0, 0, 0, 0);
         const endTime = new Date();
         endTime.setHours(11, 59, 0, 0);
-        console.log("create");
-        console.log(startTime.toISOString());
+
         this.new_event = {
           start_time : startTime.toISOString(),
           end_time : endTime.toISOString(),
@@ -89,9 +86,7 @@ export class EventEditDialogComponent {
 
   getEndTime(){
     if (this.eventAction == "Edit"){
-      console.log(new Date(this.orig_event.end_time));
       const date = new Date(this.orig_event.end_time);
-      console.log(date.toLocaleTimeString(['en-us'], {hourCycle: 'h23', hour: "2-digit", minute: "2-digit"}));
       return date.toLocaleTimeString(['en-us'], {hourCycle: 'h23', hour: "2-digit", minute: "2-digit"});
     }
     else{
@@ -133,8 +128,6 @@ export class EventEditDialogComponent {
     }  
 
     else {
-      console.log("New event!");
-      console.log(this.new_event);
       this.eventService.createEvent(this.new_event);
       this.dialogRef.close();
       this.calendarService.loadCalendarEvents();
