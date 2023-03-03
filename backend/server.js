@@ -172,7 +172,7 @@ app.post("/api/roster-update", function (req, res) {
   });  
 
   sql=`SELECT voicepart_id from voicepart 
-  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
@@ -213,7 +213,7 @@ app.post("/api/sign-up", function (req, res) {
 
   // figure out voicepart_id
   sql=`SELECT voicepart_id from voicepart 
-  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
