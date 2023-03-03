@@ -38,13 +38,39 @@ export class SignUpComponent {
   }
 
   public submit(){
+    let newDetails: any[] = [this.service.email];
+    const first_name = this.firstname.nativeElement.value;
+    const last_name = this.lastname.nativeElement.value;
+    const pronouns = this.pronouns.nativeElement.value;
+    const VP = this.voiceparts[Number(this.VPPos)];
+    const VPN = this.voicePartNumbers[Number(this.VPNPos)];
+    const choirtype = this.choirtypes[Number(this.choirtypePos)];
+    const grad_year = this.years[Number(this.yearPos)];
+    newDetails.push(first_name);
+    newDetails.push(last_name);
+    newDetails.push(pronouns);
+    newDetails.push(VP.name);
+    newDetails.push(VPN.name);
+    newDetails.push(choirtype.name);
+    newDetails.push(grad_year.name);    
+    this.service.postDetails(newDetails);
+
     this.service.close();
   }
+
   public disableSubmit(){
     if((this.firstname == undefined) || (this.lastname == undefined) || (this.pronouns == undefined) || (this.yearPos == undefined) || (this.choirtypePos == undefined) || (this.VPPos == undefined) || (this.VPNPos == undefined)){
       return true;
     }
+  
     return false;
+  }
+
+  public isValidString(s : String){
+    if (s.trim() == ""){
+      return false;
+    }
+    return true;
   }
 }
 export interface Option {

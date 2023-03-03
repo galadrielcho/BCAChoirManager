@@ -81,6 +81,18 @@ app.get("/api/get-student/:email", function (req, res) {
   });
 });
 
+app.get("/api/get-account/:email", function (req, res) {
+  sql = `CALL getAccount("${req.params.email}");`
+
+  database.query(sql, function(err, account, fields) 
+  
+  {
+  let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
+  if (err) throw err;
+  res.send({details: result});
+  });
+});
+
 app.post("/api/event/event-create/", function(req, res){
   const event = req.body;
   const startTimeDate = new Date(event.start_time)
@@ -160,7 +172,7 @@ app.post("/api/roster-update", function (req, res) {
   });  
 
   sql=`SELECT voicepart_id from voicepart 
-  WHERE name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
@@ -186,6 +198,46 @@ app.post("/api/roster-update", function (req, res) {
       if (err) throw err;
     });  
   }); 
+
+});
+
+app.post("/api/sign-up", function (req, res) {
+  
+  // insert into account
+  sql = `INSERT INTO account (email, first_name, last_name, pronouns) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])});`
+  database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+    }); 
+  
+
+  // figure out voicepart_id
+  sql=`SELECT voicepart_id from voicepart 
+  WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+    let voicepart_id = rows[0].voicepart_id;
+    // THEN figure out choirtype_id
+    sql=`SELECT choir_type_id from choir_type
+    WHERE choir_name = ${database.escape(req.body[6])}`
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      choir_type_id = rows[0].choir_type_id;
+      // THEN insert into student
+      sql = `INSERT INTO student (email, voicepart_id, grad_year, choir_type_id) VALUES (${database.escape(req.body[0])}, ${database.escape(voicepart_id)}, ${database.escape(req.body[7])}, ${database.escape(choir_type_id)});`
+      database.query(sql, function(err, rows, fields) 
+        {
+          if (err) throw err;
+        });  
+      
+    }); 
+    
+  }); 
+  
+  
+  
 
 });
 
@@ -259,7 +311,7 @@ app.post('/api/account', (req, res) => {
 
 app.post('/api/roster', (req, res) => {
   const email = req.body;
-  sql = `DELETE FROM student WHERE email = ${database.escape(email[0])};`;
+  sql = `DELETE FROM account WHERE email = ${database.escape(email[0])};`;
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;
