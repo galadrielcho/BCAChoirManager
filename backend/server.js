@@ -365,6 +365,23 @@ app.get("/api/event/get-all-events", function (req, res) {
  */
 
 
+  app.post("/api/event/add-student-to-event/", function(req, res){
+
+    const startTimeDate = new Date(req.body.event.start_time)
+                                  .toLocaleString('sv').replace(' ', 'T'); 
+
+    sql = `CALL addStudentToEvent('${req.body.event.event_name}', '${startTimeDate}', 
+                                  '${req.body.student_email}', '${req.body.voicepart_name}',
+                                  ${req.body.voicepart_number})`;                                  
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+    });  
+  
+    console.log(sql + "complete");
+
+  });
+
 app.get("/api/get-event-registrees/:eventname/:starttime", function (req, res) {
   sql = `CALL getEventRegistrees("${req.params.eventname}", "2023-02-02 00:00:00");`
 
