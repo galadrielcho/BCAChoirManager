@@ -49,7 +49,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { RosterUpdateComponent } from './roster-update/roster-update.component';
+import { RosterUpdateComponent } from './components/roster-update/roster-update.component';
 import { RosterUpdateService } from './services/roster-update/roster-update.service';
 import { MatRadioModule } from '@angular/material/radio'
 import { CalendarUpcomingEventsComponent } from './components/calendar-upcoming-events/calendar-upcoming-events.component';

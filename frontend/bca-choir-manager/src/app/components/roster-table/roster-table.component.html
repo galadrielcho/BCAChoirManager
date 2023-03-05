@@ -23,7 +23,7 @@
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let student">
-        <button mat-mini-fab (click)="editClicked(student.email)">
+        <button mat-mini-fab (click)="editClicked(student)">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
