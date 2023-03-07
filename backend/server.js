@@ -105,7 +105,6 @@ app.post("/api/event/event-create/", function(req, res){
     INSERT INTO event(event_name, start_time, end_time, location, address)
     VALUES ("${event.event_name}", '${startTimeDate}', '${endTimeDate}', "${event.location}", "${event.address}")`;
 
-  console.log(sql);
   database.query(sql, function(err, rows, fields) 
       {
         if (err) throw err;
@@ -144,7 +143,6 @@ app.post("/api/event/event-edit/", function(req, res) {
             choir_type_id=${orig_event.choir_type == "Concert" ? 1: 2}
             `;
 
-  console.log(sql);
   database.query(sql, function(err, rows, fields) 
       {
         if (err) throw err;
@@ -202,9 +200,8 @@ app.post("/api/roster-update", function (req, res) {
 });
 
 app.post("/api/sign-up", function (req, res) {
-  
   // insert into account
-  sql = `INSERT INTO account (email, first_name, last_name, pronouns) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])});`
+  sql = `INSERT INTO account (email, first_name, last_name, pronouns, is_admin) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])}, 0);`
   database.query(sql, function(err, rows, fields) 
     {
       if (err) throw err;
@@ -368,16 +365,12 @@ app.get("/api/event/get-all-events", function (req, res) {
 app.get("/api/get-event-registrees/:eventname/:starttime", function (req, res) {
   sql = `CALL getEventRegistrees("${req.params.eventname}", "2023-02-02 00:00:00");`
 
-  console.log(sql);
   database.query(sql, function(err, registrees, fields) 
   
   {
   let result = Object.values(JSON.parse(JSON.stringify(registrees[0])));
 
-  console.log("Test!")
-  console.log(registrees)
 
-  console.log(result);
   if (err) throw err;
   res.send({registrees: result});
   });

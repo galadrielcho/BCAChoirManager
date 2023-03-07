@@ -34,6 +34,7 @@ export class HomePageComponent {
     //check if email is in database, if so return true
     if(this.dbCalled == false){ // db hasn't been accessed yet
       this.dbCalled = true;
+      console.log("before getting email");
       this.signUpService.getEmail(email).subscribe({
         next: data => {
           if(data.details == undefined){

@@ -10,9 +10,8 @@ import { DOCUMENT } from '@angular/common';
 export class AuthButtonComponent {
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
   click(){
-    console.log("clicked");
     //this.cookies.deleteAll();
-    console.log(this.auth.loginWithRedirect());
+    this.auth.loginWithRedirect();
   }
   
 }

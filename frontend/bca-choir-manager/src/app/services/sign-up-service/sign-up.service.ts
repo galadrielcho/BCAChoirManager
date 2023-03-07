@@ -30,6 +30,7 @@ export class SignUpService {
   }
 
   public postDetails(details: any[]){
+    console.log("in post");
     this.http.post(this.signUpUrl, details).subscribe();
   }
 
