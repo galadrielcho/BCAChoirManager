@@ -360,6 +360,7 @@ app.get("/api/event/get-all-events", function (req, res) {
     sql = `CALL deleteStudentFromEvent('${req.body.event.event_name}', '${startTimeDate}', 
                                   '${req.body.student_email}')`;   
 
+  console.log(sql);                        
   database.query(sql, function(err, rows, fields) 
   {
     if (err) throw err;

@@ -19,6 +19,7 @@ export class EventRegistreesDialogComponent {
   dataSource: MatTableDataSource<EventRegistree> = new MatTableDataSource<EventRegistree>([]);
 
   private registrees : EventRegistree[] = [];
+  private editModeOn : boolean = false;
 
   dataColumns = ['first_name', 'last_name', 'voicepart'];
   allColumns = [...this.dataColumns, 'delete'];
@@ -54,7 +55,7 @@ export class EventRegistreesDialogComponent {
   }
 
   editMode() : void {
-    this.dialogRef.close();
+    this.editModeOn = true;
   }
 
   getRegistrees() : void {
@@ -67,10 +68,8 @@ export class EventRegistreesDialogComponent {
   }
 
   deleteClicked(email: string){
-    // let arr = [];
-    // arr.push(email);
-    // this.eventService.deleteAccount(arr);
-    // location.reload();
+    this.eventService.deleteStudentFromEvent(email, this.event);
+    location.reload();
   }
 
 
