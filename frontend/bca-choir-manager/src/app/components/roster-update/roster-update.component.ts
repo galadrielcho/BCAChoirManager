@@ -5,7 +5,7 @@ import { StudentData } from 'src/app/models/student-data.model';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -29,8 +29,7 @@ export class RosterUpdateComponent {
   years: Option[] = [{name: String(this.year), value: this.year}, 
                     {name: String(this.year + 1), value: this.year + 1},
                     {name: String(this.year + 2), value: this.year + 2},
-                    {name: String(this.year + 3), value: this.year + 3},
-                    {name: String(this.year + 4), value: this.year + 4}];
+                    {name: String(this.year + 3), value: this.year + 3}]
 
   @ViewChild('firstname') firstname!: ElementRef<HTMLInputElement>;
   @ViewChild('lastname') lastname!: ElementRef<HTMLInputElement>;
@@ -42,6 +41,7 @@ export class RosterUpdateComponent {
 
 
   constructor(public service: RosterUpdateService, 
+    public dialogRef: MatDialogRef<RosterUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_student: StudentData,
     )
   {}
@@ -63,11 +63,6 @@ export class RosterUpdateComponent {
     return this.student.pronouns;
   }
 
-  public test(){
-
-    return true;
-  }
-
 
   public isChoirtypeChecked(value : number){
     let choirtype = (value == 0) ? 'Chamber' : 'Concert';
@@ -78,6 +73,7 @@ export class RosterUpdateComponent {
   }
 
   public isYearChecked(year : number){
+
     if(this.student.grad_year == year){
       return true;
     }
@@ -85,8 +81,6 @@ export class RosterUpdateComponent {
   }
 
   public isVPChecked(value : string){
-    console.log(value);
-    console.log(this.student.voicepart_name);
     if(this.student.voicepart_name === value){
       return true;
     }
@@ -118,12 +112,16 @@ export class RosterUpdateComponent {
       number: this.isValidRadioButton(VPN) ? VPN.value : this.student.number,
       choir_name: this.isValidRadioButton(choirtype) ? choirtype.name : this.student.choir_name,
       grad_year: this.isValidRadioButton(grad_year) ? grad_year.value : this.student.grad_year
-
+      
+      
+      
     };
 
     this.service.updateDetails(updatedStudent);
 
-    this.service.closeEdit();
+    this.dialogRef.close();
+    // window.location.reload();
+
   }
   
   public isValidString(s : String){

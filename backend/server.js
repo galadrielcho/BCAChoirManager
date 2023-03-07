@@ -143,7 +143,6 @@ app.post("/api/event/event-edit/", function(req, res) {
             choir_type_id=${orig_event.choir_type == "Concert" ? 1: 2}
             `;
 
-  console.log(sql);
   database.query(sql, function(err, rows, fields) 
       {
         if (err) throw err;
@@ -156,18 +155,16 @@ app.post("/api/event/event-edit/", function(req, res) {
 app.post("/api/roster-update", function (req, res) {
   let student = req.body;
 
-  sql = `CALL updateStudent(
-    ${student.email},
-    ${student.first_name},
-    ${student.last_name},
-    ${student.pronouns},
-    ${student.voicepart_name},
-    ${student.number},
-    ${student.choir_name},
-    ${student.grad_year}
+  sql = `CALL updateStudent("${student.email}",`
+    + `"${student.first_name}",`
+    + `"${student.last_name}",`
+    + `"${student.pronouns}",`
+    + `"${student.voicepart_name}",`
+    + `${student.number},`
+    + `"${student.choir_name}",`
+    + `${student.grad_year});`
 
-  );`
-  database.query(sql, function(err) 
+    database.query(sql, function(err) 
   {
   if (err) throw err;
    });
@@ -370,19 +367,16 @@ app.get("/api/event/get-all-events", function (req, res) {
 
   });
 
-app.get("/api/get-event-registrees/:eventname/:starttime", function (req, res) {
-  sql = `CALL getEventRegistrees("${req.params.eventname}", "2023-02-02 00:00:00");`
+app.get("/api/event/get-event-registrees/:name/:startime", function (req, res) {
+  const startTimeDate = new Date(req.params.startime)
+  .toLocaleString('sv').replace(' ', 'T'); 
 
-  console.log(sql);
+  sql = `CALL getEventRegistrees("${req.params.name}", "${startTimeDate}");`
+
   database.query(sql, function(err, registrees, fields) 
   
   {
   let result = Object.values(JSON.parse(JSON.stringify(registrees[0])));
-
-  console.log("Test!")
-  console.log(registrees)
-
-  console.log(result);
   if (err) throw err;
   res.send({registrees: result});
   });

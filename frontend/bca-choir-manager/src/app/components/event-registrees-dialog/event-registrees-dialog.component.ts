@@ -1,6 +1,10 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { EventData } from 'src/app/models/event-data.model';
+import { EventRegistree } from 'src/app/models/event-registree.model';
 import { EventService } from 'src/app/services/event-service/event.service';
 
 @Component({
@@ -9,13 +13,36 @@ import { EventService } from 'src/app/services/event-service/event.service';
   styleUrls: ['./event-registrees-dialog.component.css']
 })
 export class EventRegistreesDialogComponent {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<EventRegistree>;
+  dataSource: MatTableDataSource<EventRegistree> = new MatTableDataSource<EventRegistree>([]);
+
+  private registrees : EventRegistree[] = [];
+
+  dataColumns = ['first_name', 'last_name', 'voicepart'];
+  allColumns = [...this.dataColumns, 'delete'];
+
   constructor(
     public dialogRef: MatDialogRef<EventRegistreesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
     private eventService : EventService,
 
-  ) {}
+  ) {
+    this.eventService.getEventRegistrees(event).subscribe({
+      next: data => {
+        console.log(data);
+        this.registrees = data.registrees;
+        this.dataSource = new MatTableDataSource(this.registrees);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;   
+      }      
+    }); 
+
+
+  }
 
   ngOnInit(): void {
     this.getRegistrees();
@@ -37,6 +64,13 @@ export class EventRegistreesDialogComponent {
       }
 
     );
+  }
+
+  deleteClicked(email: string){
+    // let arr = [];
+    // arr.push(email);
+    // this.eventService.deleteAccount(arr);
+    // location.reload();
   }
 
 

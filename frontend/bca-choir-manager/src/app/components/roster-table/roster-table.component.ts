@@ -53,7 +53,6 @@ export class RosterTableComponent implements AfterViewInit {
     this.rosterService.getRoster().subscribe({
       next: data => {
         this.roster = data.roster;
-        console.log(data);
         this.dataSource = new MatTableDataSource(this.roster);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

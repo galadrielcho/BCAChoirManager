@@ -23,15 +23,16 @@
 
 <p>
     Graduation Year
-    <mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="yearPos">
+    <mat-radio-group>
         <mat-radio-button
         *ngFor="let option of years"
-        [value]="option.name"
-        [checked]='isYearChecked(option.value)'>
+        [value]="option.value"
+        [checked]="isYearChecked(option.value)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
 </p>
+
 
 <p>
     Choir Type
