@@ -378,7 +378,21 @@ app.get("/api/event/get-all-events", function (req, res) {
       if (err) throw err;
     });  
   
-    console.log(sql + "complete");
+    console.log(sql);
+
+  });
+
+  app.post("/api/event/delete-student-from-event", function(req, res){
+    const startTimeDate = new Date(req.body.event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+
+    sql = `CALL deleteStudentFromEvent('${req.body.event.event_name}', '${startTimeDate}', 
+                                  '${req.body.student_email}')`;   
+
+  database.query(sql, function(err, rows, fields) 
+  {
+    if (err) throw err;
+  });  
 
   });
 

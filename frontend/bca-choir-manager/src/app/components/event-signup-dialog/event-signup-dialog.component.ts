@@ -24,15 +24,18 @@ export class EventSignupDialogComponent {
     private eventService : EventService,
     public auth : AuthService) {}
 
-  public confirm(){
-    this.eventService.addStudentToEvent("lorcho23@bergen.org", this.data.event, this.data.partnumber, this.data.voicepart);
-  
+  public confirm(){  
     this.auth.user$.subscribe(
       (user) => {
         if (user?.email != null || user?.email != undefined){
+          if (this.data.signupAction === "signup")
             this.eventService.addStudentToEvent(user.email, this.data.event, this.data.partnumber, this.data.voicepart)
+          else {
+            this.eventService.deleteStudentFromEvent(user.email, this.data.event)
+
           }
         }
+      }
     );
 
     this.dialogRef.close();

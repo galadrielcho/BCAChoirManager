@@ -17,6 +17,7 @@ export class EventDescriptionDialogComponent {
   public numbers : number[] = [1, 2, 3, 4];
 
   public partNumber = 1;
+  public signedup = false;
   public voicepart = "Soprano";
 
   constructor(
@@ -38,21 +39,6 @@ export class EventDescriptionDialogComponent {
   }
 
   
-  openSignupEventDialog(): void {
-    const dialogRef = this.dialog.open(EventSignupDialogComponent, {
-      width: '300px',
-      data:{event: this.event,
-            signupAction : "signup",
-            voicepart : "soprano",
-            partnumber : 4
-          }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-  
   close(): void {
     this.dialogRef.close();
   }
@@ -68,13 +54,14 @@ export class EventDescriptionDialogComponent {
   }
 
   confirmSignupEvent() : void {
+    console.log("asjdofia" + this.signedup);
     this.close();
     const dialogRef = this.dialog.open(EventSignupDialogComponent, {
       width: '500px',
       data: {
             event: this.event,
             partnumber: this.partNumber,
-            signupAction: "signup",
+            signupAction: this.signedup? "signup" : "unsignup",
             voicepart: this.voicepart}
     });    
   } 

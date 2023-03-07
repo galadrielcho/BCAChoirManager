@@ -58,6 +58,15 @@ export class EventService {
     return this.http.post<any>('/api/event/add-student-to-event/', data).subscribe();
   }
 
+  deleteStudentFromEvent(studentEmail : string, event: EventData){
+    let data = {
+      student_email : studentEmail,
+      event : event
+    }
+    return this.http.post<any>('/api/event/delete-student-from-event/', data).subscribe();
+
+  }
+
   createEvent(event : EventData){
     return this.http.post<any>('/api/event/event-create', event).subscribe();
   }
