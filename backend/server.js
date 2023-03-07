@@ -53,7 +53,6 @@ app.get("/api/roster", function (req, res) {
   {
   if (err) throw err;
 
-
   let result = Object.values(JSON.parse(JSON.stringify(roster[0])));
  
   res.send({roster: result});
@@ -155,49 +154,24 @@ app.post("/api/event/event-edit/", function(req, res) {
 );
 
 app.post("/api/roster-update", function (req, res) {
-  sql=`UPDATE account
-  SET first_name = ${database.escape(req.body[1])}, last_name = ${database.escape(req.body[2])}, pronouns = ${database.escape(req.body[3])}
-  WHERE email = ${database.escape(req.body[0])};`
-  database.query(sql, function(err, rows, fields) 
-    {
-      if (err) throw err;
-    });  
-  
-  sql=`UPDATE student
-  SET grad_year = ${database.escape(req.body[7])}
-  WHERE email = ${database.escape(req.body[0])};`
-  database.query(sql, function(err, rows, fields) 
-  {
-    if (err) throw err;
-  });  
+  let student = req.body;
 
-  sql=`SELECT voicepart_id from voicepart 
-  WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
-  database.query(sql, function(err, rows, fields) 
-  {
-    if (err) throw err;
-    sql=`UPDATE student
-    SET voicepart_id = ${database.escape(rows[0].voicepart_id)}
-    WHERE email = ${database.escape(req.body[0])};`
-    database.query(sql, function(err, rows, fields) 
-    {
-      if (err) throw err;
-    });  
-  }); 
+  sql = `CALL updateStudent(
+    ${student.email},
+    ${student.first_name},
+    ${student.last_name},
+    ${student.pronouns},
+    ${student.voicepart_name},
+    ${student.number},
+    ${student.choir_name},
+    ${student.grad_year}
 
-  sql=`SELECT choir_type_id from choir_type
-  WHERE choir_name = ${database.escape(req.body[6])}`
-  database.query(sql, function(err, rows, fields) 
+  );`
+  database.query(sql, function(err) 
   {
-    if (err) throw err;
-    sql=`UPDATE student
-    SET choir_type_id = ${database.escape(rows[0].choir_type_id)}
-    WHERE email = ${database.escape(req.body[0])};`
-    database.query(sql, function(err, rows, fields) 
-    {
-      if (err) throw err;
-    });  
-  }); 
+  if (err) throw err;
+   });
+
 
 });
 
