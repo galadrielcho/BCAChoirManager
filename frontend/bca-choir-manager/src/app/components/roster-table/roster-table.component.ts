@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource} from '@angular/material/table';
 import { RosterService} from '../../services/roster-service/roster.service';
 import { MatDialog } from '@angular/material/dialog';
-import { RosterUpdateComponent } from 'src/app/roster-update/roster-update.component';
+import { RosterUpdateComponent } from 'src/app/components/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { StudentData } from 'src/app/models/student-data.model';
 @Component({
@@ -27,7 +27,7 @@ export class RosterTableComponent implements AfterViewInit {
   private roster: StudentData[] = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  dataColumns = ['first_name', 'last_name', 'pronouns', 'name', 'number', 'choir_name', 'grad_year', 'email'];
+  dataColumns = ['first_name', 'last_name', 'pronouns', 'voicepart_name', 'number', 'choir_name', 'grad_year', 'email'];
   allColumns = [...this.dataColumns, 'edit', 'delete'];
 
   deleteClicked(email: string){
@@ -36,10 +36,12 @@ export class RosterTableComponent implements AfterViewInit {
     this.rosterService.deleteAccount(arr);
     location.reload();
   }
-  editClicked(email:string){
-    this.dialog.open(RosterUpdateComponent);
-    this.rosterUpdateService.setEmail(email);
-    this.rosterUpdateService.send(this.dialog, location);
+  editClicked(student : StudentData){
+    this.dialog.open(RosterUpdateComponent,
+      {
+        data: student
+      }
+    );
   }
 
   constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService) { 
@@ -51,17 +53,12 @@ export class RosterTableComponent implements AfterViewInit {
     this.rosterService.getRoster().subscribe({
       next: data => {
         this.roster = data.roster;
-        
         this.dataSource = new MatTableDataSource(this.roster);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.table.dataSource = this.dataSource;   
       }      
     }); 
-    
-    
-  
-    
     
   }
 

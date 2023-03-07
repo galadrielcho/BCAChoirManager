@@ -8,24 +8,23 @@
 
 <p>
     First Name
-    <input matInput placeholder="First Name*" [value]="getFirstName()" ngModel #firstname>
+    <input matInput placeholder="First Name*" [(ngModel)]="student.first_name" [value]="getFirstName()" #firstname>
 </p>
 
 <p>
     Last Name
-    <input matInput placeholder="Last Name*" [value]="getLastName()" ngModel #lastname>
+    <input matInput placeholder="Last Name*" [(ngModel)]="student.last_name" [value]="getLastName()" #lastname>
 </p>
 
 <p>
     Pronouns
-    <input matInput placeholder="Pronouns" [value]="getPronouns()" ngModel #pronouns>
+    <input matInput placeholder="Pronouns" [(ngModel)]="student.pronouns" [value]="getPronouns()" #pronouns>
 </p>
 
 <p>
     Graduation Year
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="yearPos">
+    <mat-radio-group>
         <mat-radio-button
-        class="example-radio-button"
         *ngFor="let option of years"
         [value]="option.value"
         [checked]="isYearChecked(option.value)">
@@ -34,9 +33,10 @@
     </mat-radio-group>
 </p>
 
+
 <p>
     Choir Type
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="choirtypePos">
+    <mat-radio-group>
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of choirtypes"
@@ -49,12 +49,12 @@
 
 <p>
     Voice Part
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPPos">
+    <mat-radio-group>
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of voiceparts"
         [value]="option.value"
-        [checked]="isVPChecked(option.value)">
+        [checked]="isVPChecked(option.name)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
@@ -62,9 +62,8 @@
 
 <p>
     Voice Part Number
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPNPos">
+    <mat-radio-group>
         <mat-radio-button
-        class="example-radio-button"
         *ngFor="let option of voicePartNumbers"
         [value]="option.value"
         [checked]="isVPNChecked(option.value)">

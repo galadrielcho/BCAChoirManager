@@ -9,14 +9,30 @@
   {{eventService.dateISOToLocale(event.end_time)}}
   </p>
 
-    <p>{{eventService.dateISOToLocale(event.start_time)}} - {{eventService.dateISOToLocale(event.end_time)}}</p> 
+    <p>{{eventService.dateISOToLocale(event.start_time)}} 
+      - {{eventService.dateISOToLocale(event.end_time)}}
+    </p> 
       <div class = "location">   
         <b>Location</b>
         <p>{{event.location}}</p>
         <b>Address</b>
         <p>{{event.address}}</p>
       </div>  
-      <hr>
+      <span> 
+        <b>Signed Up?</b>
+          <mat-checkbox [(ngModel)]="signedup"></mat-checkbox>
+        <span *ngIf="signedup">
+          <b>Voice Part</b>
+          <mat-select style="width:20%" [(ngModel)]="voicepart">
+            <mat-option *ngFor="let voicepart of voiceparts" [value]="voicepart">{{voicepart}}</mat-option>
+          </mat-select>
+
+          <b>Part Number</b>
+          <mat-select style="width:10%" [(ngModel)]="partNumber">
+            <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
+          </mat-select>
+        </span>
+      </span>
 
  
 </div>
@@ -24,6 +40,7 @@
   <button mat-button (click)="close()">Close</button>
   <button mat-button (click)="editEvent()">Edit Event</button>
   <button mat-raised-button color="warn" (click)="deleteEvent()">Delete Event</button>
+  <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Change Event Signup</button>
 
 
 </div>

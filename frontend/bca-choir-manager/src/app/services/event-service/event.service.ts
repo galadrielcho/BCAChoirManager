@@ -47,12 +47,33 @@ export class EventService {
     return this.http.post<any>('/api/event/event-edit/', events).subscribe();
   }
 
+  addStudentToEvent(studentEmail : string, event : EventData, voicepartNumber : number, voicepartName : string){
+    
+    let data = {
+      student_email : studentEmail,
+      event : event,
+      voicepart_number: voicepartNumber,
+      voicepart_name : voicepartName
+    }
+    return this.http.post<any>('/api/event/add-student-to-event/', data).subscribe();
+  }
+
+  deleteStudentFromEvent(studentEmail : string, event: EventData){
+    let data = {
+      student_email : studentEmail,
+      event : event
+    }
+    return this.http.post<any>('/api/event/delete-student-from-event/', data).subscribe();
+
+  }
+
   createEvent(event : EventData){
     return this.http.post<any>('/api/event/event-create', event).subscribe();
   }
 
-  getEventRegistrees(e : EventData){
-    return this.http.get<any>(`/api/get-event-registrees/${e.event_name}/${e.start_time}/`);
+  getEventRegistrees(event : EventData){
+    return this.http.get<any>(`/api/event/get-event-registrees/${event.event_name}/${event.start_time}/`);
   }
+
 
 }
