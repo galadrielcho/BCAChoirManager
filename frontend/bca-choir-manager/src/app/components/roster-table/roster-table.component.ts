@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/components/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { StudentData } from 'src/app/models/student-data.model';
+import { AuthService } from '@auth0/auth0-angular';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 @Component({
 
   selector: 'roster-table',
@@ -19,10 +21,12 @@ export class RosterTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<StudentData>;
   dataSource: MatTableDataSource<StudentData> = new MatTableDataSource<StudentData>([]);
+  authenticationService: AuthenticationService
 
   rosterService: RosterService;
   rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
+  admin: Boolean;
 
   private roster: StudentData[] = [];
 
@@ -43,12 +47,20 @@ export class RosterTableComponent implements AfterViewInit {
       }
     );
   }
+  isAdmin(email: string|undefined){
+    this.authenticationService.isAdmin(email).then(res => {
+      this.admin = res;
+    })
+    return this.admin;
+  }
 
-  constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService) { 
+  constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService, public auth: AuthService, public as: AuthenticationService) { 
     
     this.rosterService = rs;
     this.rosterUpdateService = rus;
     this.dialog = md;
+    this.authenticationService = as;
+    this.admin = false;
 
     this.rosterService.getRoster().subscribe({
       next: data => {

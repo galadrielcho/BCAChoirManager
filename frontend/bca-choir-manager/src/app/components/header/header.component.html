@@ -6,8 +6,8 @@
         <li>
             <a routerLink="/calendar">Calendar</a>
         </li>
-        <li>
-            <a routerLink="/events">Events</a>
+        <li *ngIf="(auth.user$)| async as user">
+            <a *ngIf="isAdmin(user.email)" routerLink="/events">Events</a>
         </li>
         <li *ngIf="(auth.user$)| async as user">
             <a routerLink="/roster">Roster</a>

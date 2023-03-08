@@ -13,7 +13,7 @@ export class AuthenticationService {
   
   //resolve({status: true});
   callApi(apiObject : string){
-    return new Promise((resolve, reject) => {
+    return new Promise<Boolean>((resolve, reject) => {
       this.http.get<any>(apiObject).subscribe({
         next: data =>{
           if(data.details != undefined){

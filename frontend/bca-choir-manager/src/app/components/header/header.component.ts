@@ -13,18 +13,20 @@ export class HeaderComponent implements OnInit {
   dialog: MatDialog;
   signUpService: SignUpService
   authenticationService: AuthenticationService
+  admin: Boolean
 
   constructor(private md: MatDialog, private sus: SignUpService, public auth: AuthService, public as: AuthenticationService) { 
     this.dialog = md;
     this.signUpService = sus;
     this.authenticationService = as;
+    this.admin = false;
   }
 
   isAdmin(email: string|undefined){
     this.authenticationService.isAdmin(email).then(res => {
-      //WTH SHOULD I DO HERE
+      this.admin = res;
     })
-    
+    return this.admin;
   }
 
   ngOnInit(): void {
