@@ -5,67 +5,78 @@
         <span class="fill-space"></span>
     </mat-toolbar>
 </div>
-
-
+<div class="group1">
 <p>
-    First Name
-    <input matInput placeholder="First Name*" ngModel #firstname>
-</p>
-
-<p>
-    Last Name
-    <input matInput placeholder="Last Name*" ngModel #lastname>
-</p>
-
-<p>
-    Pronouns
-    <input matInput placeholder="Pronouns" ngModel #pronouns>
+    <mat-form-field class="example-full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput ngModel #firstname>
+    </mat-form-field>
 </p>
 <p>
-    Graduation Year
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="yearPos">
-        <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let option of years"
-        [value]="option.value">
-        {{option.name}}
-        </mat-radio-button>
-    </mat-radio-group>
+    <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput ngModel #lastname>
+    </mat-form-field>
 </p>
-
 <p>
-    Choir Type
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="choirtypePos">
-        <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let option of choirtypes"
-        [value]="option.value">
-        {{option.name}}
-        </mat-radio-button>
-    </mat-radio-group>
+    <mat-form-field class="example-full-width">
+        <mat-label>Pronouns</mat-label>
+        <input matInput ngModel #pronouns>
+    </mat-form-field>
 </p>
+</div>
+<div class="group1">
+    <p>
+        Graduation Year
+        <mat-radio-group class="example-radio-group" [(ngModel)]="yearPos">
+            <mat-radio-button
+            class="example-radio-button"
+            *ngFor="let option of years"
+            [value]="option.value">
+            {{option.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </p>
+</div>
 
-<p>
-    Voice Part
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPPos">
-        <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let option of voiceparts"
-        [value]="option.value">
-        {{option.name}}
-        </mat-radio-button>
-    </mat-radio-group>
-</p>
+<div class="group1">
+    <p>
+        Voice Part
+        <mat-radio-group class="example-radio-group" [(ngModel)]="VPPos">
+            <mat-radio-button
+            class="example-radio-button"
+            *ngFor="let option of voiceparts"
+            [value]="option.value">
+            {{option.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </p>
+</div>
 
-<p>
-    Voice Part Number
-    <mat-radio-group aria-labelledby="example-radio-group-label"class="example-radio-group" [(ngModel)]="VPNPos">
-        <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let option of voicePartNumbers"
-        [value]="option.value">
-        {{option.name}}
-        </mat-radio-button>
-    </mat-radio-group>
-</p>
-<button type="submit" (click)="submit()" [disabled]="disableSubmit()">Submit</button> 
+<div class="group1">
+    <p>
+        Voice Part Number
+        <mat-radio-group class="example-radio-group" [(ngModel)]="VPNPos">
+            <mat-radio-button
+            class="example-radio-button"
+            *ngFor="let option of voicePartNumbers"
+            [value]="option.value">
+            {{option.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </p>
+    
+    <p>
+        Choir Type
+        <mat-radio-group class="example-radio-group" [(ngModel)]="choirtypePos">
+            <mat-radio-button
+            class="example-radio-button"
+            *ngFor="let option of choirtypes"
+            [value]="option.value">
+            {{option.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </p>
+</div>
+
+<button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="disableSubmit()" id="bottom">Submit</button> 

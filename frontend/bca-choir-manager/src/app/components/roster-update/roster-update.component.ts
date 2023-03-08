@@ -29,7 +29,8 @@ export class RosterUpdateComponent {
   years: Option[] = [{name: String(this.year), value: this.year}, 
                     {name: String(this.year + 1), value: this.year + 1},
                     {name: String(this.year + 2), value: this.year + 2},
-                    {name: String(this.year + 3), value: this.year + 3}]
+                    {name: String(this.year + 3), value: this.year + 3},
+                    {name: String(this.year + 3), value: this.year + 4}]
 
   @ViewChild('firstname') firstname!: ElementRef<HTMLInputElement>;
   @ViewChild('lastname') lastname!: ElementRef<HTMLInputElement>;

@@ -1,0 +1,32 @@
+div container{
+    margin: 0px 40px;
+}
+
+fill-space{
+    flex: 1 1 auto;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+
+  .group1 {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: text-top;
+  }
+
+  #bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }

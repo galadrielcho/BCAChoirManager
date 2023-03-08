@@ -6,25 +6,35 @@
     </mat-toolbar>
 </div>
 
+<div class="group1">
 <p>
-    First Name
-    <input matInput placeholder="First Name*" [(ngModel)]="student.first_name" [value]="getFirstName()" #firstname>
+    <mat-form-field class="example-full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="student.first_name" [value]="getFirstName()" #firstname>
+    </mat-form-field>
 </p>
 
 <p>
-    Last Name
-    <input matInput placeholder="Last Name*" [(ngModel)]="student.last_name" [value]="getLastName()" #lastname>
+    <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="student.last_name" [value]="getLastName()" #lastname>
+    </mat-form-field>
 </p>
 
 <p>
-    Pronouns
-    <input matInput placeholder="Pronouns" [(ngModel)]="student.pronouns" [value]="getPronouns()" #pronouns>
+    <mat-form-field class="example-full-width">
+        <mat-label>Pronouns</mat-label>
+        <input matInput [(ngModel)]="student.pronouns" [value]="getPronouns()" #pronouns>
+    </mat-form-field>
 </p>
+</div>
 
+<div class="group1">
 <p>
     Graduation Year
-    <mat-radio-group>
+    <mat-radio-group class="example-radio-group">
         <mat-radio-button
+        class="example-radio-button"
         *ngFor="let option of years"
         [value]="option.value"
         [checked]="isYearChecked(option.value)">
@@ -32,24 +42,12 @@
         </mat-radio-button>
     </mat-radio-group>
 </p>
+</div>
 
-
-<p>
-    Choir Type
-    <mat-radio-group>
-        <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let option of choirtypes"
-        [value]="option.value"
-        [checked]="isChoirtypeChecked(option.value)">
-        {{option.name}}
-        </mat-radio-button>
-    </mat-radio-group>
-</p>
-
+<div class="group1">
 <p>
     Voice Part
-    <mat-radio-group>
+    <mat-radio-group class="example-radio-group">
         <mat-radio-button
         class="example-radio-button"
         *ngFor="let option of voiceparts"
@@ -59,11 +57,14 @@
         </mat-radio-button>
     </mat-radio-group>
 </p>
+</div>
 
+<div class="group1">
 <p>
     Voice Part Number
-    <mat-radio-group>
+    <mat-radio-group class="example-radio-group">
         <mat-radio-button
+        class="example-radio-button"
         *ngFor="let option of voicePartNumbers"
         [value]="option.value"
         [checked]="isVPNChecked(option.value)">
@@ -71,4 +72,18 @@
         </mat-radio-button>
     </mat-radio-group>
 </p>
-<button type="submit" (click)="submit()">Submit</button> 
+
+<p>
+    Choir Type
+    <mat-radio-group class="example-radio-group">
+        <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let option of choirtypes"
+        [value]="option.value"
+        [checked]="isChoirtypeChecked(option.value)">
+        {{option.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</p>
+</div>
+<button mat-raised-button color="primary" type="submit" (click)="submit()" id="bottom">Submit</button> 
