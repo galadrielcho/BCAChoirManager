@@ -26,7 +26,7 @@ export class RosterTableComponent implements AfterViewInit {
   rosterService: RosterService;
   rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
-  admin: Boolean;
+  admin: Boolean | undefined;
 
   private roster: StudentData[] = [];
 
@@ -47,23 +47,28 @@ export class RosterTableComponent implements AfterViewInit {
       }
     );
   }
-  /*
+  
   isAdmin(email: string|undefined){
     this.authenticationService.isAdmin(email).then(res => {
       this.admin = res;
     })
     return this.admin;
   }
-  */
-
+  
+  sleep(milliseconds: number) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+  
   constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService, public auth: AuthService, public as: AuthenticationService) { 
     
     this.rosterService = rs;
     this.rosterUpdateService = rus;
     this.dialog = md;
     this.authenticationService = as;
-    this.admin = false;
-
     this.rosterService.getRoster().subscribe({
       next: data => {
         this.roster = data.roster;
@@ -73,9 +78,35 @@ export class RosterTableComponent implements AfterViewInit {
         this.table.dataSource = this.dataSource;   
       }      
     }); 
+/*
+    // ATTEMPT to restrict edit & delete buttons to admin
     if(this.auth.isAuthenticated$){
-      console.log(this.auth.user$);
+      this.auth.user$.subscribe({
+        next: data => {
+          if(data != undefined){
+            const email = data.email;     
+            this.authenticationService.isAdmin(email).then(res => {
+              this.admin = res;
+            })
+            
+          }
+          else{
+            console.log("User data does not exist");
+          }
+        }
+      });
     }
+    if(this.admin != undefined){
+      if(this.admin == true){
+        console.log("is admin");
+        this.allColumns = [...this.dataColumns, 'edit', 'delete'];
+      }
+      else{
+        console.log("not admin");
+        this.allColumns = [...this.dataColumns];
+      }
+    }
+    */
     
   }
 
