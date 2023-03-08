@@ -13,19 +13,25 @@ export class HeaderComponent implements OnInit {
   dialog: MatDialog;
   signUpService: SignUpService
   authenticationService: AuthenticationService
-  admin: Boolean
+  admin: Boolean | undefined
+  seconds: number
 
   constructor(private md: MatDialog, private sus: SignUpService, public auth: AuthService, public as: AuthenticationService) { 
     this.dialog = md;
     this.signUpService = sus;
     this.authenticationService = as;
     this.admin = false;
+    this.seconds = 0;
   }
 
   isAdmin(email: string|undefined){
-    this.authenticationService.isAdmin(email).then(res => {
-      this.admin = res;
-    })
+    if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
+      this.authenticationService.isAdmin(email).then(res => {
+        this.admin = res;
+      })
+      this.seconds = Date.now()/1000;
+    }
+    
     return this.admin;
   }
 

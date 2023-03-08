@@ -6,9 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class AuthenticationService {
   admin: boolean;
+  seconds: number;
 
   constructor(private http: HttpClient) {
     this.admin = false;
+    this.seconds = 0;
   }
   
   //resolve({status: true});
@@ -27,8 +29,10 @@ export class AuthenticationService {
           else{
             resolve(false);
           }
+          this.seconds = Date.now()/1000;
         },
         error: err =>{
+          this.seconds = Date.now()/1000;
           reject(err);
         }
       });
@@ -38,30 +42,7 @@ export class AuthenticationService {
   async isAdmin(email : string|undefined){
     let url = `/api/get-account/${email}`;
     return await this.callApi(url);
-    
-    /*
-    this.http.get<any>(url).subscribe({
-      next: data => {         // LOOK INTO OTHER EVENTS THAT ARE NOT NEXT
-        if(data.details != undefined){
-          console.log(data.details.is_admin.data[0]);
-          if(data.details.is_admin.data[0] == 0){
-            console.log("false 1");
-            return false;
-          }
-          else{
-            console.log("true 1");
-            return true;
-          }
-        }
-        else{
-          console.log("false 2");
-          return false;
-        }
-      }      
-    }); 
-    //HOW TO FORCE IT TO WAIT
-    */
-    
+   
   }
   
  

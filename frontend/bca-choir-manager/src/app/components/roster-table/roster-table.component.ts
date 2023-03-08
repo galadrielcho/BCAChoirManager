@@ -47,12 +47,14 @@ export class RosterTableComponent implements AfterViewInit {
       }
     );
   }
+  /*
   isAdmin(email: string|undefined){
     this.authenticationService.isAdmin(email).then(res => {
       this.admin = res;
     })
     return this.admin;
   }
+  */
 
   constructor(private rs: RosterService, private md: MatDialog, private rus: RosterUpdateService, public auth: AuthService, public as: AuthenticationService) { 
     
@@ -71,6 +73,9 @@ export class RosterTableComponent implements AfterViewInit {
         this.table.dataSource = this.dataSource;   
       }      
     }); 
+    if(this.auth.isAuthenticated$){
+      console.log(this.auth.user$);
+    }
     
   }
 
