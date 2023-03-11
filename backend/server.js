@@ -347,6 +347,28 @@ app.get("/api/event/get-all-events", function (req, res) {
       if (err) throw err;
     });  
   
+    console.log("Queried " + sql);  
+  });
+
+  app.post("/api/event/check-student-in-event/", function(req, res){
+
+    const startTimeDate = new Date(req.body.event.start_time)
+                                  .toLocaleString('sv').replace(' ', 'T'); 
+
+    sql = `CALL countStudentInEvent('${req.body.event.event_name}', '${startTimeDate}', 
+                                  '${req.body.student_email}')`;     
+
+    database.query(sql, function(err, rows, fields) 
+    {
+      if (err) throw err;
+      let result = Object.values(JSON.parse(JSON.stringify(rows[0])))[0];
+
+      count = result["COUNT(*)"];
+      res.send(count >= 1);
+    });  
+
+  
+    console.log("Queried " + sql);
   
   });
 

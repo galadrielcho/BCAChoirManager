@@ -55,7 +55,17 @@ export class EventService {
       voicepart_number: voicepartNumber,
       voicepart_name : voicepartName
     }
+
     return this.http.post<any>('/api/event/add-student-to-event/', data).subscribe();
+  }
+
+  checkStudentInEvent(studentEmail : string, event : EventData){
+    let data = {
+      student_email : studentEmail,
+      event : event
+    }
+    return this.http.post<any>('/api/event/check-student-in-event/', data);
+
   }
 
   deleteStudentFromEvent(studentEmail : string, event: EventData){

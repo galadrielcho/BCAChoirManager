@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 import { EventData } from 'src/app/models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-dialog.component';
@@ -24,8 +25,23 @@ export class EventDescriptionDialogComponent {
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
-    public eventService : EventService
-  ) {}
+    public eventService : EventService,
+    public auth : AuthService
+  ) {
+
+    this.auth.user$.subscribe(
+      (user) => {
+        if (user?.email != null || user?.email != undefined){
+            
+          this.eventService.checkStudentInEvent(user.email, event).subscribe(
+              (next)=> {
+                this.signedup = next; 
+              }
+          );
+        }
+      }
+    );
+  }
 
   openDeleteEventDialog(): void {
     const dialogRef = this.dialog.open(EventDeleteDialogComponent, {
