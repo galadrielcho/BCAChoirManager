@@ -30,15 +30,15 @@ export class RosterUpdateComponent {
                     {name: String(this.year + 1), value: this.year + 1},
                     {name: String(this.year + 2), value: this.year + 2},
                     {name: String(this.year + 3), value: this.year + 3},
-                    {name: String(this.year + 3), value: this.year + 4}]
+                    {name: String(this.year + 4), value: this.year + 4}]
 
   @ViewChild('firstname') firstname!: ElementRef<HTMLInputElement>;
   @ViewChild('lastname') lastname!: ElementRef<HTMLInputElement>;
   @ViewChild('pronouns') pronouns!: ElementRef<HTMLInputElement>;
-  yearPos: String | undefined;
-  choirtypePos: String | undefined;
-  VPPos: String | undefined;
-  VPNPos: String | undefined;
+  voicepartChoice : string = this.orig_student.voicepart_name;
+  voicepartNumberChoice : number = this.orig_student.number;
+  choirChoice : string = this.orig_student.choir_name;
+  yearChoice : number = this.orig_student.grad_year;
 
 
   constructor(public service: RosterUpdateService, 
@@ -95,33 +95,28 @@ export class RosterUpdateComponent {
     return false;
   }
 
+
   public submit(){
     let first_name = this.firstname.nativeElement.value ;
     let last_name = this.lastname.nativeElement.value;
     let pronouns = this.pronouns.nativeElement.value;
-    let VP = this.voiceparts[Number(this.VPPos)];
-    let VPN = this.voicePartNumbers[Number(this.VPNPos)];
-    let choirtype = this.choirtypes[Number(this.choirtypePos)];
-    let grad_year = this.years[Number(this.yearPos)];
 
     let updatedStudent : StudentData = {
       email: this.student.email,
       first_name: (this.isValidString(first_name) ? first_name : this.student.first_name),
       last_name: this.isValidString(last_name) ? last_name : this.student.last_name,
       pronouns: this.isValidString(pronouns) ? pronouns : this.student.pronouns,
-      voicepart_name: this.isValidRadioButton(VP) ? VP.name : this.student.voicepart_name,
-      number: this.isValidRadioButton(VPN) ? VPN.value : this.student.number,
-      choir_name: this.isValidRadioButton(choirtype) ? choirtype.name : this.student.choir_name,
-      grad_year: this.isValidRadioButton(grad_year) ? grad_year.value : this.student.grad_year
-      
-      
+      voicepart_name: this.voicepartChoice,
+      number: this.voicepartNumberChoice,
+      choir_name: this.choirChoice,
+      grad_year: this.yearChoice
       
     };
 
     this.service.updateDetails(updatedStudent);
 
     this.dialogRef.close();
-    // window.location.reload();
+    window.location.reload();
 
   }
   
@@ -131,12 +126,22 @@ export class RosterUpdateComponent {
     }
     return true;
   }
-  public isValidRadioButton(rb : Option){
-    if (rb == undefined){
-      return false;
-    }
-    return true;
+  public changeYear(year : number) {
+    this.yearChoice = year;
   }
+
+  public changeVoicePart(vp : string) {
+    this.voicepartChoice = vp;
+  }
+
+  public changeVoicePartNum(vpN : number) {
+    this.voicepartNumberChoice = vpN;
+  }
+
+  public changeChoirType(choir : string) {
+    this.choirChoice = choir;
+  }
+
 
 }
 export interface Option {

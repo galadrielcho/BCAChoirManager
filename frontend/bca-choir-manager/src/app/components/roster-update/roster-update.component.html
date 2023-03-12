@@ -37,7 +37,8 @@
         class="example-radio-button"
         *ngFor="let option of years"
         [value]="option.value"
-        [checked]="isYearChecked(option.value)">
+        [checked]="isYearChecked(option.value)"
+        (change)="changeYear(option.value)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
@@ -52,7 +53,8 @@
         class="example-radio-button"
         *ngFor="let option of voiceparts"
         [value]="option.value"
-        [checked]="isVPChecked(option.name)">
+        [checked]="isVPChecked(option.name)"
+        (change)="changeVoicePart(option.name)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
@@ -67,7 +69,8 @@
         class="example-radio-button"
         *ngFor="let option of voicePartNumbers"
         [value]="option.value"
-        [checked]="isVPNChecked(option.value)">
+        [checked]="isVPNChecked(option.value)"
+        (change)="changeVoicePartNum(option.value)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
@@ -80,7 +83,8 @@
         class="example-radio-button"
         *ngFor="let option of choirtypes"
         [value]="option.value"
-        [checked]="isChoirtypeChecked(option.value)">
+        [checked]="isChoirtypeChecked(option.value)"
+        (change)="changeChoirType(option.name)">
         {{option.name}}
         </mat-radio-button>
     </mat-radio-group>
