@@ -3,6 +3,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { CalendarService } from '../../services/calendar-service/calendar.service';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 import { CalendarDayData} from '../../models/calendar-day-data.model';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-calendar',
@@ -13,7 +15,10 @@ import { CalendarDayData} from '../../models/calendar-day-data.model';
 
 export class CalendarComponent implements OnInit{
   public weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];  
-
+  authenticationService: AuthenticationService
+  admin: Boolean | undefined
+  seconds: number
+  
   ngOnInit(): void{
     this.calendarService.setDate(new Date());
   }
@@ -56,7 +61,20 @@ export class CalendarComponent implements OnInit{
     });
   }
 
-  constructor(private calendarService : CalendarService, public dialog: MatDialog){
+  isAdmin(email: string|undefined){
+    if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
+      this.authenticationService.isAdmin(email).then(res => {
+        this.admin = res;
+      })
+      this.seconds = Date.now()/1000;
+    }
     
+    return this.admin;
+  }
+
+  constructor(private calendarService : CalendarService, public dialog: MatDialog, public auth: AuthService, public as: AuthenticationService){
+    this.authenticationService = as;
+    this.admin = false;
+    this.seconds = 0;
   }
 }
