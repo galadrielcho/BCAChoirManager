@@ -44,6 +44,11 @@ export class EventTableComponent {
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
       next: data => {
+        for(let eventIndex in  data.events){
+          data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
+          data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+
+        }
         this.events = data.events;
         this.setupTable();
 

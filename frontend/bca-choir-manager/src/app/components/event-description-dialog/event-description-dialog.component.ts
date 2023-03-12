@@ -28,7 +28,7 @@ export class EventDescriptionDialogComponent {
     public eventService : EventService,
     public auth : AuthService
   ) {
-
+    console.log(this.event);
     this.auth.user$.subscribe(
       (user) => {
         if (user?.email != null || user?.email != undefined){
