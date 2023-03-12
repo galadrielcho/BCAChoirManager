@@ -83,13 +83,11 @@ app.get("/api/get-student/:email", function (req, res) {
 app.get("/api/get-account/:email", function (req, res) {
   sql = `CALL getAccount("${req.params.email}");`
 
-  database.query(sql, function(err, account, fields) 
-  
-  {
-  let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
-  if (err) throw err;
-  res.send({details: result});
-  });
+  database.query(sql, function(err, account, fields) {
+    let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
+    if (err) throw err;
+    res.send({details: result});
+    });
 });
 
 app.post("/api/event/event-create/", function(req, res){
@@ -399,5 +397,20 @@ app.get("/api/event/get-event-registrees/:name/:startime", function (req, res) {
   let result = Object.values(JSON.parse(JSON.stringify(registrees[0])));
   if (err) throw err;
   res.send({registrees: result});
+  });
+});
+
+
+
+app.get("/api/is-admin/:email", function (req, res) {
+  sql = `CALL isAdmin("${req.params.email}");`
+
+  database.query(sql, function(err, isAdmin, fields) 
+
+  {
+  let result = Object.values(JSON.parse(JSON.stringify(isAdmin[0])))[0];
+
+  res.send(result.is_admin.data[0] == 1);
+
   });
 });

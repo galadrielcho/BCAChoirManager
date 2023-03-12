@@ -12,9 +12,9 @@
         <li *ngIf="(auth.user$)| async as user">
             <a routerLink="/roster">Roster</a>
         </li>
-        <li *ngIf="(auth.user$)| async as user">
+        <!-- <li *ngIf="(auth.user$)| async as user">
             <a *ngIf="isAdmin(user.email)" routerLink="/admin">Admin</a>
-        </li>
+        </li> -->
     </ul>
     <auth-button></auth-button>
 

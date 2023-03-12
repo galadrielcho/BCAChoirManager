@@ -14,7 +14,7 @@ import {CalendarService} from '../../services/calendar-service/calendar.service'
 export class EventEditDialogComponent {
   myControl = new FormControl('');
   public newStartTime : string = this.getStartTime();
-  public newEndTime : string;
+  public newEndTime : string = this.getEndTime();
 
   
   choirTypes : string[] = ['Chamber', 'Concert'];
@@ -111,20 +111,21 @@ export class EventEditDialogComponent {
 
   updateEvent(){
     if (this.eventAction == "Edit"){
-    const endTimes = this.newEndTime.split(":");
-    const startTimes = this.newStartTime.split(":");
+      const endTimes = this.newEndTime.split(":");
+      const startTimes = this.newStartTime.split(":");
 
-    let startDate = new Date(this.new_event.start_time)
-    startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
-    this.new_event.start_time = startDate.toString();
 
-    let endDate = new Date(this.new_event.end_time)
-    endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
-    this.new_event.end_time = endDate.toString();
+      let startDate = new Date(this.new_event.start_time)
+      startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
+      this.new_event.start_time = startDate.toString();
 
-    this.eventService.editEvent(this.orig_event, this.new_event);
-    this.dialogRef.close();
-    this.calendarService.loadCalendarEvents();
+      let endDate = new Date(this.new_event.end_time)
+      endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
+      this.new_event.end_time = endDate.toString();
+
+      this.eventService.editEvent(this.orig_event, this.new_event);
+      this.dialogRef.close();
+      this.calendarService.loadCalendarEvents();
     }  
 
     else {

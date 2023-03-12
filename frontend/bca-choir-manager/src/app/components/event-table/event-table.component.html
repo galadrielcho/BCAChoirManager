@@ -34,20 +34,20 @@
 
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let event" [attr.colspan]="columnsToDisplayWithExpand.length">
-        <div class="event-detail"
-             [@detailExpand]="event == expandedEvent ? 'expanded' : 'collapsed'">
-            <div class="event-detail">Location</div>
-            <p>{{event.location}}</p>
-            <div class="event-address">Address </div>
-            <p> {{event.address}}</p>
-            <div class="event-registration">Registration Status</div>
-            <p>Closed</p>
+        <div [@detailExpand]="event == expandedEvent ? 'expanded' : 'collapsed'">
+            <div class="event-detail">
+              <div class="event-heading">Location</div>
+              <p class="event-location">{{event.location}}</p>
+              <div class="event-heading">Address </div>
+              <p> {{event.address}}</p>
+              <div class="event-heading">Registration Status</div>
+              <p class="event-registration">Closed</p>
 
-            <button mat-raised-button
-                    (click)="openEventRegistrees(event);">
-              View registrees
-            </button>
-
+              <button mat-raised-button class="event-heading"
+                      (click)="openEventRegistrees(event);">
+                View registrees
+              </button>
+            </div>
         </div>
       </td>
     </ng-container>

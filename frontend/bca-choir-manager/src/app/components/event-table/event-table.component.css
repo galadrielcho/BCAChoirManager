@@ -16,11 +16,15 @@ tr.event-row:not(.event-expanded-row):active {
 
 .event-row td {
   border-bottom-width: 0;
+  padding: 10px;
+
 }
 
-.event-detail {
+div .event-detail {
   overflow: hidden;
   display: flex;
+  align-items: center;
+  padding: 10px;;
 }
 
 tr.event-detail-row {
@@ -28,9 +32,16 @@ tr.event-detail-row {
 }
 
 
-.event-location, .event-address, .event-heading {
+.event-heading {
   display: inline-block;
   font-weight: bold;
   padding: 10px;
+  vertical-align: middle;
+}
+
+.event-location, .event-address, .event-registration {
+  display: inline-block;
+  vertical-align: middle;
+
 }
 

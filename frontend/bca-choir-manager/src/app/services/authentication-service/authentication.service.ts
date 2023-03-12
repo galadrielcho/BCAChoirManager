@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  // user_email : string; 
+  user : any;
   admin: boolean;
   seconds: number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private auth : AuthService) {
     this.admin = false;
     this.seconds = 0;
   }
@@ -39,7 +42,26 @@ export class AuthenticationService {
     });
   }
 
+  login() {
+    this.auth.loginWithRedirect();
+  }
+  logout() {
+    this.user = null;
+  }
+
+  getUser() {
+    return this.auth.user$;
+  }
+
+
+  isAdmin2(email : string | undefined) {
+    let url = `/api/is-admin/${email}`;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
   async isAdmin(email : string|undefined){
+    // auth.user$ | async as user
     let url = `/api/get-account/${email}`;
     return await this.callApi(url);
    
