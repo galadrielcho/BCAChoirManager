@@ -99,8 +99,13 @@ export class EventTableComponent {
   openEventRegistrees(event : EventData): void {
     const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
       width: '500',
-      data: event
-    });
+      data: {event_name: event.event_name,
+              start_time : new Date(event.start_time).toISOString(),
+              choir_type : event.choir_type,
+              end_time : new Date(event.end_time).toISOString(),
+            }
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("Done");
