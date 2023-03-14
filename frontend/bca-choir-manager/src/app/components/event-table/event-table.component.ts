@@ -27,7 +27,7 @@ import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog
 
 export class EventTableComponent {
   displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time'];
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'delete', 'expand'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'edit', 'delete', 'expand'];
   expandedEvent : EventData | null = null;
   
   private events : EventData[] = [];
@@ -125,6 +125,15 @@ export class EventTableComponent {
 
       }
     });
+  }
+
+  editEvent(event : Event) : void {
+
+    const dialogRef = this.dialog.open(EventEditDialogComponent, {
+      width: '500px',
+      data: event
+    });
+
   }
 
 }
