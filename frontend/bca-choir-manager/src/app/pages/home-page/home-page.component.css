@@ -5,12 +5,9 @@ app-home{
 
 #site-title, #blurb {
     position: fixed;
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
 
+    text-align: center;
     transform: translate(-50%, -50%);
-    color: white;
 }
 
 #site-title {
@@ -22,5 +19,4 @@ app-home{
 #blurb {
     top: 55%;
     left: 50%;
-    text-align: center;
 }

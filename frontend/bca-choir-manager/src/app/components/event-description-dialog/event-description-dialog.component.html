@@ -15,19 +15,21 @@
         <p>{{event.address}}</p>
       </div>  
       <span *ngIf="(auth.user$)| async as user"> 
-        <b>Signed Up?</b>
-          <mat-checkbox [(ngModel)]="signedup"></mat-checkbox>
-        <span *ngIf="signedup">
-          <b>Voice Part</b>
-          <mat-select style="width:20%" [(ngModel)]="voicepart">
-            <mat-option *ngFor="let voicepart of voiceparts" [value]="voicepart">{{voicepart}}</mat-option>
-          </mat-select>
+        <div *ngIf="!isAdmin(user.email)">
+          <b>Signed Up?</b>
+            <mat-checkbox [(ngModel)]="signedup"></mat-checkbox>
+          <span *ngIf="signedup">
+            <b>Voice Part</b>
+            <mat-select style="width:20%" [(ngModel)]="voicepart">
+              <mat-option *ngFor="let voicepart of voiceparts" [value]="voicepart">{{voicepart}}</mat-option>
+            </mat-select>
 
-          <b>Part Number</b>
-          <mat-select style="width:10%" [(ngModel)]="partNumber">
-            <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
-          </mat-select>
-        </span>
+            <b>Part Number</b>
+            <mat-select style="width:10%" [(ngModel)]="partNumber">
+              <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
+            </mat-select>
+          </span>
+        </div>
       </span>
 
  
@@ -35,9 +37,11 @@
 <div mat-dialog-actions> 
   <button mat-button (click)="close()">Close</button>
   <div *ngIf="(auth.user$)| async as user">
-    <button mat-button (click)="editEvent()" *ngIf="isAdmin(user.email)">Edit Event</button>
-    <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin(user.email)">Delete Event</button>
-    <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Change Event Signup</button>
+      <button mat-button (click)="editEvent()" *ngIf="isAdmin(user.email)">Edit Event</button>
+      <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin(user.email)">Delete Event</button>
+    <div *ngIf="!isAdmin(user.email)">
+      <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Change Event Signup</button>
+    </div>
   </div>
 
 </div>
