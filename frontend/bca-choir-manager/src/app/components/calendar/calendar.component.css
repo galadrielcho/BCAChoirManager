@@ -4,6 +4,8 @@ tr{
 
 table{
     border-collapse:collapse;
+    background-color: rgb(242, 242, 242);
+
 }
 
 .center{
@@ -49,6 +51,7 @@ h1 {
     font-weight: 500;
     padding: .5cm;
     padding-top: 1cm;
+    color: white;
 }
 
 app-calendar-week {

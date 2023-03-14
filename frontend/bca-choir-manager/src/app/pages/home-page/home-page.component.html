@@ -1,4 +1,12 @@
 <div id="site-title"> BCA Choir</div> 
+
+<div id="blurb">
+    <p>Welcome to the official website of BCA's Chamber and Concert Choir.</p>
+
+
+</div> 
+
+
 <div *ngIf="(auth.user$)| async as user">
     <div *ngIf="inDatabase(user.email)"></div>
 </div>

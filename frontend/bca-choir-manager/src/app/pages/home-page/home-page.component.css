@@ -3,13 +3,24 @@ app-home{
     width:100%;
 }
 
-#site-title{
+#site-title, #blurb {
     position: fixed;
     width: fit-content;
     height: fit-content;
     position: absolute;
+
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+#site-title {
     top: 45%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size:3.5rem;
+    font-size:4rem;
+}
+
+#blurb {
+    top: 55%;
+    left: 50%;
+    text-align: center;
 }

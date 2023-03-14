@@ -7,6 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
 
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-dialog.component';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
   selector: 'app-event-description-dialog',
@@ -15,19 +16,26 @@ import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-
 })
 export class EventDescriptionDialogComponent {
   public voiceparts : string[] = ["Soprano", "Alto", "Tenor", "Bass"];
-  public numbers : number[] = [1, 2, 3, 4];
+  public numbers : number[] = [1, 2];
 
   public partNumber = 1;
   public signedup = false;
   public voicepart = "Soprano";
+  authenticationService: AuthenticationService
+  admin: Boolean | undefined
+  seconds: number
 
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
     public eventService : EventService,
-    public auth : AuthService
+    public auth : AuthService,
+    public as: AuthenticationService
   ) {
+    this.authenticationService = as;
+    this.admin = false;
+    this.seconds = 0;
     console.log(this.event);
     this.auth.user$.subscribe(
       (user) => {
@@ -54,6 +62,17 @@ export class EventDescriptionDialogComponent {
     });
   }
 
+  
+  isAdmin(email: string|undefined){
+    if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
+      this.authenticationService.isAdmin(email).then(res => {
+        this.admin = res;
+      })
+      this.seconds = Date.now()/1000;
+    }
+    
+    return this.admin;
+  }
   
   close(): void {
     this.dialogRef.close();

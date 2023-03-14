@@ -1,16 +1,37 @@
 <mat-toolbar color="primary"> 
     <ul> 
         <li> 
-            <a routerLink="/home">Home</a> 
+            Bergen County Academies Choir
         </li>
         <li>
-            <a routerLink="/calendar">Calendar</a>
+        <li> 
+            <a routerLink="/home">
+                <button mat-raised-button>
+                    Home <mat-icon>home</mat-icon>
+                </button>
+            </a> 
+        </li>
+        <li>
+            <a routerLink="/calendar">
+                <button mat-raised-button>
+                    Calendar <mat-icon>calendar_today</mat-icon>
+                </button>
+
+            </a>
         </li>
         <li *ngIf="(auth.user$)| async as user">
-            <a *ngIf="isAdmin(user.email)" routerLink="/events">Events</a>
+            <a *ngIf="isAdmin(user.email)" routerLink="/events">
+                <button mat-raised-button>
+                    Events <mat-icon>event_note</mat-icon>
+                </button>
+            </a>
         </li>
         <li *ngIf="(auth.user$)| async as user">
-            <a routerLink="/roster">Roster</a>
+            <a routerLink="/roster">
+                <button mat-raised-button>
+                    Roster <mat-icon>people</mat-icon>
+                </button>
+            </a>
         </li>
         <!-- <li *ngIf="(auth.user$)| async as user">
             <a *ngIf="isAdmin(user.email)" routerLink="/admin">Admin</a>

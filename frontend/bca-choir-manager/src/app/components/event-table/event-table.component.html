@@ -1,9 +1,27 @@
+
 <mat-form-field>
   <mat-label>Search for an event...</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
 </mat-form-field>
 
+<button
+mat-fab extended color="primary"
+aria-label="Button to create an event"
+(click)="openCreateEventDialog()">
+<mat-icon>edit</mat-icon>
+Create Event
+</button>
+
+<mat-paginator #paginator
+[length]="dataSource.data.length"
+[pageIndex]="0"
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 20]"
+aria-label="Select page">
+</mat-paginator>
 <div class="mat-elevation-z8 data-table">
+
+
   <table mat-table class="full-width-table"
         [dataSource]="dataSource"
         matSort
@@ -14,15 +32,21 @@
       <td mat-cell *matCellDef="let event">{{event[column]}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let event">
         <button mat-mini-fab color="warn" 
         aria-label="Click to delete event"
         (click)="openDeleteEventDialog(event)">
           <mat-icon>delete</mat-icon>
         </button>
+  
+    </td>
+    </ng-container>
 
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let event">
         <button mat-mini-fab color="primary" 
         aria-label="Click to expand event information"
         (click)="(expandedEvent = expandedEvent === event ? null : event); ($event.stopPropagation());">
@@ -67,11 +91,4 @@
   </tr>
   </table>
 
-  <mat-paginator #paginator
-      [length]="dataSource.data.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]"
-      aria-label="Select page">
-  </mat-paginator>
 </div>

@@ -8,6 +8,7 @@ import { EventData } from 'src/app/models/event-data.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event-registrees-dialog.component';
+import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event
 
 export class EventTableComponent {
   displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time'];
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'delete', 'expand'];
   expandedEvent : EventData | null = null;
   
   private events : EventData[] = [];
@@ -112,5 +113,18 @@ export class EventTableComponent {
     });
   }
 
+  openCreateEventDialog() : void {
+    const dialogRef = this.dialog.open(EventEditDialogComponent, {
+      width: '500px',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        location.reload();
+
+      }
+    });
+  }
 
 }

@@ -82,7 +82,7 @@ export class EventService {
   }
 
   getEventRegistrees(event : EventData){
-    return this.http.get<any>(`/api/event/get-event-registrees/${event.event_name}/${event.start_time}/`);
+    return this.http.get<any>(`/api/event/get-event-registrees/${event.event_name}/${(new Date(event.start_time)).getTime()}/`);
   }
 
 

@@ -124,13 +124,13 @@ export class EventEditDialogComponent {
       this.new_event.end_time = endDate.toString();
 
       this.eventService.editEvent(this.orig_event, this.new_event);
-      this.dialogRef.close();
+      this.dialogRef.close(false);
       this.calendarService.loadCalendarEvents();
     }  
 
     else {
       this.eventService.createEvent(this.new_event);
-      this.dialogRef.close();
+      this.dialogRef.close(true);
       this.calendarService.loadCalendarEvents();
 
     }

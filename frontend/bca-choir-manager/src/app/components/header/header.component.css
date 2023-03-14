@@ -1,5 +1,5 @@
 li {
-    padding:20px;
+    padding: 20px;
     margin: auto;
     display:inline;
 }
@@ -9,3 +9,16 @@ ul {
     align-items:center;
     width:100%;
 }
+
+.mat-toolbar {
+    background-color: #e18700;
+    height: 10%;
+
+}
+
+
+
+a {
+    text-decoration:none;
+}
+
