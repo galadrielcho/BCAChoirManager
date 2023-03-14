@@ -4,11 +4,11 @@
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
 </mat-form-field>
 
-<button
-mat-fab extended color="primary"
-aria-label="Button to create an event"
-(click)="openCreateEventDialog()">
-<mat-icon>edit</mat-icon>
+<button class="yellow-button"
+        mat-fab extended color="primary"
+        aria-label="Button to create an event"
+        (click)="openCreateEventDialog()">
+  <mat-icon>edit</mat-icon>
 Create Event
 </button>
 
@@ -47,8 +47,9 @@ aria-label="Select page">
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let event">
-        <button mat-mini-fab color="primary" 
-        aria-label="Click to expand event information"
+        <button class="yellow-button"
+                mat-mini-fab color="primary" 
+                aria-label="Click to expand event information"
         (click)="(expandedEvent = expandedEvent === event ? null : event); ($event.stopPropagation());">
           <mat-icon *ngIf="expandedEvent !== event">keyboard_arrow_down</mat-icon>
           <mat-icon *ngIf="expandedEvent === event">keyboard_arrow_up</mat-icon>

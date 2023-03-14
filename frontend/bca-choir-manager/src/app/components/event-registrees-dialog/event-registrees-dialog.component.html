@@ -25,6 +25,11 @@
 
 <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
 <tr mat-row *matRowDef="let student; columns: allColumns;"></tr>
+
+<tr class="mat-row" *matNoDataRow>
+  <td class="mat-cell" colspan="4">No event registrees</td>
+</tr>
+
 </table>
 
 </div>

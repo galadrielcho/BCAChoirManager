@@ -23,7 +23,7 @@
     <ng-container matColumnDef="edit" *ngIf="(auth.user$)">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let student">
-        <button mat-mini-fab (click)="editClicked(student)">
+        <button class="yellow-button" mat-mini-fab (click)="editClicked(student)">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
@@ -33,7 +33,7 @@
     <ng-container matColumnDef="delete" *ngIf="(auth.user$)">
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let student">
-        <button mat-mini-fab (click)="deleteClicked(student.email)">
+        <button mat-mini-fab color="warn" (click)="deleteClicked(student.email)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
