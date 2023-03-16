@@ -7,15 +7,15 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.use('/', express.static('dist/bca-choir-manager'));
+app.use(express.static('./../frontend/dist/bca-choir-manager'));
 
 app.use(bodyParser.json());
 
 // Create link to Angular build directory
 // The `ng build` command will save the result
 // under the `dist` folder.
-var distDir = "'..\\frontend\\bca-choir-manager\\dist";
-app.use(express.static(distDir));
+// var distDir = "..\\frontend\\dist\\bca-choir-manager\\";
+// app.use(express.static(distDir));
 
 // Init the server
 var server = app.listen(process.env.PORT || 8080, function () {
