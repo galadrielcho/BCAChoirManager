@@ -32,17 +32,17 @@ export class RosterUpdateComponent {
                     {name: String(this.year + 3), value: this.year + 3},
                     {name: String(this.year + 4), value: this.year + 4}]
 
-  @ViewChild('firstname') firstname!: ElementRef<HTMLInputElement>;
-  @ViewChild('lastname') lastname!: ElementRef<HTMLInputElement>;
-  @ViewChild('pronouns') pronouns!: ElementRef<HTMLInputElement>;
+  firstName : string = this.orig_student.first_name
+  lastName : string = this.orig_student.last_name
+  pronouns : string = this.orig_student.pronouns
   voicepartChoice : string = this.orig_student.voicepart_name;
   voicepartNumberChoice : number = this.orig_student.number;
   choirChoice : string = this.orig_student.choir_name;
   yearChoice : number = this.orig_student.grad_year;
 
 
-  constructor(public service: RosterUpdateService, 
-    public dialogRef: MatDialogRef<RosterUpdateComponent>,
+  constructor(private service: RosterUpdateService, 
+    private dialogRef: MatDialogRef<RosterUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_student: StudentData,
     )
   {}
@@ -50,62 +50,31 @@ export class RosterUpdateComponent {
   ngOnInit() {
   }
 
-  public getFirstName(){
-    return this.student.first_name;
-  }
-
-  public getLastName(){
-
-    return this.student.last_name;
-  }
-
-  public getPronouns(){
-
-    return this.student.pronouns;
-  }
-
-
   public isChoirtypeChecked(value : number){
     let choirtype = (value == 0) ? 'Chamber' : 'Concert';
-    if(this.student.choir_name == choirtype){
-      return true;
-    }
-    return false;
+    return this.student.choir_name == choirtype;
   }
 
   public isYearChecked(year : number){
-
-    if(this.student.grad_year == year){
-      return true;
-    }
-    return false;
+    return this.student.grad_year == year;
   }
 
   public isVPChecked(value : string){
-    if(this.student.voicepart_name === value){
-      return true;
-    }
-    return false;
+    return this.student.voicepart_name === value;
   }
 
   public isVPNChecked(value : number){
-    if(this.student.number == value){
-      return true;
-    }
-    return false;
+    return this.student.number == value;
   }
 
 
   public submit(){
-    let first_name = this.firstname.nativeElement.value ;
-    let last_name = this.lastname.nativeElement.value;
-    let pronouns = this.pronouns.nativeElement.value;
 
     let updatedStudent : StudentData = {
       email: this.student.email,
-      first_name: (this.isValidString(first_name) ? first_name : this.student.first_name),
-      last_name: this.isValidString(last_name) ? last_name : this.student.last_name,
-      pronouns: this.isValidString(pronouns) ? pronouns : this.student.pronouns,
+      first_name: (this.isValidString(this.firstName) ? this.firstName : this.student.first_name),
+      last_name: this.isValidString(this.firstName) ? this.lastName : this.student.last_name,
+      pronouns: this.isValidString(this.firstName) ? this.pronouns : this.student.pronouns,
       voicepart_name: this.voicepartChoice,
       number: this.voicepartNumberChoice,
       choir_name: this.choirChoice,
@@ -121,6 +90,7 @@ export class RosterUpdateComponent {
   }
   
   public isValidString(s : String){
+    // Call util service to test this
     if (s.trim() == ""){
       return false;
     }

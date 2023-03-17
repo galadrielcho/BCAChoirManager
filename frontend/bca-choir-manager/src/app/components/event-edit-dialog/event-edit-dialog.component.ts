@@ -12,7 +12,6 @@ import {CalendarService} from '../../services/calendar-service/calendar.service'
 })
 
 export class EventEditDialogComponent {
-  myControl = new FormControl('');
   public newStartTime : string = this.getStartTime();
   public newEndTime : string = this.getEndTime();
 
