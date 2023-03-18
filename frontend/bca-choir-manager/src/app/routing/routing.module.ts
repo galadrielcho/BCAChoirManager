@@ -1,3 +1,4 @@
+import { AuthGuard } from '@auth0/auth0-angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,11 +12,21 @@ import { EventsPageComponent } from '../pages/events-page/events-page.component'
 const routes: Routes = [
   { path: 'home', component: HomePageComponent},
   { path: 'calendar', component: CalendarPageComponent},
-  { path: 'roster', component: RosterPageComponent},
-  { path: 'admin', component: AdminPageComponent},
-  { path: 'events', component: EventsPageComponent},
+  { path: 'roster',
+    component: RosterPageComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'admin',
+    component: AdminPageComponent,
+    canActivate: [AuthGuard]
 
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  },
+  { path: 'events',
+    component: EventsPageComponent,
+    canActivate: [AuthGuard]
+  },
+
+  { path: '**', redirectTo: '/home',}
 ];
 @NgModule({
   imports: [
