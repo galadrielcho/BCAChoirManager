@@ -2,7 +2,7 @@
     <h1 class="center" [innerHTML]="getCalendarTitle()"></h1>
     <div class="center flex-row">
         <div #back (click)="setMonthBackward()">
-            <button class="yellow-button" mat-mini-fab color="primary" aria-label="Button to create an event">
+            <button class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
                 <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
         </div>
@@ -20,12 +20,12 @@
             </mat-form-field>
 
         <div #forward (click)="setMonthForward()">
-            <button class="yellow-button" mat-mini-fab color="primary" aria-label="Button to create an event">
+            <button class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
                 <mat-icon>keyboard_arrow_right</mat-icon>
             </button>
         </div>
         <div *ngIf="(auth.user$)| async as user">
-        <button class="yellow-button" *ngIf="isAdmin(user.email)"
+        <button class="blue-button" *ngIf="isAdmin(user.email)"
                 mat-fab extended color="primary"
                 aria-label="Button to create an event"
                 (click)="openCreateEventDialog()">
