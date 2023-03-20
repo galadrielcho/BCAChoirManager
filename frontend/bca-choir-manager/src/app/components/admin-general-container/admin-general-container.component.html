@@ -1,3 +1,4 @@
+admin general component. html
 <h3>Create Custom Email Group</h3> 
 <mat-form-field class="email-group-members">
     <mat-label>Names or emails</mat-label>
@@ -7,12 +8,10 @@
 <button mat-button>Create</button>
 
 <h3>Current Admins</h3> 
-<mat-list>
-    <mat-list-item>Louis Spinelli</mat-list-item>
+<mat-list *ngFor="let option of admins">
+    <mat-list-item>{{option}}</mat-list-item>
     <mat-divider></mat-divider>
-    <mat-list-item>Satwika Vemuri</mat-list-item>
-    <mat-divider></mat-divider>
-  </mat-list>
+</mat-list>
 
   
 <mat-form-field class="admins-invited">

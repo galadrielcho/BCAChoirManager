@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-general-container.component.css']
 })
 export class AdminGeneralContainerComponent {
-
+  admins: String[] = ["Louis Spinelli", "Satwika Cho"];
+  constructor(){
+    this.updateAdmins();
+  }
+  updateAdmins(){
+    
+  }
 }
