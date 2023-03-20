@@ -4,6 +4,18 @@ const router = require('express').Router();
 
 module.exports = function () {
 
+    router.get("/api/get-admins", function (req, res) {
+      sql = `CALL getAdmins();`
+      database.query(sql, function(err, admins, fields) 
+      {
+      if (err) throw err;
+    
+      let result = Object.values(JSON.parse(JSON.stringify(admins[0])));
+    
+      res.send({admins: result});
+      });
+    });                             
+
     router.post("/api/sign-up", function (req, res) {
         // insert into account
         sql = `INSERT INTO account (email, first_name, last_name, pronouns, is_admin) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])}, 0);`

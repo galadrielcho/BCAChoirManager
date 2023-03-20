@@ -53,6 +53,11 @@ export class AuthenticationService {
     return this.auth.user$;
   }
 
+  getAdmins(){
+    let url = `/api/get-admins`;
+    return this.http.get<any>(url);
+  }
+
 
   isAdmin2(email : string | undefined) {
     let url = `/api/is-admin/${email}`;
