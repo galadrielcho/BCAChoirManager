@@ -15,7 +15,6 @@ export class AdminGeneralContainerComponent {
     this.updateAdmins();
   }
   updateAdmins(){
-    console.log("here");
     this.authService.getAdmins().subscribe({
       next: data => {
         console.log(data); 

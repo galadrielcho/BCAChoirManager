@@ -1,5 +1,5 @@
 <mat-form-field class="email-recipients" appearance="fill">
-  <mat-label>Recipients</mat-label>
+  <mat-label>Add admins here!</mat-label>
   <mat-chip-grid #chipGrid aria-label="Email selection">
     <mat-chip-row *ngFor="let email of emails" (removed)="remove(email)">
       {{email}}
@@ -8,7 +8,7 @@
       </button>
     </mat-chip-row>
   </mat-chip-grid>
-  <input placeholder="New email or group..." #emailInput [formControl]="emailCtrl"
+  <input placeholder="Enter first & last name OR email" #emailInput [formControl]="emailCtrl"
     [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
     (matChipInputTokenEnd)="add($event)"/>

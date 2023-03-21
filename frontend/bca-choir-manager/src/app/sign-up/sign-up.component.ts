@@ -58,6 +58,12 @@ export class SignUpComponent {
     this.service.close();
   }
 
+  restrictInput(event: {charCode: any; }){   
+    var k;  
+    k = event.charCode;                                                    // - and / characters
+    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || k == 45 || k == 47); 
+  }
+
   public disableSubmit(){
     if((this.firstname == undefined) || (this.lastname == undefined) || (this.pronouns == undefined) || (this.yearPos == undefined) || (this.choirtypePos == undefined) || (this.VPPos == undefined) || (this.VPNPos == undefined)){
       return true;

@@ -9,19 +9,19 @@
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>First Name</mat-label>
-        <input matInput ngModel #firstname>
+        <input matInput ngModel #firstname (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput ngModel #lastname>
+        <input matInput ngModel #lastname (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Pronouns</mat-label>
-        <input matInput ngModel #pronouns>
+        <input matInput ngModel #pronouns (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 </div>

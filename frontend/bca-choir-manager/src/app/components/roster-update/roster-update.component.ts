@@ -111,6 +111,20 @@ export class RosterUpdateComponent {
   public changeChoirType(choir : string) {
     this.choirChoice = choir;
   }
+  /*
+  restrictInput(event: {charCode: any;})
+  {   
+    var k;  
+    k = event.charCode; 
+    return((k > 64 && k < 91) || (k == 189) || (k == 111)); 
+  }
+  */
+
+  restrictInput(event: {charCode: any; }){   
+    var k;  
+    k = event.charCode;                                                    // - and / characters
+    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || k == 45 || k == 47); 
+  }
 
 
 }
