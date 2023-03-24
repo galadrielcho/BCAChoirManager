@@ -27,6 +27,7 @@ export class EmailRecipientsInputComponent {
       startWith(null),
       map((email: string | null) => (email ? this._filter(email) : this.allEmails.slice())),
     );
+    console.log(this.emails);
   }
 
   add(event: MatChipInputEvent): void {
@@ -53,7 +54,7 @@ export class EmailRecipientsInputComponent {
               }
             }
           }
-
+          console.log(this.emails);
         }
       }); 
     }

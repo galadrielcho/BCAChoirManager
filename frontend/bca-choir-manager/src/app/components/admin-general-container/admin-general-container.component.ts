@@ -1,6 +1,8 @@
 
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { AddAdminComponent } from '../add-admin/add-admin.component';
 
 @Component({
   selector: 'admin-general-container',
@@ -10,9 +12,14 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class AdminGeneralContainerComponent {
   admins: String[] = [];
   authService: AuthenticationService;
-  constructor(public as: AuthenticationService){
+  dialog: MatDialog;
+  constructor(public as: AuthenticationService, private md: MatDialog,){
     this.authService = as;
     this.updateAdmins();
+    this.dialog = md;
+  }
+  addAdmin(){
+    this.dialog.open(AddAdminComponent);
   }
   updateAdmins(){
     this.authService.getAdmins().subscribe({
