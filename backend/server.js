@@ -1,9 +1,18 @@
 var express = require('express');
 var bodyParser = require("body-parser");
+const path = require('path');
+
 var app = express();
 
 app.use(bodyParser.json());
-app.use(express.static('./../frontend/dist/bca-choir-manager'));
+app.use(express.static('./../frontend/bca-choir-manager/dist/bca-choir-manager'));
+
+// Rewrites direct url routing
+folderDir = __dirname + './../frontend/bca-choir-manager/dist/bca-choir-manager';
+app.use('*', function (req, res) {
+  res.sendFile(path.join(folderDir, '/index.html'));
+});
+
 
 const fs = require('fs');
 const routes_directory = require('path').resolve(__dirname) + '\\routes\\'; 
@@ -18,6 +27,8 @@ fs.readdirSync(routes_directory).forEach(route_file => {
 });
 
 
+
+
 // Create link to Angular build directory
 // The `ng build` command will save the result
 // under the `dist` folder.
@@ -28,4 +39,5 @@ var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
+
 
