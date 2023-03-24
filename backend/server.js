@@ -7,15 +7,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static('./../frontend/bca-choir-manager/dist/bca-choir-manager'));
 
-// Rewrites direct url routing
-folderDir = __dirname + './../frontend/bca-choir-manager/dist/bca-choir-manager';
-app.use('*', function (req, res) {
-  res.sendFile(path.join(folderDir, '/index.html'));
-});
-
-
 const fs = require('fs');
-const routes_directory = require('path').resolve(__dirname) + '\\routes\\'; 
+const routes_directory = path.resolve(__dirname) + '\\routes\\'; 
 
 fs.readdirSync(routes_directory).forEach(route_file => {
   try {
@@ -26,7 +19,11 @@ fs.readdirSync(routes_directory).forEach(route_file => {
   }
 });
 
-
+// Rewrites direct url routing
+folderDir = __dirname + './../frontend/bca-choir-manager/dist/bca-choir-manager';
+app.use('*', function (req, res) {
+  res.sendFile(path.join(folderDir, '/index.html'));
+});
 
 
 // Create link to Angular build directory
