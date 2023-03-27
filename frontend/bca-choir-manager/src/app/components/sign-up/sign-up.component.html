@@ -9,31 +9,31 @@
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>First Name</mat-label>
-        <input matInput ngModel #firstname (keypress)="restrictInput($event)">
+        <input matInput ngModel #firstname (keypress)="restrictChar($event)">
     </mat-form-field>
 </p>
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput ngModel #lastname (keypress)="restrictInput($event)">
+        <input matInput ngModel #lastname (keypress)="restrictChar($event)">
     </mat-form-field>
 </p>
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Pronouns</mat-label>
-        <input matInput ngModel #pronouns (keypress)="restrictInput($event)">
+        <input matInput ngModel #pronouns (keypress)="restrictChar($event)">
     </mat-form-field>
 </p>
 </div>
 <div class="group1">
     <p>
         Graduation Year
-        <mat-radio-group class="example-radio-group" [(ngModel)]="yearPos">
+        <mat-radio-group class="example-radio-group" [(ngModel)]="year">
             <mat-radio-button
             class="example-radio-button"
             *ngFor="let option of years"
-            [value]="option.value">
-            {{option.name}}
+            [value]="option">
+            {{option}}
             </mat-radio-button>
         </mat-radio-group>
     </p>
@@ -42,12 +42,12 @@
 <div class="group1">
     <p>
         Voice Part
-        <mat-radio-group class="example-radio-group" [(ngModel)]="VPPos">
+        <mat-radio-group class="example-radio-group" [(ngModel)]="voicepart">
             <mat-radio-button
             class="example-radio-button"
             *ngFor="let option of voiceparts"
-            [value]="option.value">
-            {{option.name}}
+            [value]="option">
+            {{option}}
             </mat-radio-button>
         </mat-radio-group>
     </p>
@@ -56,24 +56,24 @@
 <div class="group1">
     <p>
         Voice Part Number
-        <mat-radio-group class="example-radio-group" [(ngModel)]="VPNPos">
+        <mat-radio-group class="example-radio-group" [(ngModel)]="voicepartNumber">
             <mat-radio-button
             class="example-radio-button"
-            *ngFor="let option of voicePartNumbers"
-            [value]="option.value">
-            {{option.name}}
+            *ngFor="let option of voicepartNumbers"
+            [value]="option">
+            {{option}}
             </mat-radio-button>
         </mat-radio-group>
     </p>
     
     <p>
         Choir Type
-        <mat-radio-group class="example-radio-group" [(ngModel)]="choirtypePos">
+        <mat-radio-group class="example-radio-group" [(ngModel)]="choirtype">
             <mat-radio-button
             class="example-radio-button"
             *ngFor="let option of choirtypes"
-            [value]="option.value">
-            {{option.name}}
+            [value]="option">
+            {{option}}
             </mat-radio-button>
         </mat-radio-group>
     </p>

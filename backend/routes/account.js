@@ -28,6 +28,8 @@ module.exports = function () {
         // figure out voicepart_id
         sql=`SELECT voicepart_id from voicepart 
         WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
+        console.log(sql);
+
         database.query(sql, function(err, rows, fields) 
         {
           if (err) throw err;

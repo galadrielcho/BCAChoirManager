@@ -3,7 +3,7 @@ export interface StudentData {
   last_name : string;
   pronouns : string;
   voicepart_name : string;
-  number : number;
+  voicepart_number : number;
   choir_name : string;
   grad_year : number;
   email : string;
