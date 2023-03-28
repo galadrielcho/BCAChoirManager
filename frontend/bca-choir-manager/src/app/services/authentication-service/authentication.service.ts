@@ -43,7 +43,7 @@ export class AuthenticationService {
   }
 
   login() {
-    this.auth.loginWithRedirect();
+    this.auth.loginWithPopup();
   }
   logout() {
     this.user = null;

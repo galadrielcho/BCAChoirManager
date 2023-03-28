@@ -3,7 +3,7 @@ import { AccountService} from '../../services/account-service/account.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
-import { SignUpComponent } from 'src/app/sign-up/sign-up.component';
+import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
 
 @Component({
   selector: 'app-home-page',

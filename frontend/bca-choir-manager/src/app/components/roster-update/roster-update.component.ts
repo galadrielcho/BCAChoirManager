@@ -36,7 +36,7 @@ export class RosterUpdateComponent {
   lastName : string = this.orig_student.last_name
   pronouns : string = this.orig_student.pronouns
   voicepartChoice : string = this.orig_student.voicepart_name;
-  voicepartNumberChoice : number = this.orig_student.number;
+  voicepartNumberChoice : number = this.orig_student.voicepart_number;
   choirChoice : string = this.orig_student.choir_name;
   yearChoice : number = this.orig_student.grad_year;
 
@@ -64,7 +64,7 @@ export class RosterUpdateComponent {
   }
 
   public isVPNChecked(value : number){
-    return this.student.number == value;
+    return this.student.voicepart_number == value;
   }
 
 
@@ -76,7 +76,7 @@ export class RosterUpdateComponent {
       last_name: this.isValidString(this.firstName) ? this.lastName : this.student.last_name,
       pronouns: this.isValidString(this.firstName) ? this.pronouns : this.student.pronouns,
       voicepart_name: this.voicepartChoice,
-      number: this.voicepartNumberChoice,
+      voicepart_number: this.voicepartNumberChoice,
       choir_name: this.choirChoice,
       grad_year: this.yearChoice
       
