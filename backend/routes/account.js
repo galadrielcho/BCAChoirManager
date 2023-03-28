@@ -17,44 +17,24 @@ module.exports = function () {
     });                             
 
     router.post("/api/sign-up", function (req, res) {
+
+        const email = database.escape(req.body[0]);
+        const first_name = database.escape(req.body[1]);
+        const last_name = database.escape(req.body[2]);
+        const pronouns = database.escape(req.body[3]);
+        const voicepart_name = database.escape(req.body[4]);
+        const voicepart_number = database.escape(req.body[5]);
+        const choir_name = database.escape(req.body[6]);
+
         // insert into account
-        sql = `INSERT INTO account (email, first_name, last_name, pronouns, is_admin) VALUES (${database.escape(req.body[0])},${database.escape(req.body[1])}, ${database.escape(req.body[2])}, ${database.escape(req.body[3])}, 0);`
-        database.query(sql, function(err, rows, fields) 
-          {
-            if (err) throw err;
-          }); 
-        
-      
-        // figure out voicepart_id
-        sql=`SELECT voicepart_id from voicepart 
-        WHERE voicepart_name = ${database.escape(req.body[4])} and number = ${database.escape(req.body[5])}`
-        console.log(sql);
+        sql = `CALL signupAccount(${email}, ${first_name}, 
+              ${last_name}, ${pronouns}, ${voicepart_name},
+              ${voicepart_number}, ${choir_name}, 0);`
 
         database.query(sql, function(err, rows, fields) 
-        {
-          if (err) throw err;
-          let voicepart_id = rows[0].voicepart_id;
-          // THEN figure out choirtype_id
-          sql=`SELECT choir_type_id from choir_type
-          WHERE choir_name = ${database.escape(req.body[6])}`
-          database.query(sql, function(err, rows, fields) 
           {
             if (err) throw err;
-            choir_type_id = rows[0].choir_type_id;
-            // THEN insert into student
-            sql = `INSERT INTO student (email, voicepart_id, grad_year, choir_type_id) VALUES (${database.escape(req.body[0])}, ${database.escape(voicepart_id)}, ${database.escape(req.body[7])}, ${database.escape(choir_type_id)});`
-            database.query(sql, function(err, rows, fields) 
-              {
-                if (err) throw err;
-              });  
-            
           }); 
-          
-        }); 
-        
-        
-        
-      
     });
 
 
