@@ -14,4 +14,8 @@ export class AccountService {
   postStatus(stringArray: string[]) {
     return this.http.post(this.statusUrl, stringArray);
   }
+
+  addAdmin(details: string[]){
+    console.log(details);
+  }
 }
