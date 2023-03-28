@@ -7,6 +7,8 @@ import { RosterPageComponent } from '../pages/roster-page/roster-page.component'
 import { CalendarPageComponent } from '../pages/calendar-page/calendar-page.component';
 import { AdminPageComponent } from '../pages/admin-page/admin-page.component';
 import { EventsPageComponent } from '../pages/events-page/events-page.component';
+import { AdminGuard } from './admin-guard/admin.guard';
+import { CallbackComponent } from '../pages/callback-page/callback-page';
 
 
 const routes: Routes = [
@@ -18,14 +20,14 @@ const routes: Routes = [
   },
   { path: 'admin',
     component: AdminPageComponent,
-    canActivate: [AuthGuard]
-
+    canActivate: [AuthGuard, AdminGuard]
   },
   { path: 'events',
     component: EventsPageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
-
+  { path: 'callback',
+  component: CallbackComponent},
   { path: '**', redirectTo: '/home',}
 ];
 @NgModule({
@@ -36,6 +38,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  declarations: []
+  declarations: [
+  ]
 })
 export class RoutingModule { }
