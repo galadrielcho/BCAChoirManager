@@ -72,7 +72,7 @@ export class RosterTableComponent implements AfterViewInit {
       next : data => {
         if (data) {
           console.log(data);
-          this.authService.isAdmin2(data.email).subscribe({
+          this.authService.isAdmin(data.email).subscribe({
             next : data => {
               if (data == true) {
                 this.admin = data;
@@ -106,22 +106,6 @@ export class RosterTableComponent implements AfterViewInit {
 
     }
   }
-
-  // async getAppropiateColumns() {
-  //   this.authService.isAdmin2().subscribe({
-  //     next : isAdmin => {
-  //       this.admin = isAdmin();
-  //       if (isAdmin) {
-  //         this.displayedColumns.push('edit');
-  //         this.displayedColumns.push('delete');
-
-  //       }
-  //     }
-  //   });
-
-  
-      
-
 
   ngAfterViewInit(): void {
   }

@@ -65,8 +65,9 @@ export class EventDescriptionDialogComponent {
   
   isAdmin(email: string|undefined){
     if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
-      this.authenticationService.isAdmin(email).then(res => {
-        this.admin = res;
+      this.authenticationService.isAdmin(email).subscribe(
+        data => {
+        this.admin = data;
       })
       this.seconds = Date.now()/1000;
     }
