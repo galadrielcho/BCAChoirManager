@@ -16,7 +16,6 @@ export class AccountService {
   }
 
   checkAdmin(details: string[]){
-    console.log("checking");
     return this.http.post('/api/check-admin', details);
   }
 

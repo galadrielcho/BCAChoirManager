@@ -114,20 +114,14 @@ module.exports = function () {
       });  
   });
   router.post('/api/add-admin', (req, res) => {
-    const email = database.escape(req.body[0]);
-    const first_name = database.escape(req.body[1]);
-    const last_name = database.escape(req.body[2]);
 
   // get account if it exists
   sql = `CALL addAdmin(${database.escape(req.body[0])}, ${database.escape(req.body[1])}, ${database.escape(req.body[2])});`
   console.log(sql);
-  console.log("before query")
   database.query(sql, function(err, account, fields) {
-    console.log("querying");
     if (err) throw err;
       res.send({added: true});
   });
-  console.log("done w/query");
 });
 
 /*  "/api/is-admin/:email"

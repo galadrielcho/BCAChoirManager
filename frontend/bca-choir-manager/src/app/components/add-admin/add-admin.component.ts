@@ -7,7 +7,6 @@ import { AccountService } from 'src/app/services/account-service/account.service
   styleUrls: ['./add-admin.component.css']
 })
 export class AddAdminComponent {
-  var = "hello";
   firstname = "";
   lastname = "";
   email = "";
