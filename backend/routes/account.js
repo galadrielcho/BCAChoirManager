@@ -37,7 +37,6 @@ module.exports = function () {
           }); 
     });
 
-
 /*  "/api/get-account/:email"
 *   GET: Gets the data of a generic account.
 *   Retrieves the following infromation:
@@ -74,15 +73,62 @@ module.exports = function () {
         });
       });
     
-    router.post('/api/delete-account', (req, res) => {
-        const email = req.body;
-        sql = `DELETE FROM account WHERE email = ${database.escape(email[0])};`;
-        database.query(sql, function(err, rows, fields) 
-        {
-            if (err) throw err;
-        });  
-    });
+    router.post('/api/check-admin', (req, res) => {
+        const email = database.escape(req.body[0]);
+        const first_name = database.escape(req.body[1]);
+        const last_name = database.escape(req.body[2]);
 
+      // get account if it exists
+      sql = `CALL getAccount(${database.escape(req.body[0])});`
+      database.query(sql, function(err, account, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(account[0])));
+        if(result[0] == undefined){
+          res.send({exists: false});
+        }
+        else{
+          res.send({exists: true});
+        }
+      });
+    });
+    router.post('/api/check-admin', (req, res) => {
+      // get account if it exists
+      sql = `CALL getAccount(${database.escape(req.body[0])});`
+      database.query(sql, function(err, account, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(account[0])));
+        if(result[0] == undefined){
+          res.send({exists: false});
+        }
+        else{
+          res.send({exists: true});
+        }
+      });
+    });
+    router.post('/api/delete-account', (req, res) => {
+      const email = req.body;
+      sql = `DELETE FROM account WHERE email = ${database.escape(email[0])};`;
+      database.query(sql, function(err, rows, fields) 
+      {
+          if (err) throw err;
+      });  
+  });
+  router.post('/api/add-admin', (req, res) => {
+    const email = database.escape(req.body[0]);
+    const first_name = database.escape(req.body[1]);
+    const last_name = database.escape(req.body[2]);
+
+  // get account if it exists
+  sql = `CALL addAdmin(${database.escape(req.body[0])}, ${database.escape(req.body[1])}, ${database.escape(req.body[2])});`
+  console.log(sql);
+  console.log("before query")
+  database.query(sql, function(err, account, fields) {
+    console.log("querying");
+    if (err) throw err;
+      res.send({added: true});
+  });
+  console.log("done w/query");
+});
 
 /*  "/api/is-admin/:email"
 *   GET: Checks if user is an admin
