@@ -1,0 +1,17 @@
+.group1 {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: text-top;
+  }
+
+.error{
+  padding-top: 25px;
+  color: rgb(196, 24, 24);
+  font-weight: bold;
+}
+
+.success{
+  padding: 1rem 1rem;
+  color: rgb(0, 123, 47);
+  padding-top: 25px;
+}

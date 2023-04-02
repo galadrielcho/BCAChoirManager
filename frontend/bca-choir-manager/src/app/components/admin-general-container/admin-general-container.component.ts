@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { AddAdminComponent } from '../add-admin/add-admin.component';
+import { DeleteAdminComponent } from '../delete-admin/delete-admin.component';
 
 @Component({
   selector: 'admin-general-container',
@@ -20,6 +21,9 @@ export class AdminGeneralContainerComponent {
   }
   addAdmin(){
     this.dialog.open(AddAdminComponent);
+  }
+  deleteAdmin(){
+    this.dialog.open(DeleteAdminComponent);
   }
   updateAdmins(){
     this.authService.getAdmins().subscribe({

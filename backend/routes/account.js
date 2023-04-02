@@ -14,7 +14,18 @@ module.exports = function () {
     
       res.send({admins: result});
       });
-    });                             
+    });           
+    
+    router.post('/api/delete-account', (req, res) => {
+      // get account if it exists
+      sql = `CALL deleteAccount(${database.escape(req.body[0])});`
+      database.query(sql, function(err, account, fields) {
+        if (err){
+          throw err;
+        }
+        res.send({success: true});
+      });
+    });
 
     router.post("/api/sign-up", function (req, res) {
 
