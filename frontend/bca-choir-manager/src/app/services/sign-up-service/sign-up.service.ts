@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { StudentData } from 'src/app/models/student-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,12 @@ import { MatDialog } from '@angular/material/dialog';
 export class SignUpService {
   dialog!: MatDialog;
   location!: Location;
-  email!: String;
+  email!: string;
   private signUpUrl = '/api/sign-up';
 
   constructor(private http: HttpClient) { }
 
-  public send(dialog: MatDialog, location: Location, email: String|undefined){
+  public send(dialog: MatDialog, location: Location, email: string|undefined){
     this.dialog = dialog;
     this.location = location;
     if(email == undefined){
@@ -26,12 +27,10 @@ export class SignUpService {
 
   public close(){
     this.dialog.closeAll();
-    this.location.reload();
   }
 
-  public postDetails(details: any[]){
-    console.log("in post");
-    this.http.post(this.signUpUrl, details).subscribe();
+  public postDetails(student: any[]){
+    this.http.post(this.signUpUrl, student).subscribe();
   }
 
   public getEmail(email : string|undefined){

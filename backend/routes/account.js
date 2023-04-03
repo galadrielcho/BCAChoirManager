@@ -25,12 +25,14 @@ module.exports = function () {
         const voicepart_name = database.escape(req.body[4]);
         const voicepart_number = database.escape(req.body[5]);
         const choir_name = database.escape(req.body[6]);
+        const grad_year = database.escape(req.body[7]);
+
 
         // insert into account
         sql = `CALL signupAccount(${email}, ${first_name}, 
               ${last_name}, ${pronouns}, ${voicepart_name},
-              ${voicepart_number}, ${choir_name}, 0);`
-
+              ${voicepart_number}, ${choir_name}, ${grad_year});`
+        
         database.query(sql, function(err, rows, fields) 
           {
             if (err) throw err;

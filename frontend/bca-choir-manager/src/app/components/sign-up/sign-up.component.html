@@ -1,82 +1,84 @@
-<div class = "container">
-    <mat-toolbar>
-        <span class="fill-space"></span>
-        <span> Sign Up</span>
-        <span class="fill-space"></span>
-    </mat-toolbar>
-</div>
-<div class="group1">
-<p>
-    <mat-form-field class="example-full-width">
-        <mat-label>First Name</mat-label>
-        <input matInput ngModel #firstname (keypress)="restrictChar($event)">
-    </mat-form-field>
-</p>
-<p>
-    <mat-form-field class="example-full-width">
-        <mat-label>Last Name</mat-label>
-        <input matInput ngModel #lastname (keypress)="restrictChar($event)">
-    </mat-form-field>
-</p>
-<p>
-    <mat-form-field class="example-full-width">
-        <mat-label>Pronouns</mat-label>
-        <input matInput ngModel #pronouns (keypress)="restrictChar($event)">
-    </mat-form-field>
-</p>
-</div>
-<div class="group1">
+<form [formGroup]="signupForm"> 
+    <div class = "container">
+        <mat-toolbar>
+            <span class="fill-space"></span>
+            <span> Sign Up</span>
+            <span class="fill-space"></span>
+        </mat-toolbar>
+    </div>
+    <div class="group1">
     <p>
-        Graduation Year
-        <mat-radio-group class="example-radio-group" [(ngModel)]="year">
-            <mat-radio-button
-            class="example-radio-button"
-            *ngFor="let option of years"
-            [value]="option">
-            {{option}}
-            </mat-radio-button>
-        </mat-radio-group>
+        <mat-form-field class="example-full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="firstName" (keypress)="restrictChar($event)">
+        </mat-form-field>
     </p>
-</div>
+    <p>
+        <mat-form-field class="example-full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastName" (keypress)="restrictChar($event)">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field class="example-full-width">
+            <mat-label>Pronouns</mat-label>
+            <input matInput type="text" formControlName="pronouns" (keypress)="restrictChar($event)">
+        </mat-form-field>
+    </p>
+    </div>
+    <div class="group1">
+        <p>
+            Graduation Year
+            <mat-radio-group class="example-radio-group" formControlName="year" >
+                <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let option of years"
+                [value]="option">
+                {{option}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </p>
+    </div>
 
-<div class="group1">
-    <p>
-        Voice Part
-        <mat-radio-group class="example-radio-group" [(ngModel)]="voicepart">
-            <mat-radio-button
-            class="example-radio-button"
-            *ngFor="let option of voiceparts"
-            [value]="option">
-            {{option}}
-            </mat-radio-button>
-        </mat-radio-group>
-    </p>
-</div>
+    <div class="group1">
+        <p>
+            Voice Part
+            <mat-radio-group class="example-radio-group" formControlName="voicepart">
+                <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let option of voiceparts"
+                [value]="option">
+                {{option}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </p>
+    </div>
 
-<div class="group1">
-    <p>
-        Voice Part Number
-        <mat-radio-group class="example-radio-group" [(ngModel)]="voicepartNumber">
-            <mat-radio-button
-            class="example-radio-button"
-            *ngFor="let option of voicepartNumbers"
-            [value]="option">
-            {{option}}
-            </mat-radio-button>
-        </mat-radio-group>
-    </p>
-    
-    <p>
-        Choir Type
-        <mat-radio-group class="example-radio-group" [(ngModel)]="choirtype">
-            <mat-radio-button
-            class="example-radio-button"
-            *ngFor="let option of choirtypes"
-            [value]="option">
-            {{option}}
-            </mat-radio-button>
-        </mat-radio-group>
-    </p>
-</div>
+    <div class="group1">
+        <p>
+            Voice Part Number
+            <mat-radio-group class="example-radio-group" formControlName="voicepartNumber">
+                <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let option of voicepartNumbers"
+                [value]="option">
+                {{option}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </p>
+        
+        <p>
+            Choir Type
+            <mat-radio-group class="example-radio-group" formControlName="choirtype">
+                <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let option of choirtypes"
+                [value]="option">
+                {{option}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </p>
+    </div>
 
-<button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="disableSubmit()" id="bottom">Submit</button> 
+    <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid" (click)="submit()" id="bottom">Submit</button> 
+</form>
