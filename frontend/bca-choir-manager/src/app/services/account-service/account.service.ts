@@ -14,4 +14,17 @@ export class AccountService {
   postStatus(stringArray: string[]) {
     return this.http.post(this.statusUrl, stringArray);
   }
+
+  checkAdmin(details: string[]){
+    return this.http.post('/api/check-admin', details);
+  }
+
+  addAdmin(details: string[]){
+    return this.http.post('/api/add-admin', details);
+  }
+
+  deleteAdmin(details: string[]){
+    return this.http.post('/api/delete-account', details);
+  }
+  
 }

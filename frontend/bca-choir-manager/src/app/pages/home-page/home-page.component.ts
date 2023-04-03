@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AccountService} from '../../services/account-service/account.service';
-import { AuthService } from '@auth0/auth0-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
 import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,12 +13,10 @@ import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
 
 export class HomePageComponent {
   dialog: MatDialog;
-  signUpService: SignUpService
   isUnaccounted: Boolean
   dbCalled: Boolean
-  constructor(private accountService: AccountService, public auth: AuthService, private md: MatDialog, private sus: SignUpService) {
+  constructor(private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService) {
     this.dialog = md;
-    this.signUpService = sus;
     this.isUnaccounted = false;
     this.dbCalled = false;
   }
@@ -30,11 +28,17 @@ export class HomePageComponent {
     const myArray: string[] = text.split(";");
     this.accountService.postStatus(myArray).subscribe({});
   }
-  inDatabase(email: string|undefined){
+
+  isAuthenticated() {
+    return this.auth.isAuthenticated();
+  }
+
+
+  inDatabase() {
+    let email = this.auth.getUser();
     //check if email is in database, if so return true
     if(this.dbCalled == false){ // db hasn't been accessed yet
       this.dbCalled = true;
-      console.log("before getting email");
       this.signUpService.getEmail(email).subscribe({
         next: data => {
           if(data.details == undefined){

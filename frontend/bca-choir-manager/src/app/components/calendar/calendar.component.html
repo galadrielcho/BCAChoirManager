@@ -24,15 +24,15 @@
                 <mat-icon>keyboard_arrow_right</mat-icon>
             </button>
         </div>
-        <div *ngIf="(auth.user$)| async as user">
-        <button class="blue-button" *ngIf="isAdmin(user.email)"
+        <div *ngIf = "getAdmin()">
+        <button class="blue-button"
                 mat-fab extended color="primary"
                 aria-label="Button to create an event"
                 (click)="openCreateEventDialog()">
             <mat-icon>edit</mat-icon>
             Create Event
         </button>
-    </div>
+        </div>
 
     </div> 
 

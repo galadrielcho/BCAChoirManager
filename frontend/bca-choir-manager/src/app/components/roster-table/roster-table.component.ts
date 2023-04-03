@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/components/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { StudentData } from 'src/app/models/student-data.model';
-import { AuthService } from '@auth0/auth0-angular';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 @Component({
 
@@ -21,10 +20,7 @@ export class RosterTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<StudentData>;
   dataSource: MatTableDataSource<StudentData> = new MatTableDataSource<StudentData>([]);
-  authService: AuthenticationService
 
-  rosterService: RosterService;
-  rosterUpdateService: RosterUpdateService;
   dialog: MatDialog;
   admin: Boolean | undefined;
 
@@ -57,35 +53,15 @@ export class RosterTableComponent implements AfterViewInit {
     } while (currentDate - date < milliseconds);
   }
   
-  constructor(private rs: RosterService,
+  constructor(private rosterService: RosterService,
               private md: MatDialog,
-              private rus: RosterUpdateService,
-              public auth: AuthService,
-              public as: AuthenticationService) { 
+              private rosterUpdateService: RosterUpdateService,
+              private authService: AuthenticationService) { 
     
-    this.rosterService = rs;
-    this.rosterUpdateService = rus;
     this.dialog = md;
-    this.authService = as;
     
-    this.auth.user$.subscribe({
-      next : data => {
-        if (data) {
-          console.log(data);
-          this.authService.isAdmin2(data.email).subscribe({
-            next : data => {
-              if (data == true) {
-                this.admin = data;
-            }
-            this.getAppropiateColumns();
-
-          }
-          });
-
-      }
-      }
-    });
-
+    this.admin = this.authService.getUserAdmin();
+    this.getAppropiateColumns();
 
     this.rosterService.getRoster().subscribe({
       next: data => {
@@ -107,21 +83,9 @@ export class RosterTableComponent implements AfterViewInit {
     }
   }
 
-  // async getAppropiateColumns() {
-  //   this.authService.isAdmin2().subscribe({
-  //     next : isAdmin => {
-  //       this.admin = isAdmin();
-  //       if (isAdmin) {
-  //         this.displayedColumns.push('edit');
-  //         this.displayedColumns.push('delete');
-
-  //       }
-  //     }
-  //   });
-
-  
-      
-
+  isAdmin() {
+    return this.authService.getUserAdmin();
+  }
 
   ngAfterViewInit(): void {
   }

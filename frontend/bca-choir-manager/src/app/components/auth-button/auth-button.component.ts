@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 import { DOCUMENT } from '@angular/common';
@@ -10,11 +9,18 @@ import { DOCUMENT } from '@angular/common';
 })
 
 export class AuthButtonComponent {
-  constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService, public authService: AuthenticationService) {}
-  click(){
-    this.authService.login();
+  constructor(public authService: AuthenticationService) {}
 
-    
+  login() {
+    this.authService.login();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
   
 }
