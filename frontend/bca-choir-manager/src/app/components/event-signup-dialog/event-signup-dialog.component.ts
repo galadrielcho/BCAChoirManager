@@ -2,7 +2,7 @@ import { Component, Input, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EventData } from '../../models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
   selector: 'app-event-signup-dialog',
@@ -10,10 +10,9 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./event-signup-dialog.component.css']
 })
 export class EventSignupDialogComponent {
+  private user_email : string;
 
   constructor(
-    
-
     public dialogRef: MatDialogRef<EventSignupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: 
         { event: EventData,
@@ -22,21 +21,20 @@ export class EventSignupDialogComponent {
           voicepart : string
         },
     private eventService : EventService,
-    public auth : AuthService) {}
+    public authService : AuthenticationService) {
+      this.user_email = this.authService.getUser().email;
+    }
 
   public confirm(){  
-    this.auth.user$.subscribe(
-      (user) => {
-        if (user?.email != null || user?.email != undefined){
-          if (this.data.signupAction === "signup")
-            this.eventService.addStudentToEvent(user.email, this.data.event, this.data.partnumber, this.data.voicepart)
-          else {
-            this.eventService.deleteStudentFromEvent(user.email, this.data.event)
+    if (this.authService.isAuthenticated()) {
+      if (this.data.signupAction === "signup")
+      this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart)
+    else {
+      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event)
 
-          }
-        }
-      }
-    );
+    }
+
+    }
 
     this.dialogRef.close();
   }  

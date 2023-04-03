@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
-import { AuthService } from '@auth0/auth0-angular';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
@@ -11,30 +10,23 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 })
 export class HeaderComponent implements OnInit {
   dialog: MatDialog;
-  signUpService: SignUpService
-  authenticationService: AuthenticationService
-  admin: Boolean | undefined
-  seconds: number
+  admin: Boolean | undefined;
+  seconds: number;
 
-  constructor(private md: MatDialog, private sus: SignUpService, public auth: AuthService, public as: AuthenticationService) { 
+  constructor(private md: MatDialog, private signUpService: SignUpService, public authService: AuthenticationService) { 
     this.dialog = md;
-    this.signUpService = sus;
-    this.authenticationService = as;
     this.admin = false;
     this.seconds = 0;
   }
 
-  isAdmin(email: string|undefined){
-    if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
-      this.authenticationService.isAdmin(email).subscribe(
-      data => {
-        this.admin = data;
-      })
-      this.seconds = Date.now()/1000;
-    }
-    
-    return this.admin;
+  isAdmin() {
+    return this.authService.getUserAdmin();
   }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
+
 
   ngOnInit(): void {
   }

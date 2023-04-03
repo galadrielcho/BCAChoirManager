@@ -7,8 +7,8 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class AuthenticationService {
   // user_email : string; 
+  
   private user : any = null;
-
   private admin: boolean = false;
 
   constructor(private http: HttpClient, private auth : AuthService) {}
@@ -35,14 +35,14 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.auth.logout({
-      returnTo: 'logout'
-    });
+    this.user = null;
+    this.admin = false;
+    this.auth.logout({ returnTo: "" })
 
   }
 
   getUser() {
-    return this.auth.user$;
+    return this.user.email;
   }
 
   getAdmins(){
@@ -60,5 +60,13 @@ export class AuthenticationService {
     return this.admin;
   }
   
+
+  isAuthenticated() {
+    if (this.user) {
+      return true;
+    } else {
+      return false;
+    }  
+  }
  
 }
