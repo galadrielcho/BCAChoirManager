@@ -14,8 +14,8 @@
         <b>Address</b>
         <p>{{event.address}}</p>
       </div>  
-      <span *ngIf="(auth.user$)| async as user"> 
-        <div *ngIf="!isAdmin(user.email)">
+      <span *ngIf="isAuthenticated()"> 
+        <div *ngIf="!isAdmin()">
           <b>Signed Up?</b>
             <mat-checkbox [(ngModel)]="signedup"></mat-checkbox>
           <span *ngIf="signedup">
@@ -36,10 +36,10 @@
 </div>
 <div mat-dialog-actions> 
   <button mat-button (click)="close()">Close</button>
-  <div *ngIf="(auth.user$)| async as user">
-      <button mat-button (click)="editEvent()" *ngIf="isAdmin(user.email)">Edit Event</button>
-      <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin(user.email)">Delete Event</button>
-    <div *ngIf="!isAdmin(user.email)">
+  <div *ngIf="isAuthenticated()">
+      <button mat-button (click)="editEvent()" *ngIf="isAdmin()">Edit Event</button>
+      <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin()">Delete Event</button>
+    <div *ngIf="!isAdmin()">
       <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Change Event Signup</button>
     </div>
   </div>

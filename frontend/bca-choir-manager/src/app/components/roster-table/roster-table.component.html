@@ -20,7 +20,7 @@
     </ng-container>
 
     
-    <ng-container matColumnDef="edit" *ngIf="(auth.user$)">
+    <ng-container matColumnDef="edit" *ngIf="isAdmin()">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let student">
         <button mat-mini-fab (click)="editClicked(student)">
@@ -30,7 +30,7 @@
     </ng-container>
   
 
-    <ng-container matColumnDef="delete" *ngIf="(auth.user$)">
+    <ng-container matColumnDef="delete" *ngIf="isAdmin()">
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let student">
         <button mat-mini-fab color="warn" (click)="deleteClicked(student.email)">

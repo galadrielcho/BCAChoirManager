@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 import { EventData } from 'src/app/models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
-import { AuthService } from '@auth0/auth0-angular';
 
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-dialog.component';
@@ -21,7 +20,6 @@ export class EventDescriptionDialogComponent {
   public partNumber = 1;
   public signedup = false;
   public voicepart = "Soprano";
-  authenticationService: AuthenticationService
   admin: Boolean | undefined
   seconds: number
 
@@ -30,25 +28,21 @@ export class EventDescriptionDialogComponent {
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
     public eventService : EventService,
-    public auth : AuthService,
-    public as: AuthenticationService
+    public authService: AuthenticationService
   ) {
-    this.authenticationService = as;
     this.admin = false;
     this.seconds = 0;
-    console.log(this.event);
-    this.auth.user$.subscribe(
-      (user) => {
-        if (user?.email != null || user?.email != undefined){
-            
-          this.eventService.checkStudentInEvent(user.email, event).subscribe(
-              (next)=> {
-                this.signedup = next; 
-              }
-          );
+
+
+
+    if (this.authService.isAuthenticated() && !this.authService.getUserAdmin()) {
+      this.eventService.checkStudentInEvent(this.authService.getUser(), event).subscribe(
+        (next)=> {
+          this.signedup = next; 
         }
-      }
     );
+
+    }
   }
 
   openDeleteEventDialog(): void {
@@ -62,18 +56,17 @@ export class EventDescriptionDialogComponent {
     });
   }
 
-  
-  isAdmin(email: string|undefined){
-    if((Date.now()/1000 - this.seconds) > 60){ //checks every minute for if person is still admin
-      this.authenticationService.isAdmin(email).subscribe(
-        data => {
-        this.admin = data;
-      })
-      this.seconds = Date.now()/1000;
-    }
+  getSignedUp() {
     
-    return this.admin;
   }
+  isAdmin(){
+    return this.authService.getUserAdmin();
+  }
+
+  isAuthenticated(){
+    return this.authService.isAuthenticated();
+  }
+
   
   close(): void {
     this.dialogRef.close();

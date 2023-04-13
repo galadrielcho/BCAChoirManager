@@ -10,21 +10,21 @@
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>First Name</mat-label>
-        <input matInput [(ngModel)]="student.first_name" (keypress)="restrictInput($event)">
+        <input matInput [(ngModel)]="firstName" (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput [(ngModel)]="student.last_name" (keypress)="restrictInput($event)">
+        <input matInput [(ngModel)]="lastName" (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 
 <p>
     <mat-form-field class="example-full-width">
         <mat-label>Pronouns</mat-label>
-        <input matInput [(ngModel)]="student.pronouns" (keypress)="restrictInput($event)">
+        <input matInput [(ngModel)]="pronouns" (keypress)="restrictInput($event)">
     </mat-form-field>
 </p>
 </div>
