@@ -68,5 +68,9 @@ export class AuthenticationService {
       return false;
     }  
   }
+
+  getEmailTag() {
+    return this.user.email.split("@")[0];
+  }
  
 }

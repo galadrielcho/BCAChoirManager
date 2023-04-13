@@ -3,13 +3,15 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 
 import { DOCUMENT } from '@angular/common';
 @Component({
-  selector: 'auth-button',
-  templateUrl: './auth-button.component.html',
-  styleUrls: ['./auth-button.component.css']
+  selector: 'user-button',
+  templateUrl: './user-button.component.html',
+  styleUrls: ['./user-button.component.css']
 })
 
-export class AuthButtonComponent {
-  constructor(public authService: AuthenticationService) {}
+export class UserButtonComponent {
+    constructor(public authService: AuthenticationService) {
+    if (this.isAuthenticated()) {}
+  }
 
   login() {
     this.authService.login();
@@ -21,6 +23,10 @@ export class AuthButtonComponent {
 
   isAuthenticated() {
     return this.authService.isAuthenticated();
+  }
+
+  getUserTag() {
+    return this.authService.getEmailTag();
   }
   
 }

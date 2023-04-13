@@ -1,0 +1,22 @@
+<ng-container *ngIf="isAuthenticated(); else loggedOut">
+  <button id="name" mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+    <div>{{getUserTag()}}
+      <mat-icon id="arrow-dropdown">arrow_drop_down</mat-icon>
+
+    </div>
+  </button>
+  <mat-menu #menu="matMenu">
+    <a routerLink="/profile">
+      <button mat-menu-item>Profile</button>
+   </a>
+    <button mat-menu-item (click)="logout()">
+      Log out
+    </button>
+  </mat-menu>
+
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button mat-raised-button (click)="login()">Log in</button>
+  </ng-template>

@@ -9,6 +9,7 @@ import { AdminPageComponent } from '../pages/admin-page/admin-page.component';
 import { EventsPageComponent } from '../pages/events-page/events-page.component';
 import { AdminGuard } from './admin-guard/admin.guard';
 import { CallbackComponent } from '../pages/callback-page/callback-page';
+import { ProfilePageComponent } from '../pages/profile-page/profile-page.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   { path: 'events',
     component: EventsPageComponent,
     canActivate: [AuthGuard, AdminGuard]
+  },
+  { path: 'profile',
+  component: ProfilePageComponent,
+  canActivate: [AuthGuard]
   },
   { path: 'callback',
   component: CallbackComponent},

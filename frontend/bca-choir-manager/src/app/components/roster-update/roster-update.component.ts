@@ -32,11 +32,11 @@ export class RosterUpdateComponent {
                     {name: String(this.year + 3), value: this.year + 3},
                     {name: String(this.year + 4), value: this.year + 4}]
 
-  firstName : string = this.orig_student.first_name
-  lastName : string = this.orig_student.last_name
-  pronouns : string = this.orig_student.pronouns
+  firstName : string = this.orig_student.first_name;
+  lastName : string = this.orig_student.last_name;
+  pronouns : string = this.orig_student.pronouns;
   voicepartChoice : string = this.orig_student.voicepart_name;
-  voicepartNumberChoice : number = this.orig_student.voicepart_number;
+  voicepartNumberChoice : number = this.orig_student.number;
   choirChoice : string = this.orig_student.choir_name;
   yearChoice : number = this.orig_student.grad_year;
 
@@ -45,7 +45,7 @@ export class RosterUpdateComponent {
     private dialogRef: MatDialogRef<RosterUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_student: StudentData,
     )
-  {}
+  {console.log(orig_student);}
 
   ngOnInit() {
   }
@@ -64,11 +64,15 @@ export class RosterUpdateComponent {
   }
 
   public isVPNChecked(value : number){
-    return this.student.voicepart_number == value;
+    return this.student.number == value;
   }
 
 
   public submit(){
+
+
+    console.log("UPADTED");
+    console.log(this.firstName);
 
     let updatedStudent : StudentData = {
       email: this.student.email,
@@ -76,16 +80,15 @@ export class RosterUpdateComponent {
       last_name: this.isValidString(this.firstName) ? this.lastName : this.student.last_name,
       pronouns: this.isValidString(this.firstName) ? this.pronouns : this.student.pronouns,
       voicepart_name: this.voicepartChoice,
-      voicepart_number: this.voicepartNumberChoice,
+      number: this.voicepartNumberChoice,
       choir_name: this.choirChoice,
       grad_year: this.yearChoice
       
     };
 
-    this.service.updateDetails(updatedStudent);
 
-    this.dialogRef.close();
-    window.location.reload();
+    this.service.updateDetails(updatedStudent);
+    this.dialogRef.close(updatedStudent);
 
   }
   

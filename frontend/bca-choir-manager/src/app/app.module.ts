@@ -8,7 +8,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
 import { AuthModule } from '@auth0/auth0-angular';
-import { AuthButtonComponent } from './components/auth-button/auth-button.component';
+import { UserButtonComponent } from './components/user-button/user-button.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { RosterPageComponent } from './pages/roster-page/roster-page.component';
@@ -64,6 +64,8 @@ import { EventRegistreesDialogComponent } from './components/event-registrees-di
 import { EventSignupDialogComponent } from './components/event-signup-dialog/event-signup-dialog.component';
 import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { DeleteAdminComponent } from './components/delete-admin/delete-admin.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { ProfileContainerComponent } from './components/profile-container/profile-container.component';
 
 
 
@@ -73,7 +75,7 @@ import { DeleteAdminComponent } from './components/delete-admin/delete-admin.com
   declarations: [
     AppComponent,
     HeaderComponent,
-    AuthButtonComponent,
+    UserButtonComponent,
     HomePageComponent,
     CalendarPageComponent,
     RosterPageComponent,
@@ -97,7 +99,9 @@ import { DeleteAdminComponent } from './components/delete-admin/delete-admin.com
     EventRegistreesDialogComponent,
     EventSignupDialogComponent,
     AddAdminComponent,
-    DeleteAdminComponent
+    DeleteAdminComponent,
+    ProfilePageComponent,
+    ProfileContainerComponent
 
 
 

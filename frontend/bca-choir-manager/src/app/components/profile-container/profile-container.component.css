@@ -1,0 +1,73 @@
+mat-card {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+}
+
+mat-card-header {
+    background-color: #a4a4a4;
+}
+
+mat-card-title {
+    margin-bottom: 5px;
+}
+
+
+mat-card-content {
+    color: #6a6a6a;
+
+}
+
+#fullName {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+
+#pronouns {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 10px;
+
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+    display:inline-block;
+
+
+}
+
+.info-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+li {
+float: left;
+margin: 10px;
+}
+
+#account-circle {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    transform: scale(5);
+
+}
+
+.center {
+    text-align: center;
+}

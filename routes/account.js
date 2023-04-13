@@ -60,6 +60,7 @@ module.exports = function () {
     sql = `CALL getAccount("${req.params.email}");`
   
     database.query(sql, function(err, account, fields) {
+      console.log(sql);
       let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
       if (err) throw err;
       res.send({details: result});
