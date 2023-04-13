@@ -1,14 +1,15 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 const path = require('path');
+global.appRoot = path.resolve(__dirname);
 
 var app = express();
 
 app.use(bodyParser.json());
-app.use(express.static('./../frontend/bca-choir-manager/dist/bca-choir-manager'));
+app.use(express.static(global.appRoot + '/frontend/bca-choir-manager/dist/bca-choir-manager'));
 
 const fs = require('fs');
-const routes_directory = path.resolve(__dirname) + '\\routes\\'; 
+const routes_directory = path.resolve(__dirname) + '//routes//'; 
 
 fs.readdirSync(routes_directory).forEach(route_file => {
   try {
@@ -20,7 +21,7 @@ fs.readdirSync(routes_directory).forEach(route_file => {
 });
 
 // Rewrites direct url routing
-folderDir = __dirname + './../frontend/bca-choir-manager/dist/bca-choir-manager';
+let folderDir = global.appRoot + '/frontend/bca-choir-manager/dist/bca-choir-manager';
 app.use('*', function (req, res) {
   res.sendFile(path.join(folderDir, '/index.html'));
 });

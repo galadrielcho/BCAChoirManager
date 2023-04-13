@@ -9,10 +9,10 @@ module.exports = function () {
     */
    
     router.get("/", function (req, res) {
-        let distDir = './../frontend/bca-choir-manager/dist/bca-choir-manager/index.html'
-        console.log(path.join(__dirname + distDir));
-        
-        res.sendFile(path.join(__dirname + distDir));
+        let distDir = '/frontend/bca-choir-manager/dist/bca-choir-manager/index.html'
+
+        console.log(global.appRoot + distDir);
+        res.sendFile(global.appRoot + distDir);
     });
     
 
