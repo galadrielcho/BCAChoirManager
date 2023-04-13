@@ -1,5 +1,7 @@
 var database = require('../db');
 const router = require('express').Router();
+var path = require('path');
+
 
 module.exports = function () {
     /*  "/api/status"
@@ -7,9 +9,10 @@ module.exports = function () {
     */
    
     router.get("/", function (req, res) {
-        console.log("test");
-        folderDir = './../frontend/bca-choir-manager/dist/bca-choir-manager'
-        res.sendFile(path.join(folderDir, '/index.html'));
+        let distDir = './../frontend/bca-choir-manager/dist/bca-choir-manager/index.html'
+        console.log(path.join(__dirname + distDir));
+        
+        res.sendFile(path.join(__dirname + distDir));
     });
     
 
