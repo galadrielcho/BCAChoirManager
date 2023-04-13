@@ -7,6 +7,10 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./roster-page.component.css']
 })
 export class RosterPageComponent {
+  url = 'https://docs.google.com/spreadsheets/d/1hOvut5eeqbxL-I1KadDFHuUCatiXuqL_n3LHoFKAhuY/edit?usp=sharing';
   constructor(public auth: AuthService) {
+  }
+  export(){
+    window.open(this.url, "_blank");
   }
 }
