@@ -37,6 +37,14 @@ export class AuthenticationService {
                   this.account = account;
                 }
                 else {
+                  this.account = {
+                    first_name: null,
+                    last_name: null,
+                    email: this.authUser.email,
+                    is_admin: false,
+                    pronouns: null
+                  }
+
                   let dialogRef = this.dialog.open(EventSignupDialogComponent, {
                     width: '300px'                  });
                 }
@@ -71,7 +79,12 @@ export class AuthenticationService {
   }
 
   getUserAdmin() {
-    return this.admin;
+    if (this.account !== null && this.account !== undefined){
+      return this.account.details.is_admin;
+    }
+    else {
+      return false;
+    }
   }
   
 

@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { EventData } from '../../models/event-data.model'
-import {FormControl} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import {EventService} from '../../services/event-service/event.service'
 import {CalendarService} from '../../services/calendar-service/calendar.service'
+import { Validators } from '@angular/forms';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'event-edit-dialog',
@@ -12,21 +14,28 @@ import {CalendarService} from '../../services/calendar-service/calendar.service'
 })
 
 export class EventEditDialogComponent {
-  public newStartTime : string = this.getStartTime();
-  public newEndTime : string = this.getEndTime();
 
-  
+  public eventForm : FormGroup = new FormGroup({
+    start_time: new FormControl(this.getStartTime(), 
+                              [Validators.required]),
+    end_time: new FormControl(this.getEndTime()),
+    start_date: new FormControl(new Date().toString(), 
+                              [Validators.required]),
+    end_date: new FormControl(''),
+    location : new FormControl('',
+                            [Validators.pattern('[a-zA-Z -/0-9]*')]),
+    address : new FormControl('', 
+                            [Validators.pattern('[a-zA-Z -/0-9,.:]*')]),
+    event_name : new FormControl('', 
+                              [Validators.required,
+                              Validators.pattern('[a-zA-Z -/0-9,.:]*'),
+                              Validators.maxLength(25)]),
+    choirtype : new FormControl('Chamber',
+                              [Validators.required])});
+
+
   choirTypes : string[] = ['Chamber', 'Concert'];
   eventAction : string;
-  public new_event : EventData = {
-    start_time: new Date().toString(),
-    end_time: new Date().toString(),
-    location: "",
-    address: "",
-    event_name: "",
-    choir_type: "Chamber",
-  };
-
 
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
@@ -41,14 +50,15 @@ export class EventEditDialogComponent {
       }
 
       if (this.eventAction == "Edit"){
-        this.new_event = {
-          start_time: this.orig_event.start_time,
-          end_time: this.orig_event.end_time,
+        console.log(this.orig_event);
+        this.eventForm.patchValue({
+          start_date: this.orig_event.start_time,
+          end_date: this.orig_event.end_time,
           location: this.orig_event.location,
           address: this.orig_event.address,
           event_name: this.orig_event.event_name,
-          choir_type: this.orig_event.choir_type
-        }
+          choirtype: this.orig_event.choir_type
+        });
       }
       else {
         const startTime = new Date();
@@ -56,19 +66,16 @@ export class EventEditDialogComponent {
         const endTime = new Date();
         endTime.setHours(11, 59, 0, 0);
 
-        this.new_event = {
-          start_time : startTime.toISOString(),
-          end_time : endTime.toISOString(),
+        this.eventForm.patchValue({
+          start_date : startTime.toISOString(),
+          end_date : endTime.toISOString(),
           location : "",
           address: "",
           event_name : "",
-          choir_type : "Chamber"
+          choirtype : "Concert"
+        });
         }
-      }
-      this.newStartTime = this.getStartTime();
-      this.newEndTime = this.getEndTime();
-
-    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -105,33 +112,35 @@ export class EventEditDialogComponent {
   }
 
   isChoirType(choirType : string){
-    return choirType == this.new_event.choir_type;
+    return choirType == this.eventForm.value.choir_type;
   }
 
   updateEvent(){
-    if (this.eventAction == "Edit"){
-      const endTimes = this.newEndTime.split(":");
-      const startTimes = this.newStartTime.split(":");
+    const endTimes = this.eventForm.value.end_time.split(":");
+    const startTimes = this.eventForm.value.start_time.split(":");
+    let startDate = new Date(this.eventForm.value.start_date)
+    startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
+    let endDate = new Date(this.eventForm.value.end_date)
+    endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
 
-
-      let startDate = new Date(this.new_event.start_time)
-      startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
-      this.new_event.start_time = startDate.toString();
-
-      let endDate = new Date(this.new_event.end_time)
-      endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
-      this.new_event.end_time = endDate.toString();
-
-      this.eventService.editEvent(this.orig_event, this.new_event);
-      this.dialogRef.close(false);
-      this.calendarService.loadCalendarEvents();
-    }  
-
-    else {
-      this.eventService.createEvent(this.new_event);
-      this.dialogRef.close(true);
-      this.calendarService.loadCalendarEvents();
-
+    let new_event = {
+      start_time : startDate.toString(),
+      end_time : endDate.toString(),
+      location  : this.eventForm.value.location,
+      address : this.eventForm.value.address,
+      event_name : this.eventForm.value.event_name,
+      choir_type : this.eventForm.value.choirtype
     }
+
+    if (this.eventAction == "Edit"){
+      this.eventService.editEvent(this.orig_event, new_event);
+      this.dialogRef.close(false);
+    }  
+    else {
+      this.eventService.createEvent(new_event);
+      this.dialogRef.close(true);
+    }
+    this.calendarService.loadCalendarEvents();
+
   }
 }

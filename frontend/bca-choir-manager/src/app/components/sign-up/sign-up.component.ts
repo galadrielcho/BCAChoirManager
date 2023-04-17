@@ -50,13 +50,7 @@ export class SignUpComponent {
     this.signupService.postDetails(newDetails);
     this.signupService.close();
   }
-
-  restrictChar(event: {charCode: any; }){   
-    var k;  
-    k = event.charCode;                                                    // - and / characters
-    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || k == 45 || k == 47); 
-  }
-
+  
   public isValidString(s : String){
     if (s.trim() == ""){
       return false;
