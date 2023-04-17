@@ -60,7 +60,7 @@ export class RosterTableComponent implements AfterViewInit {
     this.rosterService.deleteAccount(arr);
     let index = this.roster.indexOf(student);
 
-    const x = this.roster.splice(index, 1);
+    this.roster.splice(index, 1);
     this.refresh();
   }
 
@@ -105,8 +105,6 @@ export class RosterTableComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;   
 
-    console.log("in refresh")
-    console.log(this.roster);
     this.changeDetectorRefs.detectChanges();
   }
 
