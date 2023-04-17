@@ -49,3 +49,7 @@ tr.event-detail-row {
 .blue-button {
   background-color: #526ebb;
 }
+
+.data-table {
+  overflow-x: scroll;
+}

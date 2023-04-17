@@ -1,4 +1,4 @@
-import { Component, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -39,8 +39,8 @@ export class EventTableComponent {
 
   constructor(private es: EventService,
               public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
-              public dialog: MatDialog
-    
+              public dialog: MatDialog,
+              private changeDetectorRefs: ChangeDetectorRef
     ) { 
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
@@ -66,9 +66,6 @@ export class EventTableComponent {
     this.dataSource = new MatTableDataSource(this.events);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
-    console.log(this.dataSource.data);
-
   }
 
   expandEvent(event : EventData | null){
@@ -91,8 +88,9 @@ export class EventTableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        window.location.reload();
-
+        let index = this.events.indexOf(event);
+        this.events.splice(index, 1);
+        this.refresh();
       }
     });
   }
@@ -109,7 +107,7 @@ export class EventTableComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("Done");
+      // console.log("Done");
     });
   }
 
@@ -121,8 +119,19 @@ export class EventTableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        location.reload();
-
+              // TO DO : Check if the event has been updated and only update that event
+        this.eventService.getAllEvents().subscribe(
+          data => {
+            for(let eventIndex in  data.events){
+              data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
+              data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+    
+            }
+            this.events = data.events;
+            this.refresh();
+          }
+        );
+  
       }
     });
   }
@@ -132,7 +141,28 @@ export class EventTableComponent {
     const dialogRef = this.dialog.open(EventEditDialogComponent, {
       width: '500px',
       data: event
+    }).afterClosed().subscribe(updatedStudent => {
+      // TO DO : Check if the event has changed and only update that event
+      this.eventService.getAllEvents().subscribe(
+        data => {
+          for(let eventIndex in  data.events){
+            data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
+            data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+  
+          }
+          
+          this.events = data.events;
+          this.refresh();
+        }
+      );
     });
+
+  }
+
+  refresh() {
+    this.setupTable();
+    this.changeDetectorRefs.detectChanges();
+
 
   }
 
