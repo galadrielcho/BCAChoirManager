@@ -19,7 +19,7 @@ export class DeleteAdminComponent {
     this.showDNE = false;
     this.showSelfDeletionError = false;
     this.showSuccess = false;
-    let data = this.authService.getUser();
+    let data = this.authService.getUserEmail();
 
     if(data == this.email){
       this.showSelfDeletionError = true;

@@ -29,7 +29,7 @@ export class ProfileContainerComponent {
 
     this.dialog = md;
     this.admin = authService.getUserAdmin();
-    this.user = authService.getUser();
+    this.user = authService.getUserEmail();
 
     if (!this.admin) {
       this.updateProfileDetails();

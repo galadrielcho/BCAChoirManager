@@ -36,7 +36,7 @@ export class EventDescriptionDialogComponent {
 
 
     if (this.authService.isAuthenticated() && !this.authService.getUserAdmin()) {
-      this.eventService.checkStudentInEvent(this.authService.getUser(), event).subscribe(
+      this.eventService.checkStudentInEvent(this.authService.getUserEmail(), event).subscribe(
         (next)=> {
           this.signedup = next; 
         }

@@ -1,55 +1,57 @@
-<h1 mat-dialog-title>{{eventAction}} Event</h1>
-<div mat-dialog-content >
-  <mat-form-field class="long-input">
-      <input matInput placeholder="Event Name" [(ngModel)]="new_event.event_name">
-  </mat-form-field>
-  <mat-form-field class="long-input" >
-      <input matInput placeholder="Location Name"[(ngModel)]="new_event.location">
-  </mat-form-field>
-  <mat-form-field class="long-input">
-      <input matInput placeholder="Address" [(ngModel)]="new_event.address">
-  </mat-form-field>
-
-  <h2>Choir Type</h2>
-  <mat-radio-group aria-label="Select a choir type">
-    <mat-radio-button [checked]='isChoirType("Concert")' value="1">Concert</mat-radio-button>
-    <mat-radio-button [checked]='isChoirType("Chamber")' value="2">Chamber</mat-radio-button>
-  </mat-radio-group>
-
-  <div>
-    <mat-form-field appearance="fill" class="datepicker">
-      <mat-label>Choose a start date</mat-label>
-      <input matInput [matDatepicker]="startpicker" [(ngModel)]="new_event.start_time" >
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
-      <mat-datepicker #startpicker ></mat-datepicker>
+ <form [formGroup]="eventForm"> 
+  <h1 mat-dialog-title>{{eventAction}} Event</h1>
+  <div mat-dialog-content >
+    <mat-form-field class="long-input">
+        <input matInput placeholder="Event Name" type="text" formControlName="event_name">
     </mat-form-field>
-    <mat-form-field class="timepicker">
-        <mat-label>Choose a start time</mat-label>
-        <input type="time" matInput  [(ngModel)]="newStartTime">
-        <mat-icon matSuffix>insert_invitation</mat-icon>    
-    </mat-form-field>    
-  </div>
-
-  <div>
-    <mat-form-field appearance="fill" class="datepicker">
-      <mat-label>Choose an end date</mat-label>
-      <input matInput [matDatepicker]="endpicker" [(ngModel)]="new_event.end_time">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
-      <mat-datepicker #endpicker></mat-datepicker>
+    <mat-form-field class="long-input" >
+        <input matInput placeholder="Location Name" type="text" formControlName="location">
     </mat-form-field>
-    <mat-form-field class="timepicker">
-        <mat-label>Choose an end time</mat-label>
-        <input [(ngModel)]="newEndTime" type="time" matInput>
-        <mat-icon matSuffix>insert_invitation</mat-icon>    
-    </mat-form-field>    
+    <mat-form-field class="long-input">
+        <input matInput placeholder="Address" type="text" formControlName="address">
+    </mat-form-field>
+
+    <h2>Choir Type</h2>
+    <mat-radio-group aria-label="Select a choir type" formControlName="choirtype">
+      <mat-radio-button [checked]='isChoirType("Concert")' value="Concert">Concert</mat-radio-button>
+      <mat-radio-button [checked]='isChoirType("Chamber")' value="Chamber">Chamber</mat-radio-button>
+    </mat-radio-group>
+
+    <div>
+      <mat-form-field appearance="fill" class="datepicker">
+        <mat-label>Choose a start date</mat-label>
+        <input matInput [matDatepicker]="startpicker" formControlName="start_date" >
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
+        <mat-datepicker #startpicker ></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="timepicker">
+          <mat-label>Choose a start time</mat-label>
+          <input type="time" matInput  formControlName="start_time">
+          <mat-icon matSuffix>insert_invitation</mat-icon>    
+      </mat-form-field>    
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill" class="datepicker">
+        <mat-label>Choose an end date</mat-label>
+        <input matInput [matDatepicker]="endpicker" formControlName="end_date">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
+        <mat-datepicker #endpicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="timepicker">
+          <mat-label>Choose an end time</mat-label>
+          <input formControlName="end_time" type="time" matInput>
+          <mat-icon matSuffix>insert_invitation</mat-icon>    
+      </mat-form-field>    
+    </div>
+
+  
   </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="updateEvent()" type="submit" [disabled]="!eventForm.valid" >{{this.eventAction}}</button>
 
- 
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="updateEvent()">{{this.eventAction}}</button>
-
-</div>
+  </div>
+</form>

@@ -22,7 +22,7 @@ export class EventSignupDialogComponent {
         },
     private eventService : EventService,
     public authService : AuthenticationService) {
-      this.user_email = this.authService.getUser().email;
+      this.user_email = this.authService.getUserEmail();
     }
 
   public confirm(){  
