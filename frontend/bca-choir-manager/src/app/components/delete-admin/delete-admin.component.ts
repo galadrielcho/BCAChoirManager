@@ -19,31 +19,29 @@ export class DeleteAdminComponent {
     this.showDNE = false;
     this.showSelfDeletionError = false;
     this.showSuccess = false;
-    this.authService.getUser().subscribe({
-      next: (data: any) =>{
-        if(data.email == this.email){
-          this.showSelfDeletionError = true;
-        }
-        else{
-          this.accService.checkAdmin([this.email]).subscribe({
-            next: (data: any) =>{
-              if (!(data.exists)){
-                this.showDNE = true;
+    let data = this.authService.getUser();
+
+    if(data == this.email){
+      this.showSelfDeletionError = true;
+    }
+    else{
+      this.accService.checkAdmin([this.email]).subscribe({
+        next: (data: any) =>{
+          if (!(data.exists)){
+            this.showDNE = true;
+          }
+          else{
+            this.accService.deleteAdmin([this.email]).subscribe({
+              next: (info: any) =>{
+                if(info.success){
+                  this.showSuccess = true;
+                }
               }
-              else{
-                this.accService.deleteAdmin([this.email]).subscribe({
-                  next: (info: any) =>{
-                    if(info.success){
-                      this.showSuccess = true;
-                    }
-                  }
-                });
-              }
-            }
-          });
+            });
+          }
         }
-      }
-    });
+      });
+    }
     
   }
 }

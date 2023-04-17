@@ -60,7 +60,6 @@ module.exports = function () {
     sql = `CALL getAccount("${req.params.email}");`
   
     database.query(sql, function(err, account, fields) {
-      console.log(sql);
       let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
       if (err) throw err;
       res.send({details: result});
@@ -115,6 +114,7 @@ module.exports = function () {
           res.send({exists: false});
         }
         else{
+          console.log("sending true");
           res.send({exists: true});
         }
       });
@@ -131,7 +131,6 @@ module.exports = function () {
 
   // get account if it exists
   sql = `CALL addAdmin(${database.escape(req.body[0])}, ${database.escape(req.body[1])}, ${database.escape(req.body[2])});`
-  console.log(sql);
   database.query(sql, function(err, account, fields) {
     if (err) throw err;
       res.send({added: true});
