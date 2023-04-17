@@ -35,7 +35,7 @@ export class HomePageComponent {
 
 
   inDatabase() {
-    let email = this.auth.getUser();
+    let email = this.auth.getUserEmail();
     //check if email is in database, if so return true
     if(this.dbCalled == false){ // db hasn't been accessed yet
       this.dbCalled = true;
