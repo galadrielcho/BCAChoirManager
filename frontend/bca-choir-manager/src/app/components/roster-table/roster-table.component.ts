@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource} from '@angular/material/table';
@@ -30,18 +30,52 @@ export class RosterTableComponent implements AfterViewInit {
   dataColumns = ['first_name', 'last_name', 'pronouns', 'voicepart_name', 'number', 'choir_name', 'grad_year', 'email'];
   displayedColumns = [...this.dataColumns];
 
-  deleteClicked(email: string){
-    let arr = [];
-    arr.push(email);
-    this.rosterService.deleteAccount(arr);
-    location.reload();
+  constructor(private rosterService: RosterService,
+    private md: MatDialog,
+    private rosterUpdateService: RosterUpdateService,
+    private authService: AuthenticationService,
+    private changeDetectorRefs: ChangeDetectorRef) { 
+
+    this.dialog = md;
+
+    this.admin = this.authService.getUserAdmin();
+    this.getAppropiateColumns();
+
+    this.rosterService.getRoster().subscribe({
+    next: data => {
+    this.roster = data.roster;
+    this.dataSource = new MatTableDataSource(this.roster);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;   
+    }      
+    });
+
   }
+
+
+  deleteClicked(student : StudentData){
+    let arr = [];
+    arr.push(student.email);
+    this.rosterService.deleteAccount(arr);
+    let index = this.roster.indexOf(student);
+
+    const x = this.roster.splice(index, 1);
+    this.refresh();
+  }
+
   editClicked(student : StudentData){
     this.dialog.open(RosterUpdateComponent,
       {
         data: student
       }
-    );
+    ).afterClosed().subscribe(updatedStudent => {
+      var index = this.roster.indexOf(student);
+      if (index !== -1) {
+          this.roster[index] = updatedStudent;
+      }
+      this.refresh();
+    });
   }
 
   
@@ -53,28 +87,6 @@ export class RosterTableComponent implements AfterViewInit {
     } while (currentDate - date < milliseconds);
   }
   
-  constructor(private rosterService: RosterService,
-              private md: MatDialog,
-              private rosterUpdateService: RosterUpdateService,
-              private authService: AuthenticationService) { 
-    
-    this.dialog = md;
-    
-    this.admin = this.authService.getUserAdmin();
-    this.getAppropiateColumns();
-
-    this.rosterService.getRoster().subscribe({
-      next: data => {
-        this.roster = data.roster;
-        this.dataSource = new MatTableDataSource(this.roster);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.table.dataSource = this.dataSource;   
-      }      
-    });
-
-  }
-
   getAppropiateColumns() {
     if (this.admin) {
       this.displayedColumns.push('edit');
@@ -86,6 +98,18 @@ export class RosterTableComponent implements AfterViewInit {
   isAdmin() {
     return this.authService.getUserAdmin();
   }
+
+  refresh() {
+    this.dataSource = new MatTableDataSource(this.roster);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;   
+
+    console.log("in refresh")
+    console.log(this.roster);
+    this.changeDetectorRefs.detectChanges();
+  }
+
 
   ngAfterViewInit(): void {
   }
