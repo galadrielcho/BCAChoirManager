@@ -29,7 +29,7 @@ export class EventEditDialogComponent {
     event_name : new FormControl('', 
                               [Validators.required,
                               Validators.pattern('[a-zA-Z -/0-9,.:]*'),
-                              Validators.maxLength(25)]),
+                              Validators.maxLength(45)]),
     choirtype : new FormControl('Chamber',
                               [Validators.required])});
 
