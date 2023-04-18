@@ -33,7 +33,6 @@ export class EventRegistreesDialogComponent {
   ) {
     this.eventService.getEventRegistrees(event).subscribe({
       next: data => {
-        console.log(data);
         this.registrees = data.registrees;
         this.dataSource = new MatTableDataSource(this.registrees);
         this.dataSource.sort = this.sort;
@@ -46,7 +45,6 @@ export class EventRegistreesDialogComponent {
   }
 
   ngOnInit(): void {
-    this.getRegistrees();
   };
 
 
@@ -56,15 +54,6 @@ export class EventRegistreesDialogComponent {
 
   editMode() : void {
     this.editModeOn = true;
-  }
-
-  getRegistrees() : void {
-    this.eventService.getEventRegistrees(this.event).subscribe(
-      result => {
-        console.log(result);
-      }
-
-    );
   }
 
   deleteClicked(email: string){

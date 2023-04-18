@@ -52,7 +52,7 @@ export class HomePageComponent {
     // db was checked, and email wasn't in db
     if(this.isUnaccounted){ 
       this.isUnaccounted = false;
-      this.dialog.open(SignUpComponent);
+      this.dialog.open(SignUpComponent, {disableClose: true});
       this.signUpService.send(this.dialog, location, email);
     }
   }

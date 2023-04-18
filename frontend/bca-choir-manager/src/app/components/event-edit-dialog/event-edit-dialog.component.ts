@@ -50,7 +50,6 @@ export class EventEditDialogComponent {
       }
 
       if (this.eventAction == "Edit"){
-        console.log(this.orig_event);
         this.eventForm.patchValue({
           start_date: this.orig_event.start_time,
           end_date: this.orig_event.end_time,
@@ -79,11 +78,6 @@ export class EventEditDialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  editEvent() : void{
-    console.log(this.orig_event);
-    
   }
 
   createEvent(): void {
