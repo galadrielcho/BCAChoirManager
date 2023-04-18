@@ -6,16 +6,18 @@
     </mat-toolbar>
 </div> 
 
-<div class="group1">
-    <p>
-    <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter admin's email" [(ngModel)]="email">
-    </mat-form-field>    
-    </p>
-<div>
+<form [formGroup]="deleteAdminForm"> 
+    <div class="group1">
+        <p>
+        <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Enter admin's email" formControlName="email">
+        </mat-form-field>    
+        </p>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="!deleteAdminForm.valid" mat-button (click)="submit()">Submit</button>
 
-<button mat-raised-button color="primary" mat-button (click)="submit()">Submit</button>
+</form>
 
 <div *ngIf="showDNE" class="error">
     ERROR: Account does not exist. 
@@ -25,5 +27,4 @@
 </div>
 <div *ngIf="showSuccess" class="success">
     Account deletion successful!
-</div>
 </div>
