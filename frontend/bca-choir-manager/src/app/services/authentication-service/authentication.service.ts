@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { EventSignupDialogComponent } from 'src/app/components/event-signup-dialog/event-signup-dialog.component';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Injectable({
@@ -33,20 +32,8 @@ export class AuthenticationService {
             let url = `/api/get-account/${this.authUser.email}`;
             this.http.get<any>(url).subscribe(
               account =>{
-                if (account){
+                if (Object.keys(account).length > 1){
                   this.account = account;
-                }
-                else {
-                  this.account = {
-                    first_name: null,
-                    last_name: null,
-                    email: this.authUser.email,
-                    is_admin: false,
-                    pronouns: null
-                  }
-
-                  let dialogRef = this.dialog.open(EventSignupDialogComponent, {
-                    width: '300px'                  });
                 }
               }
             );            
@@ -80,7 +67,7 @@ export class AuthenticationService {
 
   getUserAdmin() {
     if (this.account !== null && this.account !== undefined){
-      return this.account.details.is_admin;
+      return this.account.details.is_admin || false;
     }
     else {
       return false;
@@ -98,6 +85,10 @@ export class AuthenticationService {
 
   getEmailTag() {
     return this.authUser.email.split("@")[0];
+  }
+
+  setStudentDetails() {
+
   }
  
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentData } from 'src/app/models/student-data.model';
+import { AuthenticationService } from '../authentication-service/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class SignUpService {
   email!: string;
   private signUpUrl = '/api/sign-up';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private authService: AuthenticationService) { }
 
   public send(dialog: MatDialog, location: Location, email: string|undefined){
     this.dialog = dialog;

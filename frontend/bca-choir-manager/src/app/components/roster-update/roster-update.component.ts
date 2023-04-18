@@ -45,7 +45,7 @@ export class RosterUpdateComponent {
     private dialogRef: MatDialogRef<RosterUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_student: StudentData,
     )
-  {console.log(orig_student);}
+  {}
 
   ngOnInit() {
   }
@@ -69,12 +69,7 @@ export class RosterUpdateComponent {
 
 
   public submit(){
-
-
-    console.log("UPADTED");
-    console.log(this.firstName);
-
-    let updatedStudent : StudentData = {
+        let updatedStudent : StudentData = {
       email: this.student.email,
       first_name: (this.isValidString(this.firstName) ? this.firstName : this.student.first_name),
       last_name: this.isValidString(this.firstName) ? this.lastName : this.student.last_name,

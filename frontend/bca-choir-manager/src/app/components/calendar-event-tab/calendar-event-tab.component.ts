@@ -23,9 +23,9 @@ export class CalendarEventTabComponent {
         data: this.event});
       
 
-              dialogRef.afterClosed().subscribe(result => {
-                console.log('The dialog was closed');
-              });
+              // dialogRef.afterClosed().subscribe(result => {
+              //       console.log('The dialog was closed');
+              // });
     }
 
   }

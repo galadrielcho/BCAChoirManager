@@ -37,9 +37,9 @@ export class EventDeleteDialogComponent {
       data: this.event
     });
 
-    describeEventDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    // describeEventDialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
   
 

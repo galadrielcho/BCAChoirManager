@@ -51,9 +51,9 @@ export class EventDescriptionDialogComponent {
       data: this.event
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
   getSignedUp() {
@@ -83,7 +83,6 @@ export class EventDescriptionDialogComponent {
   }
 
   confirmSignupEvent() : void {
-    console.log("asjdofia" + this.signedup);
     this.close();
     const dialogRef = this.dialog.open(EventSignupDialogComponent, {
       width: '500px',

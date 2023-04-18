@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.statusService.getStatus().subscribe({
       next: data => {
-        console.log("Retrieved status: " + data.status);
         this.status = data.status;
       }
     }); 
