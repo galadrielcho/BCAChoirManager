@@ -10,8 +10,8 @@ export class AuthenticationService {
   // user_email : string; 
   
   private authUser : any = null;
-  private admin: boolean = false;
   private account: any = null;
+  private admin : boolean = false;
 
   constructor(private http: HttpClient, 
               private auth : AuthService,
@@ -27,16 +27,8 @@ export class AuthenticationService {
       this.auth.user$.subscribe(
         data => {
           this.authUser = data;
-
           if (data){
-            let url = `/api/get-account/${this.authUser.email}`;
-            this.http.get<any>(url).subscribe(
-              account =>{
-                if (Object.keys(account).length > 1){
-                  this.account = account;
-                }
-              }
-            );            
+            this.setAccountDetails();
           }
 
         }
@@ -46,7 +38,7 @@ export class AuthenticationService {
 
   logout() {
     this.authUser = null;
-    this.admin = false;
+    this.account.is_admin = false;
     this.auth.logout({ returnTo: "" })
 
   }
@@ -87,8 +79,37 @@ export class AuthenticationService {
     return this.authUser.email.split("@")[0];
   }
 
+  setAccountDetails() {
+    console.log("Setting acccount");
+
+    let url = `/api/get-account/${this.getUserEmail()}`;
+    this.http.get<any>(url).subscribe(
+      account =>{
+        if (Object.keys(account).length > 0){
+          this.account = account;
+          console.log(this.account);
+          if (!this.account.is_admin) {
+            this.setStudentDetails();
+          } else {
+            console.log("Admin correctly registered");
+            this.admin = true;
+          }
+        }
+      }
+    );            
+  }
+
   setStudentDetails() {
+    let url = `/api/get-student/${this.getUserEmail()}`;
+    this.http.get<any>(url).subscribe(
+      student =>{
+        if (Object.keys(student).length > 1){
+          this.account = student;
+        }
+      }
+    );            
 
   }
+
  
 }
