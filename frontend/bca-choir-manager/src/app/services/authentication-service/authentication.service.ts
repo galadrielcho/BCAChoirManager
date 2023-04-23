@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { EventSignupDialogComponent } from 'src/app/components/event-signup-dialog/event-signup-dialog.component';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
+import { User as Auth0User } from '@auth0/auth0-spa-js';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class AuthenticationService {
   
   private authUser : any = null;
   private admin: boolean = false;
+  private chamber: boolean = false;
+  private concert: boolean = false;
   private account: any = null;
 
   constructor(private http: HttpClient, 
@@ -30,6 +34,18 @@ export class AuthenticationService {
           this.authUser = data;
 
           if (data){
+            const roles = this.authUser['http://localhost:4200/roles'];
+            if (roles && roles.includes('admin')) {
+              this.admin = true;
+            }
+            else if (roles && roles.includes('chamber')) {
+              this.chamber = true;
+            }
+            else if (roles && roles.includes('concert')) {
+              this.concert = true;
+            }
+
+
             let url = `/api/get-account/${this.authUser.email}`;
             this.http.get<any>(url).subscribe(
               account =>{
@@ -53,7 +69,7 @@ export class AuthenticationService {
           }
 
         }
-      );
+      ) as Auth0User;
     }
   }
 
@@ -73,9 +89,14 @@ export class AuthenticationService {
     return this.http.get<any>(url);
   }
 
-  isAdmin(email : string|undefined){
-    let url = `/api/is-admin/${email}`;
-    return this.http.get<boolean>(url);
+  isAdmin() {
+    return this.admin;
+  }
+  isConcert() {
+    return this.concert;
+  }
+  isChamber() {
+    return this.chamber;
   }
 
   getUserAdmin() {

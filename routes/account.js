@@ -109,8 +109,13 @@ module.exports = function () {
       sql = `CALL getAccount(${database.escape(req.body[0])});`
       database.query(sql, function(err, account, fields) {
         if (err) throw err;
+        console.log("in query");
         let result = Object.values(JSON.parse(JSON.stringify(account[0])));
+        console.log(result[0]);
         if(result[0] == undefined){
+          res.send({exists: false});
+        }
+        else if(result[0].is_admin == 0){
           res.send({exists: false});
         }
         else{

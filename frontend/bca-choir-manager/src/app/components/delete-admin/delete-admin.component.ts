@@ -19,14 +19,15 @@ export class DeleteAdminComponent {
     this.showDNE = false;
     this.showSelfDeletionError = false;
     this.showSuccess = false;
-    let data = this.authService.getUserEmail();
+    let user = this.authService.getUserEmail();
 
-    if(data == this.email){
+    if(user == this.email){
       this.showSelfDeletionError = true;
     }
     else{
       this.accService.checkAdmin([this.email]).subscribe({
         next: (data: any) =>{
+          console.log("data: " + data.exists);
           if (!(data.exists)){
             this.showDNE = true;
           }
