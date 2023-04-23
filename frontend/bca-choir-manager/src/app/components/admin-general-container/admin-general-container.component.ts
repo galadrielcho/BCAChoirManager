@@ -28,7 +28,6 @@ export class AdminGeneralContainerComponent {
   updateAdmins(){
     this.authService.getAdmins().subscribe({
       next: data => {
-        console.log(data); 
         const list = [];
         for(let i = 0; i < data.admins.length; i++){
           let name = data.admins[i].first_name + " " + data.admins[i].last_name + " (" + data.admins[i].email + ")";

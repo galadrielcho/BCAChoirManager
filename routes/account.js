@@ -119,7 +119,6 @@ module.exports = function () {
           res.send({exists: false});
         }
         else{
-          console.log("sending true");
           res.send({exists: true});
         }
       });

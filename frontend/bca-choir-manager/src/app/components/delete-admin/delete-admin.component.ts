@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-delete-admin',
@@ -8,7 +10,9 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
   styleUrls: ['./delete-admin.component.css']
 })
 export class DeleteAdminComponent {
-  email = "";
+  public deleteAdminForm : FormGroup = new FormGroup({
+    email: new FormControl("", [Validators.required, Validators.email])});
+
   showDNE = false;
   showSelfDeletionError = false;
   showSuccess = false;
@@ -19,20 +23,20 @@ export class DeleteAdminComponent {
     this.showDNE = false;
     this.showSelfDeletionError = false;
     this.showSuccess = false;
-    let user = this.authService.getUserEmail();
+    let data = this.authService.getUserEmail();
 
-    if(user == this.email){
+    if(data == this.deleteAdminForm.value.email){
       this.showSelfDeletionError = true;
     }
     else{
-      this.accService.checkAdmin([this.email]).subscribe({
+      this.accService.checkAdmin([this.deleteAdminForm.value.email]).subscribe({
         next: (data: any) =>{
           console.log("data: " + data.exists);
           if (!(data.exists)){
             this.showDNE = true;
           }
           else{
-            this.accService.deleteAdmin([this.email]).subscribe({
+            this.accService.deleteAdmin([this.deleteAdminForm.value.email]).subscribe({
               next: (info: any) =>{
                 if(info.success){
                   this.showSuccess = true;
