@@ -9,5 +9,6 @@ export class RosterPageComponent {
   constructor() {
   }
   export(){
-   }
+    window.open("https://docs.google.com/spreadsheets/d/1hOvut5eeqbxL-I1KadDFHuUCatiXuqL_n3LHoFKAhuY/edit#gid=0", "_blank");
+  }
 }
