@@ -5,16 +5,17 @@ const router = require('express').Router();
 module.exports = function () {
 
     router.get("/api/get-admins", function (req, res) {
-      sql = `CALL getAdmins();`
-      database.query(sql, function(err, admins, fields) 
-      {
-      if (err) throw err;
-    
-      let result = Object.values(JSON.parse(JSON.stringify(admins[0])));
-    
+      let result;
+
+      database.query(
+        'CALL getAdmins()',
+        function(err, results, fields) {
+          if (err) throw err;
+          result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        }
+      );        
       res.send({admins: result});
-      });
-    });           
+    });
     
     router.post('/api/delete-account', (req, res) => {
       // get account if it exists
@@ -109,9 +110,7 @@ module.exports = function () {
       sql = `CALL getAccount(${database.escape(req.body[0])});`
       database.query(sql, function(err, account, fields) {
         if (err) throw err;
-        console.log("in query");
         let result = Object.values(JSON.parse(JSON.stringify(account[0])));
-        console.log(result[0]);
         if(result[0] == undefined){
           res.send({exists: false});
         }

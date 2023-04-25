@@ -54,7 +54,7 @@ export class AuthenticationService {
 
   logout() {
     this.authUser = null;
-    this.account.is_admin = false;
+    this.admin = false;
     this.auth.logout({ returnTo: "" })
 
   }
@@ -101,18 +101,16 @@ export class AuthenticationService {
   }
 
   setAccountDetails() {
-    console.log("Setting acccount");
 
     let url = `/api/get-account/${this.getUserEmail()}`;
     this.http.get<any>(url).subscribe(
       account =>{
         if (Object.keys(account).length > 0){
           this.account = account;
-          console.log(this.account);
-          if (!this.account.is_admin) {
+
+          if (this.account.details.is_admin.data[0] == 0) {
             this.setStudentDetails();
           } else {
-            console.log("Admin correctly registered");
             this.admin = true;
           }
         }

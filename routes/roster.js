@@ -24,7 +24,7 @@ module.exports = function () {
   
 /*  "/api/get-student/:email"
 *   GET: Gets the data of a student.
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns, voice part name, 
 *      voice part number, choir type, grad year
 */

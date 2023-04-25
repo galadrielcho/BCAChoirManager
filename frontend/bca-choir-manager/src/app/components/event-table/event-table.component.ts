@@ -44,13 +44,13 @@ export class EventTableComponent {
     ) { 
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
-      next: data => {
-        for(let eventIndex in  data.events){
-          data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
-          data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+      next: events => {
+        for(let eventIndex in  events){
+          events[eventIndex].start_time = this.es.dateISOToLocale(events[eventIndex].start_time);
+          events[eventIndex].end_time = this.es.dateISOToLocale(events[eventIndex].end_time);
 
         }
-        this.events = data.events;
+        this.events = events;
         this.setupTable();
 
       }      
@@ -121,13 +121,14 @@ export class EventTableComponent {
       if (result){
               // TO DO : Check if the event has been updated and only update that event
         this.eventService.getAllEvents().subscribe(
-          data => {
-            for(let eventIndex in  data.events){
-              data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
-              data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+          (events : EventData[]) => {
+            for(let event in  events){
+              console.log(event);
+              events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
+              events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
     
             }
-            this.events = data.events;
+            this.events = events;
             this.refresh();
           }
         );
@@ -144,14 +145,14 @@ export class EventTableComponent {
     }).afterClosed().subscribe(updatedStudent => {
       // TO DO : Check if the event has changed and only update that event
       this.eventService.getAllEvents().subscribe(
-        data => {
-          for(let eventIndex in  data.events){
-            data.events[eventIndex].start_time = this.es.dateISOToLocale(data.events[eventIndex].start_time);
-            data.events[eventIndex].end_time = this.es.dateISOToLocale(data.events[eventIndex].end_time);
+        (events : EventData[]) => {
+          for(let event in  events){
+            events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
+            events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
   
           }
           
-          this.events = data.events;
+          this.events = events;
           this.refresh();
         }
       );

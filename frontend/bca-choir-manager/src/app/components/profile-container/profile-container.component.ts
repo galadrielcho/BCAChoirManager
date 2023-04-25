@@ -32,14 +32,14 @@ export class ProfileContainerComponent {
     this.user = authService.getUserEmail();
 
     if (!this.admin) {
-      this.updateProfileDetails();
+      this.updateStudentProfileDetails();
   
     } else {
       signupService.getEmail(this.user);
     }
   }
 
-  updateProfileDetails() {
+  updateStudentProfileDetails() {
     this.rosterService.getAccountDetails(this.user).subscribe(
       data => {
         this.student = data.details;
@@ -58,7 +58,7 @@ export class ProfileContainerComponent {
     );
 
     dialogRef.afterClosed().subscribe(updatedStudent => {
-      this.updateProfileDetails();
+      this.updateStudentProfileDetails();
     }
     
       );
