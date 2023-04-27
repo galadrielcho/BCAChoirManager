@@ -4,18 +4,18 @@ var database;
 
 function connectDatabase() {
   if (!database) {
-    var database = mysql.createConnection({
+    var database = mysql.createPool({
       host     : process.env.HOST,
       user     : process.env.USER,
       password : process.env.PASSWORD,
-      database : process.env.DB
+      database : process.env.DB,
+      waitForConnections: true,
+      connectionLimit: 10,
+      maxIdle: 10,
+      idleTimeout: 60000,
+      queueLimit: 0
+    
     });  
-
-    database.connect(function(err){
-        if(err) {
-          console.log('Error connecting database!');
-        }
-    });
   }
   return database;
 }
