@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EmailRecipientsInputService {
-  private emailUrl = '/api/email-recipients-input';
+  private emailUrl = '/api/get-all-accounts';
 
   constructor(private http: HttpClient) { }
 

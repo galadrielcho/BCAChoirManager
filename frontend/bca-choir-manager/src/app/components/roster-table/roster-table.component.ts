@@ -55,9 +55,7 @@ export class RosterTableComponent implements AfterViewInit {
 
 
   deleteClicked(student : StudentData){
-    let arr = [];
-    arr.push(student.email);
-    this.rosterService.deleteAccount(arr);
+    this.rosterService.deleteAccount(student.email);
     let index = this.roster.indexOf(student);
 
     this.roster.splice(index, 1);

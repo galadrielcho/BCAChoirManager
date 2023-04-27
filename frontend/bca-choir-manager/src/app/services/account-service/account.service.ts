@@ -23,8 +23,9 @@ export class AccountService {
     return this.http.post('/api/add-admin', details);
   }
 
-  deleteAdmin(details: string[]){
-    return this.http.post('/api/delete-account', details);
+  deleteAdmin(email : string){
+    console.log(email);
+    return this.http.post('/api/delete-account', email);
   }
   
 }

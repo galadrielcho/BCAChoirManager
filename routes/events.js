@@ -180,7 +180,6 @@ module.exports = function () {
                                
   });
 
-
 /*  "/api/event/get-event-registrees/:name/:startime"
  *   GET: Gets all event registrees
  *   Retrieves the following information:

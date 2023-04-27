@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SignUpService } from '../../services/sign-up-service/sign-up.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { StudentData } from 'src/app/models/student-data.model';
 
 @Component({
   selector: 'app-sign-up',
