@@ -25,12 +25,10 @@ export class EventService {
   }
   
   deleteEvent(e : EventData){
-    console.log(e);
     const startTime = new Date(e.start_time).getTime();
-    const endTime = new Date(e.end_time).getTime();
-
+    console.log(this.eventURL + `${e.event_name}/${startTime}/`);
     const obs = this.http.delete(
-      this.eventURL + `${e.event_name}/${startTime}/${endTime}/`).subscribe();
+      this.eventURL + `${e.event_name}/${startTime}/`).subscribe();
     this.calendarService.loadCalendarEvents();
     return obs;
   }

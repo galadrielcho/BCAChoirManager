@@ -4,10 +4,9 @@ var path = require('path');
 
 
 module.exports = function () {
-    /*  "/api/status"
-    *   GET: Get server status
-    */
-   
+        /*  "/"
+    *   GET: Returns base home page
+    */   
     router.get("/", function (req, res) {
         let distDir = '/frontend/bca-choir-manager/dist/bca-choir-manager/index.html'
         res.sendFile(global.appRoot + distDir);

@@ -146,27 +146,15 @@ export class CalendarService {
   }
 
   loadCalendarEvents(){
-    console.log("run");
     let endDateRange : Date = new Date(this.getLastDateOfCalendarMonth());
     endDateRange.setHours(23, 59, 59, 0);
 
     const choirTypeIdToString = {1 : "Concert", 2 : "Chamber"};
+
     this.eventService.getEventsInRange(this.getFirstDateOfCalendarMonth(), endDateRange)
       .subscribe({
-        next: data => {
-          this.events = [];
-          for(let i = 0; i < data.events.length; i++){
-            let event : EventData =  {
-              event_name: data.events[i][0], 
-              start_time: data.events[i][1],
-              end_time: data.events[i][2],
-              location: data.events[i][3],
-              address: data.events[i][4],
-              choir_type: data.events[i][5]
-              }
-            this.events.push(event);
-
-          } 
+        next: (events: EventData[])=> {
+          this.events = events;
           this.goThroughCalendarMonth();
         },
         error: error=>{

@@ -31,12 +31,11 @@ export class DeleteAdminComponent {
     else{
       this.accService.checkAdmin([this.deleteAdminForm.value.email]).subscribe({
         next: (data: any) =>{
-          console.log("data: " + data.exists);
           if (!(data.exists)){
             this.showDNE = true;
           }
           else{
-            this.accService.deleteAdmin([this.deleteAdminForm.value.email]).subscribe({
+            this.accService.deleteAdmin(this.deleteAdminForm.value.email).subscribe({
               next: (info: any) =>{
                 if(info.success){
                   this.showSuccess = true;

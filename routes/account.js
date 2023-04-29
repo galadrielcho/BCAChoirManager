@@ -3,52 +3,72 @@ var database = require('../db');
 const router = require('express').Router();
 
 module.exports = function () {
+  
+/*  "/api/get-admins"
+ *   GET: Gets all admins
+ *   Retrieves the following infromation:
+ *      first_name, last_name, email
+ */
 
-    router.get("/api/get-admins", function (req, res) {
-      sql = `CALL getAdmins();`
-      database.query(sql, function(err, admins, fields) 
-      {
-      if (err) throw err;
-    
-      let result = Object.values(JSON.parse(JSON.stringify(admins[0])));
-    
-      res.send({admins: result});
-      });
-    });           
-    
-    router.post('/api/delete-account', (req, res) => {
-      // get account if it exists
-      sql = `CALL deleteAccount(${database.escape(req.body[0])});`
-      database.query(sql, function(err, account, fields) {
-        if (err){
-          throw err;
-        }
+  router.get("/api/get-admins", function (req, res) {
+    database.execute(
+      'CALL getAdmins()',
+      [],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send({admins: result});
+      }
+    );   
+
+  });
+
+/*  "/api/delete-account"
+ *   POST: Deletes account if exists
+ *   Takes the following parameters:
+ *      email
+ */
+  
+  router.post('/api/delete-account', (req, res) => {
+    // get account if it exists
+    database.execute(
+      'CALL deleteAccount(?)',
+      [req.body.email],
+      function (err, results, fields) {
+        if (err) throw err;
         res.send({success: true});
-      });
-    });
+      }
+    );   
+  });
 
-    router.post("/api/sign-up", function (req, res) {
+  /*  "/api/sign-up"
+ *   POST: Creates account
+ *   Takes the following parameters:
+ *      email, first name, last name, pronouns, 
+ *      voicepart name and number, choir name, grad year
+ */
 
-        const email = database.escape(req.body[0]);
-        const first_name = database.escape(req.body[1]);
-        const last_name = database.escape(req.body[2]);
-        const pronouns = database.escape(req.body[3]);
-        const voicepart_name = database.escape(req.body[4]);
-        const voicepart_number = database.escape(req.body[5]);
-        const choir_name = database.escape(req.body[6]);
-        const grad_year = database.escape(req.body[7]);
+  // TO DO: Convert to object
+  router.post("/api/sign-up", function (req, res) {
+    let email = req.body[0];
+    let first_name = req.body[1];
+    let last_name = req.body[2];
+    let pronouns = req.body[3];
+    let voicepart_name = req.body[4];
+    let voicepart_number = req.body[5];
+    let choir_name = req.body[6];
+    let grad_year = req.body[7];
 
 
-        // insert into account
-        sql = `CALL signupAccount(${email}, ${first_name}, 
-              ${last_name}, ${pronouns}, ${voicepart_name},
-              ${voicepart_number}, ${choir_name}, ${grad_year});`
-        
-        database.query(sql, function(err, rows, fields) 
-          {
-            if (err) throw err;
-          }); 
-    });
+    database.execute(
+      'CALL signupAccount(?, ?, ?, ?, ?, ?, ?, ?)',
+      [email, first_name, last_name, pronouns, voicepart_name, voicepart_number, choir_name, grad_year],
+      function (err, results, fields) {
+        if (err) throw err;
+      }
+    );   
+
+  });
 
 /*  "/api/get-account/:email"
 *   GET: Gets the data of a generic account.
@@ -56,88 +76,95 @@ module.exports = function () {
 *      first name, last name, pronouns, is_admin
 */
 
-  router.get("/api/get-account/:email", function (req, res) {
-    sql = `CALL getAccount("${req.params.email}");`
-  
-    database.query(sql, function(err, account, fields) {
-      let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
+router.get("/api/get-account/:email", function (req, res) {
+  database.execute(
+    'CALL getAccount(?)',
+    [req.params.email], 
+    function(err, account, fields) {
       if (err) throw err;
-      res.send({details: result});
-      });
-  
+
+      if (Object.keys(account).length === 0) {
+        res.send({details : account});
+      } else {
+        let result = Object.values(JSON.parse(JSON.stringify(account[0])))[0];
+        res.send({details: result});
+      }
     });
 
-    router.get("/api/email-recipients-input", function (req, res) {
-        sql = `select account.first_name, account.last_name, account.email
-        FROM account;`
-        database.query(sql, function(err, rows, fields) 
-        {
-          if (err) throw err;
-      
-          let emails = [];
-          for (let i = 0; i < rows.length; i++) {
-            let person = [];
-            person.push(rows[i].first_name);
-            person.push(rows[i].last_name);
-            person.push(rows[i].email);
-            emails.push(person);
-          }
-          res.send({emails: emails});
-        });
-      });
-    
-    router.post('/api/check-admin', (req, res) => {
-        const email = database.escape(req.body[0]);
-        const first_name = database.escape(req.body[1]);
-        const last_name = database.escape(req.body[2]);
-
-      // get account if it exists
-      sql = `CALL getAccount(${database.escape(req.body[0])});`
-      database.query(sql, function(err, account, fields) {
-        if (err) throw err;
-        let result = Object.values(JSON.parse(JSON.stringify(account[0])));
-        if(result[0] == undefined){
-          res.send({exists: false});
-        }
-        else{
-          res.send({exists: true});
-        }
-      });
-    });
-    router.post('/api/check-admin', (req, res) => {
-      // get account if it exists
-      sql = `CALL getAccount(${database.escape(req.body[0])});`
-      database.query(sql, function(err, account, fields) {
-        if (err) throw err;
-        console.log("in query");
-        let result = Object.values(JSON.parse(JSON.stringify(account[0])));
-        console.log(result[0]);
-        if(result[0] == undefined){
-          res.send({exists: false});
-        }
-        else if(result[0].is_admin == 0){
-          res.send({exists: false});
-        }
-        else{
-          res.send({exists: true});
-        }
-      });
-    });
-    router.post('/api/delete-account', (req, res) => {
-      const email = req.body;
-      sql = `DELETE FROM account WHERE email = ${database.escape(email[0])};`;
-      database.query(sql, function(err, rows, fields) 
-      {
-          if (err) throw err;
-      });  
   });
-  router.post('/api/add-admin', (req, res) => {
+  
 
-  // get account if it exists
-  sql = `CALL addAdmin(${database.escape(req.body[0])}, ${database.escape(req.body[1])}, ${database.escape(req.body[2])});`
-  database.query(sql, function(err, account, fields) {
+/*  "/api/get-all-accounts/"
+*   GET: Gets the data of all accounts without admin information
+*   Retrieves the following infromation:
+*      first name, last name, pronouns
+*/
+
+  // TO DO: Convert to object
+  router.get("/api/get-all-accounts", function (req, res) {
+      database.execute(
+        "CALL getAllAccounts()", 
+        [],
+        function(err, rows, fields) 
+      {
+        if (err) throw err;
+    
+        let emails = [];
+        for (let i = 0; i < rows.length; i++) {
+          let person = [];
+          person.push(rows[i].first_name);
+          person.push(rows[i].last_name);
+          person.push(rows[i].email);
+          emails.push(person);
+        }
+        res.send({emails: emails});
+      });
+    });
+
+
+/*  "/api/get-all-accounts/"
+*   GET: Gets the data of all accounts without admin information
+*   Retrieves the following infromation:
+*      first name, last name, pronouns
+*/
+
+  router.post('/api/check-admin', (req, res) => {
+    database.execute(
+        "CALL getAccount(?)",
+        [req.body[0]],
+        function(err, account, fields) {
+          if (err) throw err;
+          let result = Object.values(JSON.parse(JSON.stringify(account[0])));
+          if (Object.keys(account).length === 0) {
+            res.send({exists: false});
+          }
+          if(result[0] == undefined){
+            res.send({exists: false});
+          }
+          else if(result[0].is_admin == 0){
+            res.send({exists: false});
+          }
+          else{
+            res.send({exists: true});
+          }
+    });
+  }); 
+
+
+/*  "/api/add-admin/"
+*   POST: Creates a new admin account
+*   Takes the following parameters:
+*      email, first name, last name
+*/
+
+
+router.post('/api/add-admin', (req, res) => {
+database.execute(
+  "CALL addAdmin(?, ?, ?)",
+  [req.body[0], req.body[1], req.body[2]],
+  function(err, account, fields) {
     if (err) throw err;
-      res.send({added: true});
+    res.send({added: true});
   });
 });
 
@@ -146,20 +173,22 @@ module.exports = function () {
 *   Returns a boolean value
 */
 
-    router.get("/api/is-admin/:email", function (req, res) {
-        sql = `CALL isAdmin("${req.params.email}");`
-      
-        database.query(sql, function(err, isAdmin, fields) 
+  router.get("/api/is-admin/:email", function (req, res) {
+      sql = `CALL isAdmin("${req.params.email}");`
     
-        {
-        let result = Object.values(JSON.parse(JSON.stringify(isAdmin[0])))[0];
-      
-        res.send(result.is_admin.data[0] == 1);
+      database.execute(
+        "CALL isAdmin(?)",
+        [req.params.email],
+        function(err, isAdmin, fields) {
+          if (Object.keys(isAdmin).length === 0) res.send(false);
+
+          let result = Object.values(JSON.parse(JSON.stringify(isAdmin[0])))[0];
+          res.send(result.is_admin.data[0] == 1);
       
         });
-      });
+    });
 
-    
+  
 
-    return router;
+  return router;
 }
