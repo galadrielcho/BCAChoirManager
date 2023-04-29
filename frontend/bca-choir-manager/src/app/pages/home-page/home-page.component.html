@@ -1,11 +1,13 @@
-<div id="site-title"> BCA Choir</div> 
+
+<div style="width: 90%; height: 70%; margin: 0 auto;">
+    <app-photo-slideshow [slides]="slides"></app-photo-slideshow>
+<div class="top">
+<div id="site-title" class="highlight">BCA Choir</div> 
 
 <div id="blurb">
     <p>Welcome to the official website of BCA's Chamber and Concert Choir.</p>
 
-
 </div> 
-
 
 <div *ngIf="isAuthenticated()">
     <div *ngIf="inDatabase()"></div>

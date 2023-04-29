@@ -66,6 +66,7 @@ import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { DeleteAdminComponent } from './components/delete-admin/delete-admin.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ProfileContainerComponent } from './components/profile-container/profile-container.component';
+import { SlideshowModule } from './slideshow';
 
 
 
@@ -131,6 +132,7 @@ import { ProfileContainerComponent } from './components/profile-container/profil
     MatDialogModule,
     MatMenuModule,
     MatRadioModule,
+    SlideshowModule,
 
     AuthModule.forRoot({
       domain: 'bca-choir-manager.us.auth0.com',
