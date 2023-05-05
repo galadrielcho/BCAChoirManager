@@ -3,20 +3,29 @@ app-home{
     width:100%;
 }
 
-#site-title, #blurb {
-    position: fixed;
+.top{
+    text-align: left;
+}
 
-    text-align: center;
-    transform: translate(-50%, -50%);
+#site-title, #blurb {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+   
+}
+.highlight{
+    color: rgb(255, 255, 255);
+    text-shadow: 7px 7px 7px rgb(0, 0, 0);
 }
 
 #site-title {
-    top: 45%;
-    left: 50%;
+    top: 15%;
     font-size:4rem;
 }
 
 #blurb {
-    top: 55%;
+    top: 77%;
     left: 50%;
+    color: black;
 }

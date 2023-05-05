@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
 import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { SlideInterface } from 'src/app/components/photo-slideshow/types/slides.interface';
 
 @Component({
   selector: 'app-home-page',
@@ -15,6 +16,13 @@ export class HomePageComponent {
   dialog: MatDialog;
   isUnaccounted: Boolean
   dbCalled: Boolean
+  slides: SlideInterface[] =[{url:"https://drive.google.com/uc?id=1UFaijjx-FKsIRFFldtyvvkYegoPaQZn4", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1Gzn05dUcYkIaZYwQ9Z3XqZVskdlqrkEs", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1Le2QEc6HcipZE8dipKZ8Rj2peMxQOTrT", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1ojDqonhdLcAPj0HtjJbJnyDpCd56pZsJ", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1dIhm86mSwDyYfpz5eKwvvjdz9dy4sL7V", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1l8WBnO5IYXYUdfMkhq2yS1r_cfNLZGCJ", title: 'photo'},
+                             {url:"https://drive.google.com/uc?id=1KWVS7M-Dt8x9qekZ4vvBYZcOrUECid86", title: 'photo'},];
   constructor(private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService) {
     this.dialog = md;
     this.isUnaccounted = false;
