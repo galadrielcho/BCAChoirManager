@@ -1,0 +1,65 @@
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side">
+        <ul> 
+            <li> 
+                <h1>
+                    BCA Choir
+                </h1>
+            </li>
+            <li>
+                <user-button></user-button>
+            </li>
+            <li> 
+                <a routerLink="/home">
+                    <button mat-button>
+                        Home <mat-icon>home</mat-icon>
+                    </button>
+                </a> 
+            </li>
+            <li>
+                <a routerLink="/calendar">
+                    <button mat-button>
+                        Calendar <mat-icon>calendar_today</mat-icon>
+                    </button>
+    
+                </a>
+            </li>
+            <li *ngIf="isAdmin()">
+                <a routerLink="/events">
+                    <button mat-button>
+                        Events <mat-icon>event_note</mat-icon>
+                    </button>
+                </a>
+            </li>
+            <li *ngIf="isAuthenticated()">
+                <a routerLink="/roster">
+                    <button mat-button>
+                        Roster <mat-icon>people</mat-icon>
+                    </button>
+                </a>
+            </li>
+            <li *ngIf="isAdmin()">
+                <a routerLink="/admin">
+                    <button mat-button>
+                        Admin <mat-icon>build</mat-icon>
+                    </button>
+                </a>
+            </li>   
+            <li>
+                <button mat-button (click)="drawer.toggle()">
+                    Close menu
+                </button>
+
+            </li>
+        </ul>
+
+
+    </mat-drawer>
+    <div>
+        <button type="button" mat-button (click)="drawer.toggle()">
+          >
+        </button>
+    </div>
+    
+  
+</mat-drawer-container>  

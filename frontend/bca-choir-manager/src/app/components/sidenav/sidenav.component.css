@@ -1,0 +1,28 @@
+li {
+    display:block;
+    margin: 0 auto;
+}
+
+mat-drawer-container {
+    height:100%;
+    position:fixed;
+}
+
+ul {
+    align-items:left;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+
+mat-toolbar{
+    padding:0;
+}
+
+a {
+    text-decoration:none;
+}
+
+.mat-drawer-container{
+    background-color:none;
+}

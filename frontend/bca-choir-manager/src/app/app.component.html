@@ -6,6 +6,8 @@
 </head>
 
 <main> 
-  <app-header></app-header> 
+  <app-header *ngIf="currentWindowWidth>=768"></app-header> 
+  <app-sidenav *ngIf="currentWindowWidth<768">   
+  </app-sidenav>
   <router-outlet> </router-outlet>
 </main>
