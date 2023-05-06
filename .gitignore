@@ -1,8 +1,8 @@
 node_modules/*
 node_modules/.package-lock.json
+package-lock.json
 
 frontend/bca-choir-manager/node_modules
 frontend/bca-choir-manager/package-lock.json
 
 frontend/package-lock.json
-
