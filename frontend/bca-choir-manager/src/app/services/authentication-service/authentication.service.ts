@@ -43,7 +43,6 @@ export class AuthenticationService {
               this.concert = true;
             }
 
-
             this.setAccountDetails();
           }
 

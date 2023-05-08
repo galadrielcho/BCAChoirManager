@@ -66,6 +66,7 @@ import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { DeleteAdminComponent } from './components/delete-admin/delete-admin.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ProfileContainerComponent } from './components/profile-container/profile-container.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SlideshowModule } from './slideshow';
 
 
@@ -102,7 +103,8 @@ import { SlideshowModule } from './slideshow';
     AddAdminComponent,
     DeleteAdminComponent,
     ProfilePageComponent,
-    ProfileContainerComponent
+    ProfileContainerComponent,
+    SidenavComponent
 
 
 
@@ -136,7 +138,7 @@ import { SlideshowModule } from './slideshow';
 
     AuthModule.forRoot({
       domain: 'bca-choir-manager.us.auth0.com',
-      clientId: 'rfDAbzcqSurbXNtz8kczhkkJU7fwiGr7'
+      clientId: 'rfDAbzcqSurbXNtz8kczhkkJU7fwiGr7',
     }),
       MatTableModule,
       MatPaginatorModule,

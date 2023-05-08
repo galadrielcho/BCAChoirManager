@@ -1,12 +1,24 @@
  <form [formGroup]="eventForm"> 
   <h1 mat-dialog-title>{{eventAction}} Event</h1>
   <div mat-dialog-content >
+    <div *ngIf="eventForm.get('event_name')?.hasError('maxlength')">
+      Must be less than 45 characters.
+    </div>
+    <div *ngIf="eventForm.get('event_name')?.hasError('pattern')">
+      Invalid characters.
+    </div>
     <mat-form-field class="long-input">
-        <input matInput placeholder="Event Name" type="text" formControlName="event_name">
+        <input matInput placeholder="Event Name (*)" type="text" formControlName="event_name">
     </mat-form-field>
+    <div *ngIf="eventForm.get('location')?.hasError('pattern')">
+      Invalid characters.
+    </div>
     <mat-form-field class="long-input" >
-        <input matInput placeholder="Location Name" type="text" formControlName="location">
+        <input matInput placeholder="Location Name" type="text" formControlName="location"> 
     </mat-form-field>
+    <div *ngIf="eventForm.get('address')?.hasError('pattern')">
+      Invalid characters.
+    </div>
     <mat-form-field class="long-input">
         <input matInput placeholder="Address" type="text" formControlName="address">
     </mat-form-field>
