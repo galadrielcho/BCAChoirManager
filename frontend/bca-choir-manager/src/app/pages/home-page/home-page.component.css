@@ -16,7 +16,6 @@ app-home{
 }
 .highlight{
     color: rgb(255, 255, 255);
-    text-shadow: 7px 7px 7px rgb(0, 0, 0);
 }
 
 #site-title {
@@ -24,8 +23,15 @@ app-home{
     font-size:4rem;
 }
 
-#blurb {
-    top: 77%;
+.blurb {
+    position: absolute;
+    top: 78%;
     left: 50%;
-    color: black;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, 0.451);
+    border-radius: 10px;
 }
