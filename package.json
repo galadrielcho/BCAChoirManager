@@ -8,6 +8,8 @@
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "^3.0.1",
     "mysql2": "^3.3.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.4",
     "path": "^0.12.7"
   },
   "scripts": {
