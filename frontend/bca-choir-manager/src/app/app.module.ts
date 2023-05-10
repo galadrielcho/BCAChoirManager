@@ -68,6 +68,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { ProfileContainerComponent } from './components/profile-container/profile-container.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SlideshowModule } from './slideshow';
+import { HomePagePopupComponent } from './components/home-page-popup/home-page-popup.component';
 
 
 
@@ -104,7 +105,8 @@ import { SlideshowModule } from './slideshow';
     DeleteAdminComponent,
     ProfilePageComponent,
     ProfileContainerComponent,
-    SidenavComponent
+    SidenavComponent,
+    HomePagePopupComponent
 
 
 

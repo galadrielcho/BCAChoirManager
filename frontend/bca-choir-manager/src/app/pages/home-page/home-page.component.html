@@ -1,20 +1,63 @@
-
-<div style="width: 100%; height: 70%; margin: 0 auto;">
-    <app-photo-slideshow [slides]="slides"></app-photo-slideshow>
-<div class="top">
-<div id="site-title" class="highlight">BCA Choir</div> 
-
-<div class="blurb">
-    <p>Welcome to the official website of BCA's Chamber and Concert Choir.</p>
-
-</div> 
-
 <div *ngIf="isAuthenticated()">
     <div *ngIf="inDatabase()"></div>
 </div>
 
-<!-- 
-<input ngModel #username type="text" placeholder="email; first_name; last_name; pronouns">
-<input type="submit" (click)="submitClicked()">
--->
+<div style="width: 100%; height: 90%; margin: 0 auto;">
+    <app-photo-slideshow [slides]="slides"></app-photo-slideshow>
+<div class="top">
+<div id="site-title" class="highlight"><b>BCA Choir</b></div> 
+
+<div class="blurb">
+    <p>Welcome to the official website of BCA's Chamber and Concert Choirs.</p>
+</div> 
+
+<!--*ngIf="isAdmin()"-->
+<button class="button" mat-mini-fab (click)="edit()">
+    <mat-icon>edit</mat-icon>
+</button>
+
+<!--About-->
+<div class="heading">
+    <p><b>About Us</b></p>
+</div>
+<div class="space"></div>
+<div class="subheading">
+    <p>{{about}}</p>
+</div>
+
+<!--A Cappella Groups-->
+<div class="space"></div>
+<div class="heading">
+    <p><b>A cappella Groups</b></p>
+</div>
+<div class="space"></div>
+
+<!--Bergen Sound-->
+<div class="flex-parent-element">
+    <div class="flex-child-element subheading">{{group1}}</div>
+    <div class="picture1 flex-child-element"></div>
+</div>
+<div class="space"></div>
+
+<!--Femme Fatale-->
+<div class="flex-parent-element">
+    <div class="flex-child-element subheading">{{group2}}</div>
+    <div class="picture2 flex-child-element"></div>
+</div>
+<div class="space"></div>
+
+
+<!--A Cappella Groups-->
+<div class="space"></div>
+<div class="heading">
+    <p><b>About the Conductor</b></p>
+</div>
+<div class="space"></div>
+
+<!--Mr. Spinelli-->
+<div class="flex-parent-element">
+    <div class="flex-child-element subheading">{{conductor}}</div>
+    <div class="picture3 flex-child-element2"></div>
+</div>
+<div class="space"></div>
 

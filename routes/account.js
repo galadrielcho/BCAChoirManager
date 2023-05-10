@@ -23,6 +23,20 @@ module.exports = function () {
 
   });
 
+  router.get("/api/get-content", function (req, res) {
+    let category = req.body[0];
+    database.execute(
+      'CALL getContent(?)',
+      [category],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send({content: result});
+      }
+    );   
+
+  });
+
 /*  "/api/delete-account"
  *   POST: Deletes account if exists
  *   Takes the following parameters:

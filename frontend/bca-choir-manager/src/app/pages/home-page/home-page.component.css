@@ -19,13 +19,13 @@ app-home{
 }
 
 #site-title {
-    top: 15%;
+    top: 20%;
     font-size:4rem;
 }
 
 .blurb {
     position: absolute;
-    top: 78%;
+    top: 95%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: rgb(255, 255, 255);
@@ -35,3 +35,73 @@ app-home{
     background-color: rgba(0, 0, 0, 0.451);
     border-radius: 10px;
 }
+.button{
+  position: absolute;
+  top:93%;
+  padding: 0 10px;
+  left:96%;
+}
+.heading{
+    background-color: #34487d;
+    color:rgb(255, 255, 255);
+    padding: 15px;
+    font-size: 30px;
+    text-align:center;
+}
+.space{
+    padding:11px;
+}
+.subheading{
+    background-color: #bfbfd246;
+    font-size:18px;
+    line-height:30px;
+    width: 94%;
+    padding: 6px;
+    border-radius:10px;
+    margin: 0 auto;
+}
+.flex-parent-element {
+    display: flex;
+    width: 94%;
+    margin: 0 auto;
+  }
+  
+  .flex-child-element {
+    flex: 2;
+  }
+  
+  .flex-child-element:first-child {
+    flex: 3;
+    margin-right:15px;
+  }
+
+  .flex-child-element2 {
+    flex: 0.6;
+  }
+
+  
+  .flex-child-element:nth-child(2) {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 10px;
+  }
+
+  .flex-child-element2:nth-child(2) {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 10px;
+  }
+
+  .picture1{
+    background-image: url('https://drive.google.com/uc?id=1AgpTQQPVhW9CjAqjuvnrhGP_YleJUjZT');
+  }
+
+  .picture2{
+    background-image: url('https://drive.google.com/uc?id=12Mh3K3GyoI-G-zmAItFLWpTG5ckfMx8o');
+  }
+
+  .picture3{
+    background-image: url('https://drive.google.com/uc?id=1ElcPz9v4oRlFHLdBCYoHUNTkLVexZC49');
+  }
