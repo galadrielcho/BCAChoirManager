@@ -1,3 +1,5 @@
+import { environment } from '../environments/environment';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -139,8 +141,8 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     SlideshowModule,
 
     AuthModule.forRoot({
-      domain: 'bca-choir-manager.us.auth0.com',
-      clientId: 'rfDAbzcqSurbXNtz8kczhkkJU7fwiGr7',
+      domain: environment.auth0.domain,
+      clientId: environment.auth0.clientId,
     }),
       MatTableModule,
       MatPaginatorModule,
