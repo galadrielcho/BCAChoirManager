@@ -24,14 +24,24 @@ module.exports = function () {
   });
 
   router.get("/api/get-content", function (req, res) {
-    let category = req.body[0];
     database.execute(
-      'CALL getContent(?)',
-      [category],
+      'CALL getContent()',
+      [],
       function (err, results, fields) {
         if (err) throw err;
         let result = Object.values(JSON.parse(JSON.stringify(results[0])));
         res.send({content: result});
+      }
+    );   
+
+  });
+
+  router.post("/api/post-content", function (req, res) {
+    database.execute(
+      'CALL updateContent(?, ?, ?, ?)',
+      [req.body[0], req.body[1], req.body[2], req.body[3]],
+      function (err, results, fields) {
+        if (err) throw err;
       }
     );   
 
@@ -201,8 +211,6 @@ database.execute(
       
         });
     });
-
-  
 
   return router;
 }

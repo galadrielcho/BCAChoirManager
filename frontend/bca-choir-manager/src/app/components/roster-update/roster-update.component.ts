@@ -69,7 +69,7 @@ export class RosterUpdateComponent {
 
 
   public submit(){
-        let updatedStudent : StudentData = {
+    let updatedStudent : StudentData = {
       email: this.student.email,
       first_name: (this.isValidString(this.firstName) ? this.firstName : this.student.first_name),
       last_name: this.isValidString(this.firstName) ? this.lastName : this.student.last_name,

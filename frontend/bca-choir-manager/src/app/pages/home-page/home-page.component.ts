@@ -6,6 +6,7 @@ import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { SlideInterface } from 'src/app/components/photo-slideshow/types/slides.interface';
 import { HomePagePopupComponent } from 'src/app/components/home-page-popup/home-page-popup.component';
+import { HomeService } from 'src/app/services/home-service/home.service';
 
 @Component({
   selector: 'app-home-page',
@@ -25,10 +26,12 @@ export class HomePageComponent {
                              {url:"https://drive.google.com/uc?id=1l8WBnO5IYXYUdfMkhq2yS1r_cfNLZGCJ", title: 'photo'},
                              {url:"https://drive.google.com/uc?id=1KWVS7M-Dt8x9qekZ4vvBYZcOrUECid86", title: 'photo'},
                              {url:"https://drive.google.com/uc?id=1rwzN64eWQPAJcfrZuMM1_8UjJSHCzX4m", title: 'photo'},];
-  constructor(private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService, private authService: AuthenticationService) {
+  constructor(private homeService: HomeService, private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService, private authService: AuthenticationService) {
     this.dialog = md;
     this.isUnaccounted = false;
     this.dbCalled = false;
+    this.updateContent();
+
   }
 
   @ViewChild('username') input: ElementRef<HTMLInputElement> | undefined;  
@@ -41,6 +44,17 @@ export class HomePageComponent {
 
   isAuthenticated() {
     return this.auth.isAuthenticated();
+  }
+
+  updateContent(){
+    this.homeService.getContent().subscribe({
+      next: data => {
+        this.about = data.content[0].info;
+        this.group1 = data.content[1].info;
+        this.group2 = data.content[2].info;
+        this.conductor = data.content[3].info;
+      }      
+      });
   }
 
 
@@ -68,20 +82,9 @@ export class HomePageComponent {
   }
 
   edit(){
-    this.dialog.open(HomePagePopupComponent,
-      {
-        data: [this.about, this.group1, this.group2, this.conductor]
-      }
-    )
-    /*
-    .afterClosed().subscribe(updatedStudent => {
-      var index = this.roster.indexOf(student);
-      if (index !== -1) {
-          this.roster[index] = updatedStudent;
-      }
-      this.refresh();
-    });
-    */
+    this.dialog.open(HomePagePopupComponent).afterClosed().subscribe(() => {
+      this.updateContent();
+    });  
   }
 
   isAdmin() {

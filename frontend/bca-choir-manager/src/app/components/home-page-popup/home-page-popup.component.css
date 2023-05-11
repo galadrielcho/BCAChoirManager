@@ -1,7 +1,21 @@
-div container{
-    margin: 0px 40px;
-}
-
-fill-space{
+.container {
+    display: flex;
+    max-width: 1000px; /* adjust this value to suit your needs */
+    flex-direction: column;
+  }
+  
+  .container > div {
+    width: 50%;
+  }
+  
+  .container textarea {
+    flex: 1;
+    width: 100%;
+    max-width: calc(100% - 20px);
+    margin: 10px;
+  }
+  
+  .fill-space {
     flex: 1 1 auto;
-}
+  }
+  

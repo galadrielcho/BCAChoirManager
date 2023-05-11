@@ -1,42 +1,38 @@
 <form [formGroup]="contentForm"> 
-    <div class = "container">
-        <mat-toolbar>
-            <span class="fill-space"></span>
-            <span> Edit Content</span>
-            <span class="fill-space"></span>
-        </mat-toolbar>
+    <div class="container">
+      <mat-toolbar>
+        <span class="fill-space"></span>
+        <span>Edit Content</span>
+        <span class="fill-space"></span>
+      </mat-toolbar>
+      <div> 
+        <mat-form-field class="example-full-width" style="width: 1000px;">
+          <mat-label>About</mat-label>
+          <textarea matInput type="text" formControlName="about" [(ngModel)]="about" class="container"></textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width" style="width: 1000px;">
+          <mat-label>Group 1</mat-label>
+          <textarea matInput type="text" formControlName="group1" [(ngModel)]="group1" class="container"></textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width" style="width: 1000px;">
+          <mat-label>Group 2</mat-label>
+          <textarea matInput type="text" formControlName="group2" [(ngModel)]="group2" class="container"></textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width" style="width: 1000px;">
+          <mat-label>Conductor</mat-label>
+          <textarea matInput type="text" formControlName="conductor" [(ngModel)]="conductor" class="container"></textarea>
+        </mat-form-field>
+      </div>
     </div>
-        <div> 
-            <mat-form-field class="example-full-width">
-                <mat-label>About</mat-label>
-                <textarea matInput type="text" formControlName="about"></textarea>
-            </mat-form-field>
-
-        <div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Group 1</mat-label>
-                <textarea matInput type="text" formControlName="group1"></textarea>
-            </mat-form-field>
-        </div>
-
-        <div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Group 2</mat-label>
-                <textarea matInput type="text" formControlName="group2"></textarea>
-            </mat-form-field>
-        </div>
-
-        <div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Conductor</mat-label>
-                <textarea matInput type="text" formControlName="conductor"></textarea>
-            </mat-form-field>
-        </div>
-    </div>
-    
     <div *ngIf="!contentForm.valid">
-        Please fill out all required fields.
+      Please fill out all required fields.
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="!contentForm.valid" (click)="submit()" id="bottom">Submit</button> 
-</form>
-
+  </form>
+  

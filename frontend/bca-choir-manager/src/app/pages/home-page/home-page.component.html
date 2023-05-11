@@ -11,8 +11,7 @@
     <p>Welcome to the official website of BCA's Chamber and Concert Choirs.</p>
 </div> 
 
-<!--*ngIf="isAdmin()"-->
-<button class="button" mat-mini-fab (click)="edit()">
+<button class="button" mat-mini-fab (click)="edit()" *ngIf="isAdmin()">
     <mat-icon>edit</mat-icon>
 </button>
 
