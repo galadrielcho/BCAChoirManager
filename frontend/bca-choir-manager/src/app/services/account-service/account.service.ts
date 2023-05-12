@@ -24,8 +24,7 @@ export class AccountService {
   }
 
   deleteAdmin(email : string){
-    console.log(email);
-    return this.http.post('/api/delete-account', email);
+    return this.http.post<any>('/api/delete-account', [email]);
   }
   
 }

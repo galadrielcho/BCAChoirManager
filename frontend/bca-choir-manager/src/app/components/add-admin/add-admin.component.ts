@@ -20,6 +20,7 @@ export class AddAdminComponent {
     last_name : new FormControl('',
                         [Validators.required, Validators.pattern('[a-zA-Z -/]*')])
   })
+  
   constructor(private service: AccountService){
 
   }

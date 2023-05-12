@@ -3,6 +3,7 @@ import { AccountService } from 'src/app/services/account-service/account.service
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-admin',
@@ -24,6 +25,7 @@ export class DeleteAdminComponent {
     this.showSelfDeletionError = false;
     this.showSuccess = false;
     let data = this.authService.getUserEmail();
+    console.log("this user: " + data);
 
     if(data == this.deleteAdminForm.value.email){
       this.showSelfDeletionError = true;
@@ -40,6 +42,7 @@ export class DeleteAdminComponent {
                 if(info.success){
                   this.showSuccess = true;
                 }
+
               }
             });
           }

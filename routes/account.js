@@ -57,7 +57,7 @@ module.exports = function () {
     // get account if it exists
     database.execute(
       'CALL deleteAccount(?)',
-      [req.body.email],
+      [req.body[0]],
       function (err, results, fields) {
         if (err) throw err;
         res.send({success: true});
@@ -154,18 +154,15 @@ router.get("/api/get-account/:email", function (req, res) {
 
   router.post('/api/check-admin', (req, res) => {
     database.execute(
-        "CALL getAccount(?)",
+        "CALL isAdmin(?)",
         [req.body[0]],
         function(err, account, fields) {
           if (err) throw err;
           let result = Object.values(JSON.parse(JSON.stringify(account[0])));
-          if (Object.keys(account).length === 0) {
-            res.send({exists: false});
-          }
           if(result[0] == undefined){
             res.send({exists: false});
           }
-          else if(result[0].is_admin == 0){
+          else if(result[0].is_admin.data == 0){
             res.send({exists: false});
           }
           else{
@@ -183,6 +180,8 @@ router.get("/api/get-account/:email", function (req, res) {
 
 
 router.post('/api/add-admin', (req, res) => {
+  console.log("in add admin");
+  console.log(req.body);
 database.execute(
   "CALL addAdmin(?, ?, ?)",
   [req.body[0], req.body[1], req.body[2]],
