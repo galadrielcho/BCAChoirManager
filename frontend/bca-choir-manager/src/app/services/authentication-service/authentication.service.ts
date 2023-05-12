@@ -129,5 +129,8 @@ export class AuthenticationService {
 
   }
 
+  getAccessToken() {
+    return this.auth.getAccessTokenSilently();
+  } 
  
 }
