@@ -62,7 +62,7 @@ module.exports = function () {
  *   Takes the following parameters:
  *      none
  */
-  router.post("/api/delete-old-accounts", function (req, res) {
+  router.get("/api/delete-old-accounts", function (req, res) {
     database.execute(
       'CALL deleteOldAccounts()',
       [],
@@ -206,8 +206,6 @@ router.get("/api/get-account/:email", function (req, res) {
 
 
 router.post('/api/add-admin', (req, res) => {
-  console.log("in add admin");
-  console.log(req.body);
 database.execute(
   "CALL addAdmin(?, ?, ?)",
   [req.body[0], req.body[1], req.body[2]],

@@ -26,5 +26,9 @@ export class AccountService {
   deleteAdmin(email : string){
     return this.http.post<any>('/api/delete-account', [email]);
   }
+
+  deleteRecords(){
+    this.http.get<any>('/api/delete-old-accounts').subscribe();
+  }
   
 }

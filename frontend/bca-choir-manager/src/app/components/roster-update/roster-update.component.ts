@@ -81,7 +81,6 @@ export class RosterUpdateComponent {
       
     };
 
-
     this.service.updateDetails(updatedStudent);
     this.dialogRef.close(updatedStudent);
 

@@ -19,7 +19,6 @@ import { RosterTableComponent } from './components/roster-table/roster-table.com
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { AdminEmailContainerComponent } from './components/admin-email-container/admin-email-container.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -40,7 +39,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MatIconModule } from '@angular/material/icon';
 import { AdminGeneralContainerComponent } from './components/admin-general-container/admin-general-container.component';
-import { AdminSettingsContainerComponent } from './components/admin-settings-container/admin-settings-container.component';
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -71,6 +69,7 @@ import { ProfileContainerComponent } from './components/profile-container/profil
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SlideshowModule } from './slideshow';
 import { HomePagePopupComponent } from './components/home-page-popup/home-page-popup.component';
+import { RecordsDeleteDialogComponent } from './components/records-delete-dialog/records-delete-dialog.component';
 
 
 
@@ -86,9 +85,7 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     RosterPageComponent,
     AdminPageComponent,
     RosterTableComponent,
-    AdminEmailContainerComponent,
     AdminGeneralContainerComponent,
-    AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
     CalendarComponent,
     CalendarDayComponent,
@@ -108,7 +105,8 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     ProfilePageComponent,
     ProfileContainerComponent,
     SidenavComponent,
-    HomePagePopupComponent
+    HomePagePopupComponent,
+    RecordsDeleteDialogComponent
 
 
 

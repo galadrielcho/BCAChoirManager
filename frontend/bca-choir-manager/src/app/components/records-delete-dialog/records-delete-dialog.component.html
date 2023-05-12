@@ -1,0 +1,11 @@
+
+<h1 mat-dialog-title>Delete Records</h1>
+<div mat-dialog-content>
+    <h3>Clicking delete will mean deleting all student records from the previous graduation year.</h3>
+    <h3>Are you sure you want to delete these records?</h3>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Close</button>
+    <button mat-raised-button color="warn" (click)="deleteRecords()">Delete</button>
+
+</div>

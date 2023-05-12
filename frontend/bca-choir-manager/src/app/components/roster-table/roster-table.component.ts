@@ -68,11 +68,13 @@ export class RosterTableComponent implements AfterViewInit {
         data: student
       }
     ).afterClosed().subscribe(updatedStudent => {
-      var index = this.roster.indexOf(student);
-      if (index !== -1) {
-          this.roster[index] = updatedStudent;
+      if(updatedStudent != undefined){
+        var index = this.roster.indexOf(student);
+        if (index !== -1) {
+            this.roster[index] = updatedStudent;
+        }
+        this.refresh();
       }
-      this.refresh();
     });
   }
 

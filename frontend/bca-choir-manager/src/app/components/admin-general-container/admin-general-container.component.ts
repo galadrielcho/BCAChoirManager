@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { AddAdminComponent } from '../add-admin/add-admin.component';
 import { DeleteAdminComponent } from '../delete-admin/delete-admin.component';
+import { RecordsDeleteDialogComponent } from '../records-delete-dialog/records-delete-dialog.component';
 
 @Component({
   selector: 'admin-general-container',
@@ -42,5 +43,8 @@ export class AdminGeneralContainerComponent {
       }      
     });
 
+  }
+  deleteRecords(){
+    this.dialog.open(RecordsDeleteDialogComponent);
   }
 }
