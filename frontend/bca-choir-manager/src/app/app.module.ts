@@ -2,7 +2,8 @@ import { environment } from '../environments/environment';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -143,6 +144,10 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     AuthModule.forRoot({
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
+      // redirect_uri: environment.auth0.redirect_uri,
+      audience: environment.auth0.audience,
+      useRefreshTokens: true
+
     }),
       MatTableModule,
       MatPaginatorModule,
@@ -155,6 +160,11 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
       provide: MatDialogRef,
       useValue: {}
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [RosterUpdateComponent]

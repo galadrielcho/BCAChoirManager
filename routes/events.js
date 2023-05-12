@@ -1,5 +1,6 @@
-
 var database = require('../db');
+var auth = require('../auth');
+
 const router = require('express').Router();
 
 module.exports = function () {
@@ -10,7 +11,7 @@ module.exports = function () {
  *      name, start time, end time, location, address
 */
 
-  router.post("/api/event/event-create/", function(req, res){
+  router.post("/api/event/event-create/", auth.checkJwt, function(req, res){
     const event = req.body;
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
@@ -32,7 +33,7 @@ module.exports = function () {
  *      orig_event (Event object), new_event (Event object)
 */
 
-  router.post("/api/event/event-edit/", function(req, res) {
+  router.post("/api/event/event-edit/", auth.checkJwt, function(req, res) {
     const orig_event = req.body.orig_event;
     const new_event = req.body.new_event;
     
@@ -57,7 +58,7 @@ module.exports = function () {
 */
 
   router.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res){
-      startTimeDate = new Date(Number(req.params.starttime)).toISOString();
+    startTimeDate = new Date(Number(req.params.starttime)).toISOString();
       endTimeDate = new Date(Number(req.params.endtime)).toISOString();
 
       database.execute(
@@ -76,7 +77,7 @@ module.exports = function () {
  *      start time, end time
 */
 
-  router.delete('/api/event/:name/:starttime/', (req, res) => {
+  router.delete('/api/event/:name/:starttime/', auth.checkJwt, (req, res) => {
     const startTimeDate = new Date(Number(req.params.starttime))
       .toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
 
@@ -114,7 +115,7 @@ module.exports = function () {
  *      student email, voice part, voice part number
  */
 
-  router.post("/api/event/add-student-to-event/", function(req, res){
+  router.post("/api/event/add-student-to-event/", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');                 
     database.execute(
@@ -135,7 +136,7 @@ module.exports = function () {
  *      student email
  */
 
-  router.post("/api/event/check-student-in-event/", function(req, res){
+  router.post("/api/event/check-student-in-event/", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');    
 
@@ -166,7 +167,7 @@ module.exports = function () {
  *      student email
  */
 
-  router.post("/api/event/delete-student-from-event", function(req, res){
+  router.post("/api/event/delete-student-from-event", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
 
@@ -187,7 +188,7 @@ module.exports = function () {
  *      student email
  */
   
-  router.get("/api/event/get-event-registrees/:name/:startime", function (req, res) {
+  router.get("/api/event/get-event-registrees/:name/:startime", auth.checkJwt, function (req, res) {
     const startTimeDate = new Date(req.params.startime)
     .toLocaleString('sv').replace(' ', 'T'); 
   

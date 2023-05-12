@@ -1,11 +1,18 @@
 var express = require('express');
+var auth = require('./auth');
+
 var bodyParser = require("body-parser");
 const path = require('path');
 global.appRoot = path.resolve(__dirname);
 
 var app = express();
+app.use(auth.cors());
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 app.use(express.static(global.appRoot + '/frontend/bca-choir-manager/dist/bca-choir-manager'));
 
 const fs = require('fs');
