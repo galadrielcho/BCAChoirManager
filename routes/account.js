@@ -7,7 +7,7 @@ module.exports = function () {
   
 /*  "/api/get-admins"
  *   GET: Gets all admins
- *   Retrieves the following infromation:
+ *   Retrieves the following information:
  *      first_name, last_name, email
  */
 
@@ -24,6 +24,12 @@ module.exports = function () {
 
   });
 
+  /*  "/api/get-content"
+ *   GET: Gets all stored content from database
+ *   Retrieves the following information:
+ *      about, group1, group2, conductor
+ */
+
   router.get("/api/get-content", function (req, res) {
     database.execute(
       'CALL getContent()',
@@ -36,7 +42,11 @@ module.exports = function () {
     );   
 
   });
-
+ /*  "/api/get-content"
+ *   POST: Posts changes to content from admin
+ *   Takes the following parameters:
+ *      about, group1, group2, conductor
+ */
   router.post("/api/post-content", function (req, res) {
     database.execute(
       'CALL updateContent(?, ?, ?, ?)',
@@ -45,6 +55,22 @@ module.exports = function () {
         if (err) throw err;
       }
     );   
+
+  });
+
+  /*  "/api/delete-old-accounts"
+ *   POST: Deletes accounts from previous grad years
+ *   Takes the following parameters:
+ *      none
+ */
+  router.post("/api/delete-old-accounts", function (req, res) {
+    database.execute(
+      'CALL deleteOldAccounts()',
+      [],
+      function (err, results, fields) {
+        if (err) throw err;
+      }
+    ); 
 
   });
 
@@ -97,7 +123,7 @@ module.exports = function () {
 
 /*  "/api/get-account/:email"
 *   GET: Gets the data of a generic account.
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns, is_admin
 */
 
@@ -121,7 +147,7 @@ router.get("/api/get-account/:email", auth.checkJwt, function (req, res) {
 
 /*  "/api/get-all-accounts/"
 *   GET: Gets the data of all accounts without admin information
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns
 */
 
@@ -149,7 +175,7 @@ router.get("/api/get-account/:email", auth.checkJwt, function (req, res) {
 
 /*  "/api/get-all-accounts/"
 *   GET: Gets the data of all accounts without admin information
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns
 */
 
