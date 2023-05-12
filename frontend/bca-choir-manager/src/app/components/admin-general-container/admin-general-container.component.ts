@@ -20,10 +20,15 @@ export class AdminGeneralContainerComponent {
     this.dialog = md;
   }
   addAdmin(){
-    this.dialog.open(AddAdminComponent);
+    this.dialog.open(AddAdminComponent).afterClosed().subscribe(() => {
+      this.updateAdmins();
+    });
   }
   deleteAdmin(){
-    this.dialog.open(DeleteAdminComponent);
+    this.dialog.open(DeleteAdminComponent).afterClosed().subscribe(() => {
+      this.updateAdmins();
+    });
+
   }
   updateAdmins(){
     this.authService.getAdmins().subscribe({

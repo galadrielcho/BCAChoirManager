@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-admin',
