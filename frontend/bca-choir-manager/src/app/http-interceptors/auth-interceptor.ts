@@ -78,8 +78,24 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
+    if (!this.authService.isAuthenticated()) {
+      console.log("User not authenticated, cannot authorize");
+      return request;
+    }
+    else if ((this.authService.isAuthenticated() && this.token == null)) {
+      console.log("Access token retrieval in process...");
+      return request;
+    }
     return request.clone({
       headers: request.headers.set(this.AUTH_HEADER, "Bearer " + this.token)
     });
+  }
+
+  public setInitialAccessToken() {
+    this.authService.getAccessToken().subscribe(
+      token => {
+        this.token = token;
+      }
+    )
   }
 }
