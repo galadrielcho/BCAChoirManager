@@ -56,7 +56,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
             return this.refreshAccessToken().pipe(
               switchMap((token: string) => {
-                this.token = token;
+                this.authService.setAccessToken(token);
+                console.log("Access token retrieved!")
                 this.refreshTokenSubject.next(false);
 
                 return next.handle(this.addAuthenticationToken(req));
@@ -74,7 +75,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private refreshAccessToken(): Observable<any> {
-    return this.authService.getAccessToken();
+    return this.authService.refreshAccessToken();
   }
 
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
@@ -82,20 +83,12 @@ export class AuthInterceptor implements HttpInterceptor {
       console.log("User not authenticated, cannot authorize");
       return request;
     }
-    else if ((this.authService.isAuthenticated() && this.token == null)) {
+    else if ((this.authService.isAuthenticated() && this.authService.getAccessToken() == null)) {
       console.log("Access token retrieval in process...");
       return request;
     }
     return request.clone({
-      headers: request.headers.set(this.AUTH_HEADER, "Bearer " + this.token)
+      headers: request.headers.set(this.AUTH_HEADER, "Bearer " + this.authService.getAccessToken())
     });
-  }
-
-  public setInitialAccessToken() {
-    this.authService.getAccessToken().subscribe(
-      token => {
-        this.token = token;
-      }
-    )
   }
 }

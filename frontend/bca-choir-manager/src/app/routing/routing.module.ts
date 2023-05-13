@@ -1,4 +1,4 @@
-import { AuthGuard } from '@auth0/auth0-angular';
+import { AuthGuardModified } from '../guards/auth-guard-modified';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -17,19 +17,19 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarPageComponent},
   { path: 'roster',
     component: RosterPageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardModified]
   },
   { path: 'admin',
     component: AdminPageComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuardModified, AdminGuard]
   },
   { path: 'events',
     component: EventsPageComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuardModified, AdminGuard]
   },
   { path: 'profile',
   component: ProfilePageComponent,
-  canActivate: [AuthGuard]
+  canActivate: [AuthGuardModified]
   },
   { path: 'callback',
   component: CallbackComponent},
