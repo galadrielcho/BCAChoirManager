@@ -3,37 +3,44 @@ app-home{
     width:100%;
 }
 
+* {
+  text-align: center;
+}
 .top{
     text-align: left;
 }
 
-#site-title, #blurb {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-   
-}
 .highlight{
     color: rgb(255, 255, 255);
 }
 
 #site-title {
-    top: 20%;
-    font-size:4rem;
+    font-size:5rem;
+}
+
+.welcome-text {
+    color: rgb(255, 255, 255);
+    padding: 0 10px;
+    
+}
+
+.welcome-text-container {
+  overflow: auto;
+  display: block;
+  top:50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-top: 4em;
+
+  background-color: rgba(38, 41, 46, 0.6);
+
+
 }
 
 .blurb {
-    position: absolute;
-    top: 95%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(255, 255, 255);
-    padding: 0 10px;
-    height: 30px;
-    line-height: 30px;
-    background-color: rgba(0, 0, 0, 0.451);
-    border-radius: 10px;
+  margin-top: 50px;
+  font-size: 1rem;
 }
 .button{
   position: absolute;
@@ -42,8 +49,8 @@ app-home{
   left:96%;
 }
 .heading{
-    background-color: #34487d;
-    color:rgb(255, 255, 255);
+  background-color: #2c3244;
+  color:rgb(255, 255, 255);
     padding: 15px;
     font-size: 30px;
     text-align:center;
@@ -53,17 +60,19 @@ app-home{
 }
 .subheading{
     background-color: #bfbfd246;
-    font-size:18px;
+    font-size: 1rem;
     line-height:30px;
-    width: 94%;
-    padding: 6px;
+    width: 60%;
+    padding: 2%;
     border-radius:10px;
-    margin: 0 auto;
+    margin: 2% auto;
+
 }
 .flex-parent-element {
     display: flex;
-    width: 94%;
+    width: 80%;
     margin: 0 auto;
+
   }
   
   .flex-child-element {
@@ -71,11 +80,15 @@ app-home{
   }
   
   .flex-child-element:first-child {
+    padding-top: 2%;
+    padding-bottom: 2%;
+
     flex: 3;
     margin-right:15px;
   }
 
   .flex-child-element2 {
+    padding-bottom: 2%;
     flex: 0.6;
   }
 
