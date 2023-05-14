@@ -10,7 +10,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
   styleUrls: ['./event-signup-dialog.component.css']
 })
 export class EventSignupDialogComponent {
-  private user_email : string;
+  private user_email : string; 
 
   constructor(
     public dialogRef: MatDialogRef<EventSignupDialogComponent>,
@@ -27,9 +27,12 @@ export class EventSignupDialogComponent {
 
   public confirm(){  
     if (this.authService.isAuthenticated()) {
-      if (this.data.signupAction === "signup")
-      this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart)
-    else {
+      if (this.data.signupAction === "signup"){
+        console.log(this.data.partnumber);
+        console.log(this.data.voicepart);
+        this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
+      }
+      else {
       this.eventService.deleteStudentFromEvent(this.user_email, this.data.event)
 
     }

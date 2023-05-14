@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
 
   isAuthenticated() {

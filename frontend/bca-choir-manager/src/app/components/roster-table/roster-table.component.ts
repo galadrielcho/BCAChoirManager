@@ -38,7 +38,7 @@ export class RosterTableComponent implements AfterViewInit {
 
     this.dialog = md;
 
-    this.admin = this.authService.getUserAdmin();
+    this.admin = this.authService.isAdmin();
     this.getAppropiateColumns();
 
     this.rosterService.getRoster().subscribe({
@@ -96,7 +96,7 @@ export class RosterTableComponent implements AfterViewInit {
   }
 
   isAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
 
   refresh() {

@@ -59,7 +59,7 @@ export class EventService {
 
   checkStudentInEvent(studentEmail : string, event : EventData){
     let data = {
-      student_email : studentEmail,
+      student_email : studentEmail, 
       event : event
     }
     return this.http.post<any>('/api/event/check-student-in-event/', data);

@@ -88,7 +88,7 @@ export class HomePageComponent {
   }
 
   isAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
   
 }

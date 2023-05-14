@@ -77,16 +77,6 @@ export class AuthenticationService {
     return this.chamber;
   }
 
-  getUserAdmin() {
-    if (this.account !== null && this.account !== undefined){
-      return this.account.details.is_admin || false;
-    }
-    else {
-      return false;
-    }
-  }
-  
-
   isAuthenticated() {
     if (this.authUser) {
       return true;
