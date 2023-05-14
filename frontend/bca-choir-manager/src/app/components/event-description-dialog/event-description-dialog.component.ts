@@ -41,6 +41,12 @@ export class EventDescriptionDialogComponent {
           this.signedup = next; 
           if(this.signedup == true){
             //get voicepart name and number based on event signup data
+            this.eventService.getVoicePartDetails(this.authService.getUserEmail(), event).subscribe({
+              next: data => {
+                this.voicepart = data.details[0].voicepart_name;
+                this.partNumber = data.details[0].number;
+              }
+            });
 
           }
           else if(this.signedup == false){

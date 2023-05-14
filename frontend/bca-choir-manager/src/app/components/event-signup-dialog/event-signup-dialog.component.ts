@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { EventData } from '../../models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-event-signup-dialog',
@@ -28,12 +29,27 @@ export class EventSignupDialogComponent {
   public confirm(){  
     if (this.authService.isAuthenticated()) {
       if (this.data.signupAction === "signup"){
-        console.log(this.data.partnumber);
-        console.log(this.data.voicepart);
-        this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
-      }
+        this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.data.event).subscribe(
+          (next)=> {
+            if(next == true){ //student already in event
+              this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe({
+                next: data => {
+                  if(data.success == true){
+                    this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
+                  }
+                }      
+            });
+                
+            }
+            else if(next == false){ //student not already in event
+              this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
+            }
+          }
+        );
+    }
+    
       else {
-      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event)
+      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe();
 
     }
 

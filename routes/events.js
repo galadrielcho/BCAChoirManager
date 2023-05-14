@@ -176,6 +176,7 @@ module.exports = function () {
       [req.body.event.event_name, startTimeDate, req.body.student_email],
       function (err, results, fields) {
         if (err) throw err;
+        res.send({success: true});
       }
     );       
                                
@@ -199,6 +200,28 @@ module.exports = function () {
         if (err) throw err;
         let result = Object.values(JSON.parse(JSON.stringify(results[0])));
         res.send({registrees: result});
+      }
+    );   
+  });
+
+  /*  "/api/event/get-voicepart-details/:name/:startime/:email"
+ *   GET: Gets voicepart details for a specific student in a specific event
+ *   Retrieves the following information:
+ *      event name, event start time
+ *      student email
+ */
+  
+  router.get("/api/event/get-voicepart-details/:name/:startime/:email", auth.checkJwt, function (req, res) {
+    const startTimeDate = new Date(req.params.startime)
+    .toLocaleString('sv').replace(' ', 'T'); 
+  
+    database.execute(
+      'CALL getVoicePartDetails(?, ?, ?)',
+      [req.params.name, startTimeDate, req.params.email],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send({details: result});
       }
     );   
   });
