@@ -49,16 +49,17 @@ export class EventEditDialogComponent {
         this.eventAction = "Create";
       } else {
         this.eventAction = "Edit";
-      }
-
-      this.orig_event.registration_status = (this.orig_event.registration_status === "Closed" || this.orig_event.registration_status === 0) ? 0 : 1;
-      this.orig_event.choir_type = (this.orig_event.choir_type === "Concert"|| this.orig_event.choir_type === 0) ? 0 : 1;
-  
+      }  
 
       if (this.eventAction === "Edit"){
+        this.orig_event.registration_status = (this.orig_event.registration_status === "Closed" || this.orig_event.registration_status === 0) ? 0 : 1;
+        this.orig_event.choir_type = (this.orig_event.choir_type === "Concert"|| this.orig_event.choir_type === 0) ? 0 : 1;
+
         this.eventForm.patchValue({
-          start_date: this.orig_event.start_time,
-          end_date: this.orig_event.end_time,
+          start_date: new Date(this.orig_event.start_time).toISOString(),
+          end_date: new Date(this.orig_event.end_time).toISOString(),
+          start_time: this.getEndTime(),
+          end_time: this.getStartTime(),
           location: this.orig_event.location,
           address: this.orig_event.address,
           event_name: this.orig_event.event_name,
