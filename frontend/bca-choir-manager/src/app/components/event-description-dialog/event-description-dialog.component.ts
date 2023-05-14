@@ -53,7 +53,6 @@ export class EventDescriptionDialogComponent {
             //get voicepart name and number based on student's original data
             this.studentService.getAccountDetails(this.authService.getUserEmail()).subscribe({
               next: data => {
-                console.log(data.details);
                 this.voicepart = data.details.voicepart_name;
                 try{
                   this.partNumber = Number(data.details.number);

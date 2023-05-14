@@ -26,7 +26,7 @@ export class EventSignupDialogComponent {
       this.user_email = this.authService.getUserEmail();
     }
 
-  public confirm(){  
+  public confirm(){   
     if (this.authService.isAuthenticated()) {
       if (this.data.signupAction === "signup"){
         this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.data.event).subscribe(
