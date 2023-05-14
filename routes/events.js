@@ -17,10 +17,11 @@ module.exports = function () {
     .toLocaleString('sv').replace(' ', 'T'); 
     const endTimeDate = new Date(event.end_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-  
+    
     database.execute(
-      'CALL createEvent(?, ?, ?, ?, ?)',
-      [event.event_name, startTimeDate, endTimeDate, event.location, event.address],
+      'CALL createEvent(?, ?, ?, ?, ?, ?, ?)',
+      [event.event_name, startTimeDate, endTimeDate, event.location, event.address,
+        event.choir_type, event.registration_status],
       function (err, results, fields) {
         if (err) throw err;
       });
@@ -41,11 +42,10 @@ module.exports = function () {
     const new_startTimeDate = new Date(new_event.start_time).toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
     const new_endTimeDate = new Date(new_event.end_time).toLocaleString('sv').replace(' ', 'T');
 
-    // TO DO ! Add in event registration toggle
     database.execute(
       'CALL updateEvent(?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [orig_event.event_name, orig_startTimeDate, new_event.event_name, new_startTimeDate, 
-        new_endTimeDate, new_event.location, new_event.address, orig_event.choir_type == "Concert" ? 1: 2, 0],
+        new_endTimeDate, new_event.location, new_event.address, new_event.choir_type, new_event.registration_status],
       function (err, results, fields) {
         if (err) throw err;
       });               

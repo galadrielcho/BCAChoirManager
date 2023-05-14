@@ -4,5 +4,6 @@ export interface EventData {
   end_time : string;
   location : string;
   address : string;
-  choir_type : string;
+  choir_type : number | string;
+  registration_status : number | string;
 }
