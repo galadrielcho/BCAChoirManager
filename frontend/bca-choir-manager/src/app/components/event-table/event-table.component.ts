@@ -26,7 +26,7 @@ import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog
 })
 
 export class EventTableComponent {
-  displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time'];
+  displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time', 'registration_status'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'edit', 'delete', 'expand'];
   expandedEvent : EventData | null = null;
   
@@ -48,7 +48,8 @@ export class EventTableComponent {
         for(let eventIndex in  events){
           events[eventIndex].start_time = this.es.dateISOToLocale(events[eventIndex].start_time);
           events[eventIndex].end_time = this.es.dateISOToLocale(events[eventIndex].end_time);
-
+          events[eventIndex].registration_status = (events[eventIndex].registration_status == 1) ? "Open" : "Closed";
+          
         }
         this.events = events;
         this.setupTable();
@@ -69,7 +70,7 @@ export class EventTableComponent {
   }
 
   expandEvent(event : EventData | null){
-    console.log(event);
+    // console.log(event);
   }
 
   applyFilter(event: Event) {
@@ -123,9 +124,9 @@ export class EventTableComponent {
         this.eventService.getAllEvents().subscribe(
           (events : EventData[]) => {
             for(let event in  events){
-              console.log(event);
               events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
               events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
+              events[event].registration_status = (events[event].registration_status == 1) ? "Open" : "Closed";
     
             }
             this.events = events;
@@ -137,11 +138,20 @@ export class EventTableComponent {
     });
   }
 
-  editEvent(event : Event) : void {
+  editEvent(event : EventData) : void {
+    let event_copy : EventData = {
+      event_name : event.event_name,
+      start_time : event.start_time,
+      end_time : event.end_time,
+      location : event.location,
+      address : event.address,
+      choir_type : event.choir_type,
+      registration_status : event.registration_status
+    }
 
     const dialogRef = this.dialog.open(EventEditDialogComponent, {
       width: '500px',
-      data: event
+      data: event_copy
     }).afterClosed().subscribe(updatedStudent => {
       // TO DO : Check if the event has changed and only update that event
       this.eventService.getAllEvents().subscribe(
@@ -149,7 +159,8 @@ export class EventTableComponent {
           for(let event in  events){
             events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
             events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
-  
+            events[event].registration_status = (events[event].registration_status == 1) ? "Open" : "Closed";
+
           }
           
           this.events = events;
@@ -163,8 +174,6 @@ export class EventTableComponent {
   refresh() {
     this.setupTable();
     this.changeDetectorRefs.detectChanges();
-
-
   }
 
 }

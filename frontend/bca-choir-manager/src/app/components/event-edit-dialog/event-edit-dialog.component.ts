@@ -30,11 +30,13 @@ export class EventEditDialogComponent {
                               [Validators.required,
                               Validators.pattern('[a-zA-Z -/0-9,.:]*'),
                               Validators.maxLength(45)]),
-    choirtype : new FormControl('Chamber',
+    choirtype : new FormControl(0,
+                              [Validators.required]),
+    registration_status : new FormControl(1,
                               [Validators.required])});
 
 
-  choirTypes : string[] = ['Chamber', 'Concert'];
+  choirTypes : string[] = ['Concert', 'Chamber'];
   eventAction : string;
 
   constructor(
@@ -43,20 +45,26 @@ export class EventEditDialogComponent {
     private eventService : EventService,
     private calendarService : CalendarService
     ) {
-      if (orig_event == null) {
+      if (orig_event === null) {
         this.eventAction = "Create";
       } else {
         this.eventAction = "Edit";
       }
 
-      if (this.eventAction == "Edit"){
+      this.orig_event.registration_status = (this.orig_event.registration_status === "Closed" || this.orig_event.registration_status === 0) ? 0 : 1;
+      this.orig_event.choir_type = (this.orig_event.choir_type === "Concert"|| this.orig_event.choir_type === 0) ? 0 : 1;
+  
+
+      if (this.eventAction === "Edit"){
         this.eventForm.patchValue({
           start_date: this.orig_event.start_time,
           end_date: this.orig_event.end_time,
           location: this.orig_event.location,
           address: this.orig_event.address,
           event_name: this.orig_event.event_name,
-          choirtype: this.orig_event.choir_type
+          choirtype: this.orig_event.choir_type,
+          registration_status: this.orig_event.registration_status
+
         });
       }
       else {
@@ -71,7 +79,8 @@ export class EventEditDialogComponent {
           location : "",
           address: "",
           event_name : "",
-          choirtype : "Concert"
+          choirtype : 0,
+          registration_status : 1
         });
         }
   }
@@ -105,8 +114,12 @@ export class EventEditDialogComponent {
     }
   }
 
-  isChoirType(choirType : string){
-    return choirType == this.eventForm.value.choir_type;
+  isChoirType(choirType : number){
+    return choirType === this.eventForm.value.choirtype;
+  }
+
+  isRegOpen(status : number){
+    return status === this.eventForm.value.registration_status;
   }
 
   updateEvent(){
@@ -117,14 +130,20 @@ export class EventEditDialogComponent {
     let endDate = new Date(this.eventForm.value.end_date)
     endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
 
+    console.log("OVER HERE");
+    console.log(this.eventForm.value.choirtype);
+    
     let new_event = {
       start_time : startDate.toString(),
       end_time : endDate.toString(),
       location  : this.eventForm.value.location,
       address : this.eventForm.value.address,
       event_name : this.eventForm.value.event_name,
-      choir_type : this.eventForm.value.choirtype
+      choir_type : Number(this.eventForm.value.choirtype),
+      registration_status : Number(this.eventForm.value.registration_status)
     }
+
+    console.log(new_event);
 
     if (this.eventAction == "Edit"){
       this.eventService.editEvent(this.orig_event, new_event);
