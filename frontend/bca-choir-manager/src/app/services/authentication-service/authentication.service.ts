@@ -16,11 +16,13 @@ export class AuthenticationService {
   private concert: boolean = false;
   private account: any = null;
   private admin : boolean = false;
+  private accessToken : string | null = null;
 
   constructor(private http: HttpClient, 
               private auth : AuthService,
               private dialog: MatDialog) {}
-  login() {
+  
+              login() {
     this.auth.loginWithRedirect({
       appState: { target: 'callback' }
     });
@@ -90,21 +92,25 @@ export class AuthenticationService {
   }
 
   setAccountDetails() {
-
-    let url = `/api/get-account/${this.getUserEmail()}`;
-    this.http.get<any>(url).subscribe(
-      account =>{
-        if (Object.keys(account).length > 0){
-          this.account = account;
-
-          if (this.account.details.is_admin.data[0] == 0) {
-            this.setStudentDetails();
-          } else {
-            this.admin = true;
+    this.refreshAccessToken().subscribe(
+      (token: string) => {
+        this.setAccessToken(token);
+        let url = `/api/get-account/${this.getUserEmail()}`;
+        this.http.get<any>(url).subscribe(
+          account =>{
+            if (Object.keys(account).length > 0){
+              this.account = account;
+    
+              if (this.account.details.is_admin.data[0] == 0) {
+                this.setStudentDetails();
+              } else {
+                this.admin = true;
+              }
+            }
           }
-        }
+        );                
       }
-    );            
+    )
   }
 
   setStudentDetails() {
@@ -119,8 +125,20 @@ export class AuthenticationService {
 
   }
 
-  getAccessToken() {
+  refreshAccessToken() {
     return this.auth.getAccessTokenSilently();
-  } 
+  }
+
+  setAccessToken(token : string | null) {
+    this.accessToken = token;
+  }
+
+  getAccessToken() {
+    return this.accessToken;
+  }
+
+  hasAccessToken() {
+    return this.accessToken != null;
+  }
  
 }
