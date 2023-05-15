@@ -1,7 +1,27 @@
-.attending{
-    color: #009688;
+.concert{
+    color: white;
+    padding:3px;
+    background-color: #283493c5;
+    border-radius:5px;
+}
+.chamber{
+    color: white;
+    padding:3px;
+    background-color: #e91e62d3;
+    border-radius:5px;
 }
 .padding{
-    margin:2px;
+    margin:6px;
+}
+.attending{
+    color:#c7c7c7;
+    font-weight: 580;
+    font-size: smaller;
+    font-style: italic;
+}
+.days{
+    color:#c7c7c7;
+    font-weight: bold;
+    font-size: smaller;
 }
 

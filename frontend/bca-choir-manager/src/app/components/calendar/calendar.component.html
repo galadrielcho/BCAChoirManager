@@ -40,14 +40,14 @@
         <table class="center">
             <thead>
                 <tr> 
-                    <th *ngFor="let weekday of weekdays"> {{weekday}} </th>
+                    <th *ngFor="let weekday of weekdays" class="weekday"> {{weekday}} </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let week of getCalendarMonth(); index as weekIndex">
                     <td *ngFor="let day of week" [ngClass]="isInCurrentMonth(day.date, weekIndex)? 'current-month' : 'other-month'">
                         {{day.date}}
-                        <calendar-day [events]="day.events"></calendar-day>
+                        <calendar-day [events]="day.events" [date]="getCurrentDate(day.date)"></calendar-day>
                     </td>
                 </tr>
             </tbody>
@@ -58,3 +58,4 @@
 
     </main>
 </div>
+<div class="padding"></div>

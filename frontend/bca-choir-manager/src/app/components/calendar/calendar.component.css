@@ -1,5 +1,5 @@
 tr{
-    border: 1px solid black;
+    border: 0.7px solid #000000c1; 
 }
 
 table{
@@ -24,8 +24,8 @@ table{
 }
 
 table td { 
-    border-left: 1px solid #000; 
-    width: 125px;
+    border-left: 0.7px solid #000000c1; 
+    width: 145px;
     height: 75px;
     vertical-align:top;
 }
@@ -33,15 +33,15 @@ table td {
 table td:first-child { border-left: none; }
 
 .current-month{
-    color:black;
+    color:rgba(0, 0, 0, 0.741);
 }
 
 .other-month{
-    color:grey;
+    color:rgba(128, 128, 128, 0.679);
 }
 
 app-calendar-upcoming-events {
-    width:300px
+    width:250px
 }
 
 h1 {
@@ -54,4 +54,13 @@ h1 {
 app-calendar-week {
     width:100%;
 } 
+
+.weekday{
+    font-size:20px;
+    padding:15px;
+}
+
+.padding{
+    padding:15px;
+}
 

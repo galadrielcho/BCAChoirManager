@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { EventData} from '../../models/event-data.model';
+import { CalendarDayData } from 'src/app/models/calendar-day-data.model';
 
 
 @Component({
@@ -9,6 +10,6 @@ import { EventData} from '../../models/event-data.model';
   styleUrls: ['./calendar-day.component.css']
 })
 export class CalendarDayComponent {
-  @Input('events')  events : EventData[] = [];  
-
+  @Input('events')  events : EventData[] = [];
+  @Input('date') date : Date | null = null;
 }

@@ -2,3 +2,25 @@
 .center{
     margin:auto;
 }
+.concert{
+    color: #283593;
+    text-decoration: underline; 
+}
+.chamber{
+    color: #E91E63;
+    text-decoration: underline;
+}
+.flex-container {
+    display: flex;
+    padding-left: 18px;
+    padding-bottom:15px;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+.flex-child:first-child {
+    margin-right: 10px;
+} 
+

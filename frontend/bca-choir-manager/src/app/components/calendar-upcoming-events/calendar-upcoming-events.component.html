@@ -3,10 +3,20 @@
         <mat-card-title>
             Upcoming events
         </mat-card-title>
-
     </mat-card-header>
+    <div class="flex-container">
+
+        <div class="flex-child">
+            <div class="concert">Concert Choir</div>
+        </div>
+        
+        <div class="flex-child">
+            <div class="chamber">Chamber Choir</div>
+        </div>
+        
+      </div>
     <mat-card-content>
-        <calendar-event-tab *ngFor="let event of cs.getEvents()" [event]="event">
+        <calendar-event-tab *ngFor="let event of this.getEvents();" [event]="event">
         </calendar-event-tab> 
     </mat-card-content>
 </mat-card>

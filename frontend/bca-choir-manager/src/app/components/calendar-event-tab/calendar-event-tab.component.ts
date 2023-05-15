@@ -12,7 +12,10 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 })
 export class CalendarEventTabComponent implements OnChanges {
   @Input('event') event: EventData | null = null;
+  @Input('date') date : Date | null = null;
   public attending : string = "";
+  public isConcert : boolean = true;
+  public day_number: string = "";
   
   constructor(public dialog: MatDialog, 
     public eventService : EventService,
@@ -22,12 +25,46 @@ export class CalendarEventTabComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['event'] && changes['event'].currentValue) {
       this.checkAttendance();
+      if(this.event?.choir_type == "Concert"){
+        this.isConcert = true;
+      }
+      else{
+        this.isConcert = false;
+      }
     }
+    if(changes['date']){
+      this.day_number = this.calculateDayNumber();
+    }
+  }
+
+  calculateDayNumber(){
+    if(this.event && this.date){
+      let start_time = new Date(Number(this.event.end_time.substring(0,4)), Number(this.event.end_time.substring(5,7)), Number(this.event.end_time.substring(8,10)));
+      if(this.event.start_time == this.event.end_time){
+        return "";
+      }
+      else if(this.date != null){
+        if (this.date.getTime() > start_time.getTime()) { // this.date is after this.start_time
+          const daysDiff = Math.floor((this.date.getTime() - start_time.getTime()) / 86400000);
+          return " (Day " + String(daysDiff + 1) + ")";
+        } 
+        else{
+          return "";
+        }
+
+      }
+      else{
+        return "";
+      }
+    }
+    else{
+      return "";
+    }
+ 
   }
 
   checkAttendance(){
     if (this.authService.isAuthenticated() && !this.authService.isAdmin() && this.event) {
-      console.log("here");
       this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.event).subscribe(
         (next)=> {
           if(next){

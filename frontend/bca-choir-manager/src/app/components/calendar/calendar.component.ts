@@ -15,6 +15,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class CalendarComponent implements OnInit{
   public weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];  
   admin : Boolean | undefined;
+  service : CalendarService;
 
   currentWindowWidth: number = 0;
   @HostListener('window:resize', ['$event'])
@@ -22,7 +23,9 @@ export class CalendarComponent implements OnInit{
     this.currentWindowWidth = window.innerWidth;
   }
   
-  constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){}
+  constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){
+    this.service = calendarService;
+  }
   
   ngOnInit(): void{
     this.currentWindowWidth = window.innerWidth;
@@ -41,12 +44,25 @@ export class CalendarComponent implements OnInit{
   }
 
   getCalendarMonth() : CalendarDayData[][]{
-    return this.calendarService.getCalendarMonthArray()
+    let month = this.calendarService.getCalendarMonthArray();
+
+    if (month.length > 0) {
+      if (this.authService.isConcert()) {
+        month = this.calendarService.filterOutConcertEventsOnly(month);
+      }
+    }
+
+    return month;
   }
 
   getDate() : Date {
     return this.calendarService.getDate();
   }
+
+  getCurrentDate(date : number) : Date{
+    return new Date(this.service.getDate().getFullYear(), this.service.getDate().getMonth()+1, date);
+  }
+  
 
   getCalendarTitle(): string{
     return this.calendarService.getCalendarTitle();
