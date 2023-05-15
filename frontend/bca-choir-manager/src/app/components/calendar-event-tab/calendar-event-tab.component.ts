@@ -13,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class CalendarEventTabComponent implements OnChanges {
   @Input('event') event: EventData | null = null;
   public attending : string = "";
+  public isConcert : boolean = true;
   
   constructor(public dialog: MatDialog, 
     public eventService : EventService,
@@ -22,12 +23,17 @@ export class CalendarEventTabComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['event'] && changes['event'].currentValue) {
       this.checkAttendance();
+      if(this.event?.choir_type == "Concert"){
+        this.isConcert = true;
+      }
+      else{
+        this.isConcert = false;
+      }
     }
   }
 
   checkAttendance(){
     if (this.authService.isAuthenticated() && !this.authService.isAdmin() && this.event) {
-      console.log("here");
       this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.event).subscribe(
         (next)=> {
           if(next){

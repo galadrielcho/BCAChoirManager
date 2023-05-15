@@ -1,3 +1,6 @@
 <mat-card (click)="openEventDialog()" *ngIf="event" class="padding">
-    {{event.event_name}}<span class="attending">{{attending}}</span>
+    <div *ngIf="isConcert; else elseBlock" class="concert">{{event.event_name}}</div>
+    <ng-template #elseBlock class="chamber"><span class="chamber">{{event.event_name}}</span></ng-template>
+    <div class="attending">{{attending}}</div>
+    <!--<span class="attending">{{attending}}</span>-->
 </mat-card>

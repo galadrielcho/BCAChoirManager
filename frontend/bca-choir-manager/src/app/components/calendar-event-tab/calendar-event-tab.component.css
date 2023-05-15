@@ -1,7 +1,16 @@
-.attending{
-    color: #009688;
+.concert{
+    color: #283593;
+}
+.chamber{
+    color: #E91E63;
 }
 .padding{
     margin:2px;
+}
+.attending{
+    color:#9E9E9E;
+    font-weight: 580;
+    font-size: smaller;
+    font-style: italic;
 }
 
