@@ -75,7 +75,7 @@ aria-label="Select page">
               <div class="event-heading">Address </div>
               <p> {{event.address}}</p>
               <div class="event-heading">Registration Status</div>
-              <p class="event-registration">Closed</p>
+              <p class="event-registration">{{event.registration_status}}</p>
 
               <button mat-raised-button class="event-heading"
                       (click)="openEventRegistrees(event);">

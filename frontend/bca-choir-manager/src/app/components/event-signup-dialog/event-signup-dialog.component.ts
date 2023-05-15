@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { EventData } from '../../models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-event-signup-dialog',
@@ -10,7 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
   styleUrls: ['./event-signup-dialog.component.css']
 })
 export class EventSignupDialogComponent {
-  private user_email : string;
+  private user_email : string; 
 
   constructor(
     public dialogRef: MatDialogRef<EventSignupDialogComponent>,
@@ -25,12 +26,30 @@ export class EventSignupDialogComponent {
       this.user_email = this.authService.getUserEmail();
     }
 
-  public confirm(){  
+  public confirm(){   
     if (this.authService.isAuthenticated()) {
-      if (this.data.signupAction === "signup")
-      this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart)
-    else {
-      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event)
+      if (this.data.signupAction === "signup"){
+        this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.data.event).subscribe(
+          (next)=> {
+            if(next == true){ //student already in event
+              this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe({
+                next: data => {
+                  if(data.success == true){
+                    this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
+                  }
+                }      
+            });
+                
+            }
+            else if(next == false){ //student not already in event
+              this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
+            }
+          }
+        );
+    }
+    
+      else {
+      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe();
 
     }
 

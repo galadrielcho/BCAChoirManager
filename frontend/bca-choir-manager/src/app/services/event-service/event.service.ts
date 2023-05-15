@@ -53,13 +53,12 @@ export class EventService {
       voicepart_number: voicepartNumber,
       voicepart_name : voicepartName
     }
-
     return this.http.post<any>('/api/event/add-student-to-event/', data).subscribe();
   }
 
   checkStudentInEvent(studentEmail : string, event : EventData){
     let data = {
-      student_email : studentEmail,
+      student_email : studentEmail, 
       event : event
     }
     return this.http.post<any>('/api/event/check-student-in-event/', data);
@@ -71,7 +70,7 @@ export class EventService {
       student_email : studentEmail,
       event : event
     }
-    return this.http.post<any>('/api/event/delete-student-from-event/', data).subscribe();
+    return this.http.post<any>('/api/event/delete-student-from-event/', data);
 
   }
 
@@ -81,6 +80,10 @@ export class EventService {
 
   getEventRegistrees(event : EventData){
     return this.http.get<any>(`/api/event/get-event-registrees/${event.event_name}/${event.start_time}/`);
+  }
+
+  getVoicePartDetails(studentEmail : string, event: EventData){
+    return this.http.get<any>(`/api/event/get-voicepart-details/${event.event_name}/${event.start_time}/${studentEmail}`);
   }
 
 

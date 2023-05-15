@@ -38,7 +38,7 @@ export class RosterTableComponent implements AfterViewInit {
 
     this.dialog = md;
 
-    this.admin = this.authService.getUserAdmin();
+    this.admin = this.authService.isAdmin();
     this.getAppropiateColumns();
 
     this.rosterService.getRoster().subscribe({
@@ -68,11 +68,13 @@ export class RosterTableComponent implements AfterViewInit {
         data: student
       }
     ).afterClosed().subscribe(updatedStudent => {
-      var index = this.roster.indexOf(student);
-      if (index !== -1) {
-          this.roster[index] = updatedStudent;
+      if(updatedStudent != undefined){
+        var index = this.roster.indexOf(student);
+        if (index !== -1) {
+            this.roster[index] = updatedStudent;
+        }
+        this.refresh();
       }
-      this.refresh();
     });
   }
 
@@ -94,7 +96,7 @@ export class RosterTableComponent implements AfterViewInit {
   }
 
   isAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
 
   refresh() {

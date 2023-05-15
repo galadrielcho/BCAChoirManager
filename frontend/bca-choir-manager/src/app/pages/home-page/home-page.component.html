@@ -4,12 +4,16 @@
 
 <div style="width: 100%; height: 90%; margin: 0 auto;">
     <app-photo-slideshow [slides]="slides"></app-photo-slideshow>
-<div class="top">
-<div id="site-title" class="highlight"><b>BCA Choir</b></div> 
+<div class = "welcome-text-container">
+    <div class="welcome-text">
+        <div id="site-title" class="highlight"><b>BCA Choir</b></div> 
 
-<div class="blurb">
-    <p>Welcome to the official website of BCA's Chamber and Concert Choirs.</p>
-</div> 
+        <div class="blurb">
+            <p>Welcome to the official website of the BCA Chamber and Concert Choirs.</p>
+        </div> 
+        
+    </div>
+</div>
 
 <button class="button" mat-mini-fab (click)="edit()" *ngIf="isAdmin()">
     <mat-icon>edit</mat-icon>

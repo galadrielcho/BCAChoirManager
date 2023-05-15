@@ -15,16 +15,18 @@
         <p>{{event.address}}</p>
       </div>  
       <span *ngIf="isAuthenticated()"> 
-        <div *ngIf="!isAdmin()">
-          <b>Signed Up?</b>
+        <div *ngIf="!isAdmin()"> 
+          <p>
+          <b>Check to sign up for event: </b>
             <mat-checkbox [(ngModel)]="signedup"></mat-checkbox>
+          </p>
           <span *ngIf="signedup">
-            <b>Voice Part</b>
+            <b>Voice Part     </b>
             <mat-select style="width:20%" [(ngModel)]="voicepart">
               <mat-option *ngFor="let voicepart of voiceparts" [value]="voicepart">{{voicepart}}</mat-option>
             </mat-select>
 
-            <b>Part Number</b>
+            <b>  Part Number    </b>
             <mat-select style="width:10%" [(ngModel)]="partNumber">
               <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
             </mat-select>

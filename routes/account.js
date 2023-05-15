@@ -1,4 +1,5 @@
 var database = require('../db');
+var auth = require('../auth');
 
 const router = require('express').Router();
 
@@ -6,11 +7,11 @@ module.exports = function () {
   
 /*  "/api/get-admins"
  *   GET: Gets all admins
- *   Retrieves the following infromation:
+ *   Retrieves the following information:
  *      first_name, last_name, email
  */
 
-  router.get("/api/get-admins", function (req, res) {
+  router.get("/api/get-admins", auth.checkJwt, function (req, res) {
     database.execute(
       'CALL getAdmins()',
       [],
@@ -22,6 +23,12 @@ module.exports = function () {
     );   
 
   });
+
+  /*  "/api/get-content"
+ *   GET: Gets all stored content from database
+ *   Retrieves the following information:
+ *      about, group1, group2, conductor
+ */
 
   router.get("/api/get-content", function (req, res) {
     database.execute(
@@ -35,7 +42,11 @@ module.exports = function () {
     );   
 
   });
-
+ /*  "/api/get-content"
+ *   POST: Posts changes to content from admin
+ *   Takes the following parameters:
+ *      about, group1, group2, conductor
+ */
   router.post("/api/post-content", function (req, res) {
     database.execute(
       'CALL updateContent(?, ?, ?, ?)',
@@ -47,13 +58,29 @@ module.exports = function () {
 
   });
 
+  /*  "/api/delete-old-accounts"
+ *   POST: Deletes accounts from previous grad years
+ *   Takes the following parameters:
+ *      none
+ */
+  router.get("/api/delete-old-accounts", function (req, res) {
+    database.execute(
+      'CALL deleteOldAccounts()',
+      [],
+      function (err, results, fields) {
+        if (err) throw err;
+      }
+    ); 
+
+  });
+
 /*  "/api/delete-account"
  *   POST: Deletes account if exists
  *   Takes the following parameters:
  *      email
  */
   
-  router.post('/api/delete-account', (req, res) => {
+  router.post('/api/delete-account', auth.checkJwt, (req, res) => {
     // get account if it exists
     database.execute(
       'CALL deleteAccount(?)',
@@ -73,7 +100,7 @@ module.exports = function () {
  */
 
   // TO DO: Convert to object
-  router.post("/api/sign-up", function (req, res) {
+  router.post("/api/sign-up", auth.checkJwt, function (req, res) {
     let email = req.body[0];
     let first_name = req.body[1];
     let last_name = req.body[2];
@@ -96,11 +123,11 @@ module.exports = function () {
 
 /*  "/api/get-account/:email"
 *   GET: Gets the data of a generic account.
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns, is_admin
 */
 
-router.get("/api/get-account/:email", function (req, res) {
+router.get("/api/get-account/:email", auth.checkJwt, function (req, res) {
   database.execute(
     'CALL getAccount(?)',
     [req.params.email], 
@@ -120,12 +147,12 @@ router.get("/api/get-account/:email", function (req, res) {
 
 /*  "/api/get-all-accounts/"
 *   GET: Gets the data of all accounts without admin information
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns
 */
 
   // TO DO: Convert to object
-  router.get("/api/get-all-accounts", function (req, res) {
+  router.get("/api/get-all-accounts", auth.checkJwt, function (req, res) {
       database.execute(
         "CALL getAllAccounts()", 
         [],
@@ -148,11 +175,11 @@ router.get("/api/get-account/:email", function (req, res) {
 
 /*  "/api/get-all-accounts/"
 *   GET: Gets the data of all accounts without admin information
-*   Retrieves the following infromation:
+*   Retrieves the following information:
 *      first name, last name, pronouns
 */
 
-  router.post('/api/check-admin', (req, res) => {
+  router.post('/api/check-admin', auth.checkJwt, (req, res) => {
     database.execute(
         "CALL isAdmin(?)",
         [req.body[0]],
@@ -179,9 +206,7 @@ router.get("/api/get-account/:email", function (req, res) {
 */
 
 
-router.post('/api/add-admin', (req, res) => {
-  console.log("in add admin");
-  console.log(req.body);
+router.post('/api/add-admin', auth.checkJwt, (req, res) => {
 database.execute(
   "CALL addAdmin(?, ?, ?)",
   [req.body[0], req.body[1], req.body[2]],
@@ -196,7 +221,7 @@ database.execute(
 *   Returns a boolean value
 */
 
-  router.get("/api/is-admin/:email", function (req, res) {
+  router.get("/api/is-admin/:email", auth.checkJwt, function (req, res) {
       sql = `CALL isAdmin("${req.params.email}");`
     
       database.execute(

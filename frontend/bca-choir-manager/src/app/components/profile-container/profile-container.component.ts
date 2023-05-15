@@ -28,7 +28,7 @@ export class ProfileContainerComponent {
               private md: MatDialog) {
 
     this.dialog = md;
-    this.admin = authService.getUserAdmin();
+    this.admin = authService.isAdmin();
     this.user = authService.getUserEmail();
 
     if (!this.admin) {

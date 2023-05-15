@@ -2,7 +2,8 @@ import { environment } from '../environments/environment';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +20,6 @@ import { RosterTableComponent } from './components/roster-table/roster-table.com
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { AdminEmailContainerComponent } from './components/admin-email-container/admin-email-container.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -40,7 +40,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MatIconModule } from '@angular/material/icon';
 import { AdminGeneralContainerComponent } from './components/admin-general-container/admin-general-container.component';
-import { AdminSettingsContainerComponent } from './components/admin-settings-container/admin-settings-container.component';
 import { EmailRecipientsInputComponent } from './components/email-recipients-input/email-recipients-input.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -71,6 +70,7 @@ import { ProfileContainerComponent } from './components/profile-container/profil
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SlideshowModule } from './slideshow';
 import { HomePagePopupComponent } from './components/home-page-popup/home-page-popup.component';
+import { RecordsDeleteDialogComponent } from './components/records-delete-dialog/records-delete-dialog.component';
 
 
 
@@ -86,9 +86,7 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     RosterPageComponent,
     AdminPageComponent,
     RosterTableComponent,
-    AdminEmailContainerComponent,
     AdminGeneralContainerComponent,
-    AdminSettingsContainerComponent,
     EmailRecipientsInputComponent,
     CalendarComponent,
     CalendarDayComponent,
@@ -108,7 +106,8 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     ProfilePageComponent,
     ProfileContainerComponent,
     SidenavComponent,
-    HomePagePopupComponent
+    HomePagePopupComponent,
+    RecordsDeleteDialogComponent
 
 
 
@@ -143,6 +142,10 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
     AuthModule.forRoot({
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
+      // redirect_uri: environment.auth0.redirect_uri,
+      audience: environment.auth0.audience,
+      useRefreshTokens: true
+
     }),
       MatTableModule,
       MatPaginatorModule,
@@ -155,6 +158,11 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
       provide: MatDialogRef,
       useValue: {}
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [RosterUpdateComponent]

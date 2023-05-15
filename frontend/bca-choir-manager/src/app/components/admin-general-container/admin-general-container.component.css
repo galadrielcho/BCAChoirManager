@@ -1,6 +1,10 @@
 .buttons {
     width: 200px;
-    margin: 0 auto;
+    margin-right: 0 auto;
     display: inline;
+}
+
+.margin{
+    margin-right: 10px;
 }
 

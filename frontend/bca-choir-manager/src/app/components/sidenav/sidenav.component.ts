@@ -11,7 +11,7 @@ export class SidenavComponent {
 
   }
   isAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
 
   isAuthenticated() {

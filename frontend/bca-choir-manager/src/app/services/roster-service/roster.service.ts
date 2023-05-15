@@ -12,10 +12,7 @@ export class RosterService {
   }
 
   deleteAccount(e : string) {
-    let email = {
-      email: e
-    }
-    return this.http.post('/api/delete-account', email);
+    this.http.post('/api/delete-account', [e]).subscribe();
   }
 
 }

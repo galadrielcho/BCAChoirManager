@@ -1,4 +1,6 @@
 var database = require('../db');
+var auth = require('../auth');
+
 const router = require('express').Router();
 
 module.exports = function () {
@@ -10,7 +12,7 @@ module.exports = function () {
  *      voice part number, choir type, grad_year, email
  */
 
-  router.get("/api/get-roster", function (req, res) {
+  router.get("/api/get-roster", auth.checkJwt, function (req, res) {
     sql = `CALL getStudentRoster();`
     database.execute(
       "CALL getStudentRoster()",
@@ -32,13 +34,15 @@ module.exports = function () {
 *      voice part number, choir type, grad year
 */
   
-  router.get("/api/get-student/:email", function (req, res) {  
+  router.get("/api/get-student/:email", auth.checkJwt, function (req, res) {  
     database.execute(
       "CALL getStudent(?)",
       [req.params.email],
       function(err, student, fields) {
         if (err) throw err;
-        if (Object.keys(student).length === 0) res.send({details: results});
+        if (Object.keys(student).length === 0) {
+          res.send({details: results});
+        }
 
         let result = Object.values(JSON.parse(JSON.stringify(student[0])))[0];
         res.send({details: result});
@@ -54,7 +58,7 @@ module.exports = function () {
 *         graduation year
 */
 
-  router.post("/api/roster-update", function (req, res) {
+  router.post("/api/roster-update", auth.checkJwt, function (req, res) {
     let student = req.body;
 
     database.execute(

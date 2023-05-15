@@ -23,7 +23,7 @@ export class CalendarComponent implements OnInit{
   }
 
   getAdmin() {
-    return this.authService.getUserAdmin();
+    return this.authService.isAdmin();
   }
   setMonthForward(): void{
     this.calendarService.setMonthForward();

@@ -1,5 +1,6 @@
-
 var database = require('../db');
+var auth = require('../auth');
+
 const router = require('express').Router();
 
 module.exports = function () {
@@ -10,16 +11,17 @@ module.exports = function () {
  *      name, start time, end time, location, address
 */
 
-  router.post("/api/event/event-create/", function(req, res){
+  router.post("/api/event/event-create/", auth.checkJwt, function(req, res){
     const event = req.body;
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
     const endTimeDate = new Date(event.end_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-  
+    
     database.execute(
-      'CALL createEvent(?, ?, ?, ?, ?)',
-      [event.event_name, startTimeDate, endTimeDate, event.location, event.address],
+      'CALL createEvent(?, ?, ?, ?, ?, ?, ?)',
+      [event.event_name, startTimeDate, endTimeDate, event.location, event.address,
+        event.choir_type, event.registration_status],
       function (err, results, fields) {
         if (err) throw err;
       });
@@ -32,7 +34,7 @@ module.exports = function () {
  *      orig_event (Event object), new_event (Event object)
 */
 
-  router.post("/api/event/event-edit/", function(req, res) {
+  router.post("/api/event/event-edit/", auth.checkJwt, function(req, res) {
     const orig_event = req.body.orig_event;
     const new_event = req.body.new_event;
     
@@ -40,11 +42,10 @@ module.exports = function () {
     const new_startTimeDate = new Date(new_event.start_time).toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
     const new_endTimeDate = new Date(new_event.end_time).toLocaleString('sv').replace(' ', 'T');
 
-    // TO DO ! Add in event registration toggle
     database.execute(
       'CALL updateEvent(?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [orig_event.event_name, orig_startTimeDate, new_event.event_name, new_startTimeDate, 
-        new_endTimeDate, new_event.location, new_event.address, orig_event.choir_type == "Concert" ? 1: 2, 0],
+        new_endTimeDate, new_event.location, new_event.address, new_event.choir_type, new_event.registration_status],
       function (err, results, fields) {
         if (err) throw err;
       });               
@@ -57,7 +58,7 @@ module.exports = function () {
 */
 
   router.get("/api/event/get-events-in-range/:starttime/:endtime/", function(req, res){
-      startTimeDate = new Date(Number(req.params.starttime)).toISOString();
+    startTimeDate = new Date(Number(req.params.starttime)).toISOString();
       endTimeDate = new Date(Number(req.params.endtime)).toISOString();
 
       database.execute(
@@ -76,7 +77,7 @@ module.exports = function () {
  *      start time, end time
 */
 
-  router.delete('/api/event/:name/:starttime/', (req, res) => {
+  router.delete('/api/event/:name/:starttime/', auth.checkJwt, (req, res) => {
     const startTimeDate = new Date(Number(req.params.starttime))
       .toLocaleString('sv').replace(' ', 'T'); // format into ISO but local time
 
@@ -114,7 +115,7 @@ module.exports = function () {
  *      student email, voice part, voice part number
  */
 
-  router.post("/api/event/add-student-to-event/", function(req, res){
+  router.post("/api/event/add-student-to-event/", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');                 
     database.execute(
@@ -135,7 +136,7 @@ module.exports = function () {
  *      student email
  */
 
-  router.post("/api/event/check-student-in-event/", function(req, res){
+  router.post("/api/event/check-student-in-event/", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');    
 
@@ -166,7 +167,7 @@ module.exports = function () {
  *      student email
  */
 
-  router.post("/api/event/delete-student-from-event", function(req, res){
+  router.post("/api/event/delete-student-from-event", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
 
@@ -175,6 +176,7 @@ module.exports = function () {
       [req.body.event.event_name, startTimeDate, req.body.student_email],
       function (err, results, fields) {
         if (err) throw err;
+        res.send({success: true});
       }
     );       
                                
@@ -187,7 +189,7 @@ module.exports = function () {
  *      student email
  */
   
-  router.get("/api/event/get-event-registrees/:name/:startime", function (req, res) {
+  router.get("/api/event/get-event-registrees/:name/:startime", auth.checkJwt, function (req, res) {
     const startTimeDate = new Date(req.params.startime)
     .toLocaleString('sv').replace(' ', 'T'); 
   
@@ -198,6 +200,28 @@ module.exports = function () {
         if (err) throw err;
         let result = Object.values(JSON.parse(JSON.stringify(results[0])));
         res.send({registrees: result});
+      }
+    );   
+  });
+
+  /*  "/api/event/get-voicepart-details/:name/:startime/:email"
+ *   GET: Gets voicepart details for a specific student in a specific event
+ *   Retrieves the following information:
+ *      event name, event start time
+ *      student email
+ */
+  
+  router.get("/api/event/get-voicepart-details/:name/:startime/:email", auth.checkJwt, function (req, res) {
+    const startTimeDate = new Date(req.params.startime)
+    .toLocaleString('sv').replace(' ', 'T'); 
+  
+    database.execute(
+      'CALL getVoicePartDetails(?, ?, ?)',
+      [req.params.name, startTimeDate, req.params.email],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send({details: result});
       }
     );   
   });
