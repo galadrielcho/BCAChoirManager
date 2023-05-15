@@ -27,7 +27,6 @@ export class CalendarEventTabComponent implements OnChanges {
 
   checkAttendance(){
     if (this.authService.isAuthenticated() && !this.authService.isAdmin() && this.event) {
-      console.log("here");
       this.eventService.checkStudentInEvent(this.authService.getUserEmail(), this.event).subscribe(
         (next)=> {
           if(next){

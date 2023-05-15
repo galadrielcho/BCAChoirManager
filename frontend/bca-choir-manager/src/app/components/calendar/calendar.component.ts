@@ -34,7 +34,15 @@ export class CalendarComponent implements OnInit{
   }
 
   getCalendarMonth() : CalendarDayData[][]{
-    return this.calendarService.getCalendarMonthArray()
+    let month = this.calendarService.getCalendarMonthArray();
+
+    if (month.length > 0) {
+      if (this.authService.isConcert()) {
+        month = this.calendarService.filterOutConcertEventsOnly(month);
+      }
+    }
+
+    return month;
   }
 
   getDate() : Date {
