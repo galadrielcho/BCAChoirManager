@@ -4,6 +4,8 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
 import { RosterUpdateComponent } from '../roster-update/roster-update.component';
+import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
+
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -37,6 +39,14 @@ export class ProfileContainerComponent {
     } else {
       signupService.getEmail(this.user);
     }
+  }
+
+  openDialogConfirm(){
+    this.md.open(DeleteAccountDialogComponent, {width:"300px"});
+  }
+
+  isAdmin(){
+    this.authService.isAdmin();
   }
 
   updateStudentProfileDetails() {
