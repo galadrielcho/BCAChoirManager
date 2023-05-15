@@ -1,5 +1,5 @@
-<mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side">
+<mat-sidenav-container autosize hasBackdrop="false">
+    <mat-sidenav #drawer mode="side" position="start" >
         <ul> 
             <li> 
                 <h1>
@@ -52,14 +52,8 @@
 
             </li>
         </ul>
-
-
-    </mat-drawer>
-    <div>
-        <button type="button" mat-button (click)="drawer.toggle()">
-          >
-        </button>
-    </div>
-    
-  
-</mat-drawer-container>  
+    </mat-sidenav>
+    <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon [innerHTML]="drawer.opened? 'arrow_back' : 'list'">list</mat-icon> 
+    </button>
+</mat-sidenav-container>  

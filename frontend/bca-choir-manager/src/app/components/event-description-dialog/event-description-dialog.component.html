@@ -40,7 +40,7 @@
       <button mat-button (click)="editEvent()" *ngIf="isAdmin()">Edit Event</button>
       <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin()">Delete Event</button>
     <div *ngIf="!isAdmin()">
-      <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Change Event Signup</button>
+      <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Confirm Signup Details</button>
     </div>
   </div>
 
