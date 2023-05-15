@@ -15,8 +15,11 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class CalendarComponent implements OnInit{
   public weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];  
   admin : Boolean | undefined;
+  service : CalendarService;
 
-  constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){}
+  constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){
+    this.service = calendarService;
+  }
   
   ngOnInit(): void{
     this.calendarService.setDate(new Date());
@@ -48,6 +51,11 @@ export class CalendarComponent implements OnInit{
   getDate() : Date {
     return this.calendarService.getDate();
   }
+
+  getCurrentDate(date : number) : Date{
+    return new Date(this.service.getDate().getFullYear(), this.service.getDate().getMonth()+1, date);
+  }
+  
 
   getCalendarTitle(): string{
     return this.calendarService.getCalendarTitle();
