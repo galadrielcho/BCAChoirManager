@@ -16,7 +16,7 @@
         
       </div>
     <mat-card-content>
-        <calendar-event-tab *ngFor="let event of cs.getEvents()" [event]="event">
+        <calendar-event-tab *ngFor="let event of this.getEvents();" [event]="event">
         </calendar-event-tab> 
     </mat-card-content>
 </mat-card>

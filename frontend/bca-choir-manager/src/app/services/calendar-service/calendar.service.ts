@@ -163,6 +163,16 @@ export class CalendarService {
       });
   }
 
+  filterOutConcertEventsOnly(month : CalendarDayData[][]) : CalendarDayData[][] {
+    for (let week = 0; week < month.length; week++){
+      for (let day = 0; day < month[week].length; day++){
+        month[week][day].events = month[week][day].events.filter((event) => (event.choir_type === 0 || event.choir_type == "Concert"));
+      }
+    }
+    
+    return month;
+  }
+
   constructor(private http: HttpClient, private eventService : EventService){
     this.eventService.setCalendarService(this);
     this.loadCalendarEvents();
