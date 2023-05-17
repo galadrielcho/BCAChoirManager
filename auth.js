@@ -5,15 +5,17 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const jwtAuthz = require('express-jwt-authz');
 var axios = require("axios").default;
+const auth0 = require('auth0');
+
 var currentJWT = "";
 
 
-var AuthenticationClient = require('auth0').AuthenticationClient;
+// var AuthenticationClient = require('auth0').AuthenticationClient;
 
-var webAuth = new auth0.WebAuth({
-  domain:       process.env.AUTH0_DOMAIN,
-  clientID:     process.env.AUTH0_CLIENT_ID
-});
+// var webAuth = new auth0.WebAuth({
+//   domain:       process.env.AUTH0_DOMAIN,
+//   clientID:     process.env.AUTH0_CLIENT_ID
+// });
 
 
 const checkJwt = jwt({
@@ -75,17 +77,17 @@ function getUser(token) {
 }
 
 
-// Parse the URL and extract the Access Token
-webAuth.parseHash(window.location.hash, function(err, authResult) {
-  if (err) {
-    return console.log(err);
-  }
-  webAuth.client.userInfo(authResult.accessToken, function(err, user) {
-      // This method will make a request to the /userinfo endpoint
-      // and return the user object, which contains the user's information,
-      // similar to the response below.
-  });
-});
+// // Parse the URL and extract the Access Token
+// webAuth.parseHash(window.location.hash, function(err, authResult) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   webAuth.client.userInfo(authResult.accessToken, function(err, user) {
+//       // This method will make a request to the /userinfo endpoint
+//       // and return the user object, which contains the user's information,
+//       // similar to the response below.
+//   });
+// });
 
 
 module.exports = {checkJwt, cors, jwtAuthz, currentJWT, getManagementToken, getUser};
