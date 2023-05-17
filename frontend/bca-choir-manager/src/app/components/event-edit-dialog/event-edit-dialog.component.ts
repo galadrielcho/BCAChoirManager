@@ -130,9 +130,6 @@ export class EventEditDialogComponent {
     startDate.setHours(Number(startTimes[0]), Number(startTimes[1]), 0);
     let endDate = new Date(this.eventForm.value.end_date)
     endDate.setHours(Number(endTimes[0]), Number(endTimes[1]), 0);
-
-    console.log("OVER HERE");
-    console.log(this.eventForm.value.choirtype);
     
     let new_event = {
       start_time : startDate.toString(),

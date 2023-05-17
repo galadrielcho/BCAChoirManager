@@ -44,6 +44,8 @@ export class CalendarEventTabComponent implements OnChanges {
         return "";
       }
       else if(this.date != null){
+        console.log("in here");
+        console.log(this.date + " " + start_time)
         if (this.date.getTime() > start_time.getTime()) { // this.date is after this.start_time
           const daysDiff = Math.floor((this.date.getTime() - start_time.getTime()) / 86400000);
           return " (Day " + String(daysDiff + 1) + ")";
