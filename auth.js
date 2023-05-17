@@ -5,6 +5,7 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const jwtAuthz = require('express-jwt-authz');
 var axios = require("axios").default;
+var currentJWT = "";
 
 
 var AuthenticationClient = require('auth0').AuthenticationClient;
@@ -24,17 +25,43 @@ const checkJwt = jwt({
     }),
   
     // Validate the audience and the issuer
-    audience: 'https://bcachoir.glitch.me/api/', //replace with your API's audience, available at Dashboard > APIs
-    issuer: 'https://bca-choir-manager.us.auth0.com/',
-    algorithms: [ 'RS256' ]
+    audience: process.env.AUTH0_AUDIENCE,
+    issuer: process.env.AUTH0_DOMAIN,
+    algorithms: [ 'RS256' ],
+
+    setToken: function fromHeaderOrQuerystring(req) {
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.split(" ")[0] === "Bearer"
       ) {
           let t = req.headers.authorization.split(" ")[1];
           currentJWT = t;
-});
-  
-  
+      } else if (req.query && req.query.token) {  
+        currentJWT = req.query.token;
+      }
+      currentJWT = "";
+    }
 
-module.exports = {checkJwt, cors, jwtAuthz};    // TO DO: add account deletion
+});
+
+var managementTokenOptions = {
+  method: 'POST',
+  url: 'https://' + process.env.AUTH0_DOMAIN + '/oauth/token',
+  headers: {'content-type': 'application/x-www-form-urlencoded'},
+  data: new URLSearchParams({
+    grant_type: 'client_credentials',
+    client_id: process.env.AUTH0_M2M_CLIENT_ID,
+    client_secret: process.env.AUTH0_M2M_CLIENT_SECRET,
+    audience: 'https://'+ process.env.AUTH0_DOMAIN + '/api/v2/'
+  })
+};
+
+function getManagementToken() {
+  axios.request(managementTokenOptions).then(function (response) {
+    let managementToken = response.data.access_token;
+    return managementToken;
+  }).catch(function (error) {
+    // TO DO: add account deletion
     throw error;
   });
 
