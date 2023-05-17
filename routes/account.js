@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var database = require('../db');
 var auth = require('../auth');
 
@@ -118,7 +120,6 @@ module.exports = function () {
         if (err) throw err;
       }
     );   
-
   });
 
 /*  "/api/get-account/:email"

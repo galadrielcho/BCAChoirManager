@@ -1,4 +1,5 @@
  <form [formGroup]="eventForm"> 
+  
   <h1 mat-dialog-title>{{eventAction}} Event</h1>
   <div mat-dialog-content >
     <div *ngIf="eventForm.get('event_name')?.hasError('maxlength')">
@@ -28,6 +29,7 @@
       <mat-radio-button [checked]='isChoirType(0)' value=0>Concert</mat-radio-button>
       <mat-radio-button [checked]='isChoirType(1)' value=1>Chamber</mat-radio-button>
     </mat-radio-group>
+    
     <h2>Registration Status</h2>
     <mat-radio-group aria-label="Select registration status" formControlName="registration_status">
       <mat-radio-button [checked]='isRegOpen(1)' value=1>Open</mat-radio-button>
@@ -64,8 +66,16 @@
       </mat-form-field>    
     </div>
 
-  
+    <div>
+      <h2>Voicepart Limits</h2>
+      <button mat-mini-fab color="primary" aria-label="Add voiceapart limit button">
+        <mat-icon>add</mat-icon>
+      </button>
+    
+    </div>
+    
   </div>
+
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Close</button>
     <button mat-button (click)="updateEvent()" type="submit" [disabled]="!eventForm.valid" >{{this.eventAction}}</button>

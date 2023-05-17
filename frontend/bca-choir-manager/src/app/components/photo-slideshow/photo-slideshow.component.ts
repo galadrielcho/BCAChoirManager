@@ -11,7 +11,7 @@ export class PhotoSlideshowComponent {
   currentIndex: number = 0;
   imageObjects: HTMLImageElement[] = [];
 
-  constructor() {
+  ngOnInit() {
     // preload images in the background
     this.slides.forEach((slide) => {
       const img = new Image();

@@ -11,11 +11,10 @@ import { StatusService } from './services/status-service/status.service';
 export class AppComponent implements OnInit {
   title = 'bca-choir-manager';
   status = 'DOWN';
-  currentWindowWidth: number = 0;
 
   constructor(private statusService: StatusService) { }
 
-
+  currentWindowWidth: number = 0;
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
     this.currentWindowWidth = window.innerWidth;

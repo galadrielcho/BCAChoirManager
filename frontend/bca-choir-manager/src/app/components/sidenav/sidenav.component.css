@@ -1,9 +1,10 @@
 li {
     display:block;
-    margin: 0 auto;
+    position: auto;
+    margin: auto 20px;
 }
 
-mat-drawer-container {
+mat-sidenav-container {
     height:100%;
     position:fixed;
 }
@@ -23,6 +24,6 @@ a {
     text-decoration:none;
 }
 
-.mat-drawer-container{
+.mat-sidenav-container{
     background-color:none;
 }

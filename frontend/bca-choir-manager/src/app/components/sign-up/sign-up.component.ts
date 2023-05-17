@@ -16,7 +16,7 @@ export class SignUpComponent {
     [this.year, this.year + 1, this.year + 2, this.year + 3, this.year + 4];
   choirtypes = ["Chamber", "Concert"]
   voiceparts = ["soprano", "alto", "tenor", "bass"]
-  voicepartNumbers = [1, 2, 3, 4]
+  voicepartNumbers = [1, 2];
   
   signupForm = new FormGroup({
     firstName: new FormControl('', 

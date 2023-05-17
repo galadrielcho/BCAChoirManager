@@ -36,5 +36,7 @@
             </div>
         </div>
 
+        <button mat-raised-button color="warn" *ngIf="isAdmin()" (click)="openDialogConfirm()">Delete Account</button>
+
     </mat-card-content>
 </mat-card>

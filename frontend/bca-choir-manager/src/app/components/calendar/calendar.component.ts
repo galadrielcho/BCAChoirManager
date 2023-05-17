@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CalendarService } from '../../services/calendar-service/calendar.service';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
@@ -17,11 +17,18 @@ export class CalendarComponent implements OnInit{
   admin : Boolean | undefined;
   service : CalendarService;
 
+  currentWindowWidth: number = 0;
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.currentWindowWidth = window.innerWidth;
+  }
+  
   constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){
     this.service = calendarService;
   }
   
   ngOnInit(): void{
+    this.currentWindowWidth = window.innerWidth;
     this.calendarService.setDate(new Date());
   }
 
