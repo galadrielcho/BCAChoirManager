@@ -1,5 +1,5 @@
 <mat-card (click)="openEventDialog()" *ngIf="event" class="padding">
     <div *ngIf="isConcert; else elseBlock" class="concert">{{event.event_name}}<span class="days">{{day_number}}</span><div class="attending">{{attending}}</div></div>
-    <ng-template #elseBlock><span class="chamber">{{event.event_name}}<span class="days">{{day_number}}</span></span><div class="attending">{{attending}}</div></ng-template>
+    <ng-template #elseBlock><span class="chamber">{{event.event_name}}<span class="days">{{day_number}}</span><div class="attending">{{attending}}</div></span></ng-template>
     <!--<span class="attending">{{attending}}</span>-->
 </mat-card>

@@ -38,14 +38,13 @@ export class CalendarEventTabComponent implements OnChanges {
   }
 
   calculateDayNumber(){
+/*
     if(this.event && this.date){
-      let start_time = new Date(Number(this.event.end_time.substring(0,4)), Number(this.event.end_time.substring(5,7)), Number(this.event.end_time.substring(8,10)));
+      let start_time = new Date(Number(this.event.start_time.substring(0,4)), Number(this.event.start_time.substring(5,7)), Number(this.event.start_time.substring(8,10)));
       if(this.event.start_time == this.event.end_time){
         return "";
       }
       else if(this.date != null){
-        console.log("in here");
-        console.log(this.date + " " + start_time)
         if (this.date.getTime() > start_time.getTime()) { // this.date is after this.start_time
           const daysDiff = Math.floor((this.date.getTime() - start_time.getTime()) / 86400000);
           return " (Day " + String(daysDiff + 1) + ")";
@@ -62,7 +61,8 @@ export class CalendarEventTabComponent implements OnChanges {
     else{
       return "";
     }
- 
+ */
+return "";
   }
 
   checkAttendance(){

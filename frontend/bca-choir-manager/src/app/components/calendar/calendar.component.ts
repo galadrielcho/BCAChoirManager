@@ -51,7 +51,6 @@ export class CalendarComponent implements OnInit{
         month = this.calendarService.filterOutConcertEventsOnly(month);
       }
     }
-
     return month;
   }
 
@@ -82,8 +81,5 @@ export class CalendarComponent implements OnInit{
       data: null
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
   }
 }

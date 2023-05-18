@@ -14,6 +14,11 @@ export class CalendarService {
   private calendarMonth : CalendarDayData[][] = []; 
   private events : EventData[]= []; 
 
+  constructor(private http: HttpClient, private eventService : EventService){
+    this.eventService.setCalendarService(this);
+    this.loadCalendarEvents();
+  }
+
   setDate(date : Date) :void{
     this.date = date;
     this.loadCalendarEvents();
@@ -78,13 +83,14 @@ export class CalendarService {
     const eventStartDate = new Date(eventData.start_time);
     const eventEndDate = new Date(eventData.end_time);
 
+
     date.setHours(0, 0, 0, 0);
     const startDate = new Date(date.getTime());
     date.setHours(23, 59, 59, 0);
     const endDate = new Date(date.getTime());
-
-    return eventStartDate.getTime() >= startDate.getTime() 
-        && eventEndDate.getTime() <= endDate.getTime();
+    
+    return eventStartDate.getTime() <= startDate.getTime() 
+        && eventEndDate.getTime() >= endDate.getTime();
 
   }
 
@@ -173,8 +179,5 @@ export class CalendarService {
     return month;
   }
 
-  constructor(private http: HttpClient, private eventService : EventService){
-    this.eventService.setCalendarService(this);
-    this.loadCalendarEvents();
-  }
+  
 }
