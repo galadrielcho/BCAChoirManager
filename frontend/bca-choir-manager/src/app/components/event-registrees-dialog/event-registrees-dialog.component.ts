@@ -28,10 +28,10 @@ export class EventRegistreesDialogComponent {
     public dialogRef: MatDialogRef<EventRegistreesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
-    private eventService : EventService,
+    private eventService : EventService
 
   ) {
-    this.eventService.getEventRegistrees(event).subscribe({
+    this.eventService.getEventRegistrees(this.event).subscribe({
       next: data => {
         this.registrees = data.registrees;
         this.dataSource = new MatTableDataSource(this.registrees);
@@ -57,8 +57,8 @@ export class EventRegistreesDialogComponent {
   }
 
   deleteClicked(email: string){
-    this.eventService.deleteStudentFromEvent(email, this.event);
-    location.reload();
+    this.eventService.deleteStudentFromEvent(email, this.event).subscribe();
+    this.close();
   }
 
 
