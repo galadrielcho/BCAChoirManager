@@ -45,11 +45,37 @@ tr.event-detail-row {
 
 }
 
-
 .blue-button {
   background-color: #526ebb;
+}
+.event{
+  margin-left:83%;
 }
 
 .data-table {
   overflow-x: scroll;
+}
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-child {
+  flex: 1;
+}  
+
+.flex-child:first-child {
+  margin-right: 20px;
+} 
+
+.arrow{
+  margin-right: 10%;
 }

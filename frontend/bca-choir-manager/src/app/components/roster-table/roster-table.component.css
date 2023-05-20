@@ -4,6 +4,36 @@
   overflow-x: scroll;
 }
 
+.filter{
+  margin-left: 10%;
+}
+
 .yellow-button {
   background-color: #efa12c;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px;
+}
+
+.filter {
+  margin-right: 20px;
+}
+.flex-container {
+  display: flex;
+}
+
+.flex-child {
+  flex: 1;
+}  
+
+.flex-child:first-child {
+  margin-right: 20px;
+} 
+
+.arrow{
+  margin-right: 10%;
 }
