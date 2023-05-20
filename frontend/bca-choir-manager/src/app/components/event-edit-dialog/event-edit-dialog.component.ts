@@ -38,6 +38,7 @@ export class EventEditDialogComponent {
 
   choirTypes : string[] = ['Concert', 'Chamber'];
   eventAction : string;
+  displayedColumns: string[] = ["Voicepart", "Limit"]
 
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
@@ -72,7 +73,7 @@ export class EventEditDialogComponent {
         const startTime = new Date();
         startTime.setHours(0, 0, 0, 0);
         const endTime = new Date();
-        endTime.setHours(11, 59, 0, 0);
+        endTime.setHours(23, 59, 0, 0);
 
         this.eventForm.patchValue({
           start_date : startTime.toISOString(),
@@ -100,7 +101,7 @@ export class EventEditDialogComponent {
       return date.toLocaleTimeString(['en-us'], {hourCycle: 'h23', hour: "2-digit", minute: "2-digit"});
     }
     else{
-      return "11:59";
+      return "23:59";
     }
   }
 

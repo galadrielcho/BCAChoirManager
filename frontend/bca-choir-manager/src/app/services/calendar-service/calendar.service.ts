@@ -89,8 +89,12 @@ export class CalendarService {
     date.setHours(23, 59, 59, 0);
     const endDate = new Date(date.getTime());
     
-    return eventStartDate.getTime() <= startDate.getTime() 
-        && eventEndDate.getTime() >= endDate.getTime();
+    return  (
+        eventStartDate <= startDate
+        && eventEndDate >= startDate
+        || 
+          eventStartDate >= startDate 
+          && eventStartDate <= endDate );
 
   }
 

@@ -9,11 +9,7 @@ var app = express();
 app.use(auth.cors());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.use(express.static(global.appRoot + '/frontend/bca-choir-manager/dist/bca-choir-manager'));
+app.use(express.static('./../frontend/bca-choir-manager/dist/'));
 
 const fs = require('fs');
 const routes_directory = path.resolve(__dirname) + '//routes//'; 
@@ -28,7 +24,7 @@ fs.readdirSync(routes_directory).forEach(route_file => {
 });
 
 // Rewrites direct url routing
-let folderDir = global.appRoot + '/frontend/bca-choir-manager/dist/bca-choir-manager';
+folderDir = __dirname + './../frontend/bca-choir-manager/dist/';
 app.use('*', function (req, res) {
   res.sendFile(path.join(folderDir, '/index.html'));
 });

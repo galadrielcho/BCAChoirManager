@@ -46,7 +46,7 @@ export class ProfileContainerComponent {
   }
 
   isAdmin(){
-    this.authService.isAdmin();
+    return this.authService.isAdmin();
   }
 
   updateStudentProfileDetails() {
