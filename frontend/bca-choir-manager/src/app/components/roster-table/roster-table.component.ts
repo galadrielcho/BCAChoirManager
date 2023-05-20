@@ -52,7 +52,13 @@ export class RosterTableComponent implements AfterViewInit {
     });
 
   }
-
+  
+  applyFilter(event: Event) {
+    if (this.dataSource) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+  }
 
   deleteClicked(student : StudentData){
     this.rosterService.deleteAccount(student.email);

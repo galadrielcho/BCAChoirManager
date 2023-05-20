@@ -1,24 +1,29 @@
 
-<mat-form-field>
-  <mat-label>Search for an event...</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
-</mat-form-field>
-
-<button class="blue-button"
+<button class="blue-button event flex-child"
         mat-fab extended color="primary"
         aria-label="Button to create an event"
         (click)="openCreateEventDialog()">
   <mat-icon>edit</mat-icon>
 Create Event
 </button>
+<div class="flex-container">
+  <div class="flex-child">
+  <mat-form-field>
+    <mat-label>Search for an event...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
+  </mat-form-field>
+  </div>
 
 <mat-paginator #paginator
 [length]="dataSource.data.length"
 [pageIndex]="0"
 [pageSize]="10"
 [pageSizeOptions]="[5, 10, 20]"
-aria-label="Select page">
+aria-label="Select page"
+class="flex-child">
+
 </mat-paginator>
+</div>
 <div class="mat-elevation-z8 data-table">
 
 

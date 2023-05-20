@@ -170,8 +170,6 @@ module.exports = function () {
   router.post("/api/event/delete-student-from-event", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-    console.log(req.body.event.event_name);
-    console.log(req.body.student_email);
 
     database.execute(
       'CALL deleteStudentFromEvent(?, ?, ?)',
