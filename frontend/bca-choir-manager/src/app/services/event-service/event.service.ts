@@ -26,7 +26,6 @@ export class EventService {
   
   deleteEvent(e : EventData){
     const startTime = new Date(e.start_time).getTime();
-    console.log(this.eventURL + `${e.event_name}/${startTime}/`);
     const obs = this.http.delete(
       this.eventURL + `${e.event_name}/${startTime}/`).subscribe();
     this.calendarService.loadCalendarEvents();
@@ -46,7 +45,6 @@ export class EventService {
   }
 
   addStudentToEvent(studentEmail : string, event : EventData, voicepartNumber : number, voicepartName : string){
-    
     let data = {
       student_email : studentEmail,
       event : event,

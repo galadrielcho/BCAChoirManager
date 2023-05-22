@@ -9,6 +9,9 @@ table{
 .center{
     margin:auto;
 }
+.left{
+    margin-left:66%;
+}
 
 .flex-column{
     display:flex;

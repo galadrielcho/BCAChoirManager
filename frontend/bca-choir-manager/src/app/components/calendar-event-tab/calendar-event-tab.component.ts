@@ -4,13 +4,14 @@ import { EventDescriptionDialogComponent } from '../event-description-dialog/eve
 import { EventData } from 'src/app/models/event-data.model';
 import { EventService } from 'src/app/services/event-service/event.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { CalendarService } from 'src/app/services/calendar-service/calendar.service';
 
 @Component({
   selector: 'calendar-event-tab',
   templateUrl: './calendar-event-tab.component.html',
   styleUrls: ['./calendar-event-tab.component.css']
 })
-export class CalendarEventTabComponent implements OnChanges {
+export class CalendarEventTabComponent {
   @Input('event') event: EventData | null = null;
   @Input('date') date : Date | null = null;
   public attending : string = "";
@@ -19,21 +20,33 @@ export class CalendarEventTabComponent implements OnChanges {
   
   constructor(public dialog: MatDialog, 
     public eventService : EventService,
-    public authService: AuthenticationService) {
+    public authService: AuthenticationService,
+    private calendarService : CalendarService) {
   }
-
+  /*
   ngOnChanges(changes: SimpleChanges) {
     if (changes['event'] && changes['event'].currentValue) {
-      this.checkAttendance();
-      if(this.event?.choir_type == "Concert"){
+      
+      if (this.event?.choir_type == "Concert") {
         this.isConcert = true;
-      }
-      else{
+      } else {
         this.isConcert = false;
       }
     }
     if(changes['date']){
       this.day_number = this.calculateDayNumber();
+    }
+  }
+  */
+
+  checkDisplay(){
+    if(this.calendarService.displayAttending == true){
+      this.checkAttendance();
+      return true;
+    }
+    else{
+      this.attending = "";
+      return false;
     }
   }
 

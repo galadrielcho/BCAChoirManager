@@ -116,6 +116,8 @@ module.exports = function () {
  */
 
   router.post("/api/event/add-student-to-event/", auth.checkJwt, function(req, res){
+    console.log("student data: " + req.body.event.event_name + " " + req.body.student_email + " " + 
+    req.body.voicepart_name + " " + req.body.voicepart_number);
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');                 
     database.execute(
@@ -139,7 +141,6 @@ module.exports = function () {
   router.post("/api/event/check-student-in-event/", auth.checkJwt, function(req, res){
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');    
-
     database.execute(
       'CALL countStudentInEvent(?, ?, ?)',
       [req.body.event.event_name, startTimeDate, req.body.student_email],
@@ -153,7 +154,6 @@ module.exports = function () {
           let result = Object.values(JSON.parse(JSON.stringify(results[0])))[0];
           count = result["COUNT(*)"];
         }
-        
         res.send(count >= 1);
       }
     );       

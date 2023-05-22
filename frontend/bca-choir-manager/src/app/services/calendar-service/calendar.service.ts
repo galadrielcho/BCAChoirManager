@@ -13,10 +13,15 @@ export class CalendarService {
   private date : Date = new Date();   
   private calendarMonth : CalendarDayData[][] = []; 
   private events : EventData[]= []; 
+  public displayAttending: boolean = false;
 
   constructor(private http: HttpClient, private eventService : EventService){
     this.eventService.setCalendarService(this);
     this.loadCalendarEvents();
+  }
+
+  setDisplayAttending(value : boolean){
+    this.displayAttending = value;
   }
 
   setDate(date : Date) :void{
@@ -58,7 +63,6 @@ export class CalendarService {
   }
       
   getEvents() {
-    console.log(this.events);
     return this.events;
   }
 

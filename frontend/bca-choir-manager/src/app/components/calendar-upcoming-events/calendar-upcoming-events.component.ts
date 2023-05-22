@@ -18,7 +18,6 @@ export class CalendarUpcomingEventsComponent {
 
   retrieveEvents() {
     let e = this.cs.getEvents();
-    console.log("retrieve");
     this.events = e.map(obj => ({...obj}));
     
     if (this.as.isConcert()) {
