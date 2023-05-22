@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "config" : "npm run config"
+    "config": "npm run config"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@auth0/auth0-angular": "^1.11.1",
+    "ngx-toastr": "^17.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
