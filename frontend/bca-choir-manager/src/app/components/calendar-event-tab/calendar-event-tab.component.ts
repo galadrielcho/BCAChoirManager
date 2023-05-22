@@ -53,11 +53,6 @@ export class CalendarEventTabComponent implements OnChanges {
           return " (Day " + String(daysDiff + 1) + ")";
         } 
         else{
-          /*
-          if(this.event.event_name == "Multi-Day"){
-            console.log("date: " + this.date.getTime() + " <= start_time: " + start_time.getTime());
-          }
-          */
           return "";
         }
 
