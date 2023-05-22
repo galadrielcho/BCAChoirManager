@@ -58,10 +58,45 @@ export class CalendarComponent implements OnInit{
     return this.calendarService.getDate();
   }
 
-  getCurrentDate(date : number) : Date{
-    return new Date(this.service.getDate().getFullYear(), this.service.getDate().getMonth()+1, date);
+  getCurrentDate(date : number, weekNum: number){
+    if(this.isInCurrentMonth(date, weekNum)){
+      return new Date(this.service.getDate().getFullYear(), this.service.getDate().getMonth(), date);
+    }
+    else if(weekNum == 0){
+      return new Date(this.getPrevious(this.service.getDate().getMonth())[0], this.getPrevious(this.service.getDate().getMonth())[1], date);;
+    }
+    else{
+      return new Date(this.getNext(this.service.getDate().getMonth())[0], this.getNext(this.service.getDate().getMonth())[1], date);;
+    }
+    
   }
   
+  
+getPrevious(month: number): [number, number] { //returns [year, month]
+  const currentDate = this.service.getDate();
+  let prevYear = currentDate.getFullYear();
+  let prevMonth = month - 1;
+
+  if ((prevMonth) < 0) {
+    prevMonth = 11;
+    prevYear--;
+  }
+
+  return [prevYear, prevMonth];
+}
+
+getNext(month: number): [number, number] { //returns [year, month]
+  const currentDate = this.service.getDate();
+  let nextYear = currentDate.getFullYear();
+  let nextMonth = month + 1;
+
+  if (nextMonth > 11) {
+    nextMonth = 0;
+    nextYear++;
+  }
+
+  return [nextYear, nextMonth];
+}
 
   getCalendarTitle(): string{
     return this.calendarService.getCalendarTitle();

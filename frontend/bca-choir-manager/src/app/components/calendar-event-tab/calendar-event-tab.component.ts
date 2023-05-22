@@ -40,8 +40,11 @@ export class CalendarEventTabComponent implements OnChanges {
   calculateDayNumber(){
 
     if(this.event && this.date){
-      let start_time = new Date(Number(this.event.start_time.substring(0,4)), Number(this.event.start_time.substring(5,7)), Number(this.event.start_time.substring(8,10)));
+      
+      let start_time = new Date(Number(this.event.start_time.substring(0,4)), Number(this.event.start_time.substring(5,7)) - 1, Number(this.event.start_time.substring(8,10)));
       if(this.event.start_time == this.event.end_time){
+        if(this.event.event_name == "Multi-Day"){
+        }
         return "";
       }
       else if(this.date != null){
@@ -50,6 +53,11 @@ export class CalendarEventTabComponent implements OnChanges {
           return " (Day " + String(daysDiff + 1) + ")";
         } 
         else{
+          /*
+          if(this.event.event_name == "Multi-Day"){
+            console.log("date: " + this.date.getTime() + " <= start_time: " + start_time.getTime());
+          }
+          */
           return "";
         }
 

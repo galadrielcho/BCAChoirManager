@@ -47,7 +47,7 @@
                 <tr *ngFor="let week of getCalendarMonth(); index as weekIndex">
                     <td *ngFor="let day of week" [ngClass]="isInCurrentMonth(day.date, weekIndex)? 'current-month' : 'other-month'">
                         {{day.date}}
-                        <calendar-day [events]="day.events" [date]="getCurrentDate(day.date)"></calendar-day>
+                        <calendar-day [events]="day.events" [date]="getCurrentDate(day.date,weekIndex)"></calendar-day>
                     </td>
                 </tr>
             </tbody>
