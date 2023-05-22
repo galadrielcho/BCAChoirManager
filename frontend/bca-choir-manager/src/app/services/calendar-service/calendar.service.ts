@@ -58,6 +58,7 @@ export class CalendarService {
   }
       
   getEvents() {
+    console.log(this.events);
     return this.events;
   }
 
@@ -94,7 +95,7 @@ export class CalendarService {
         && eventEndDate >= startDate
         || 
           eventStartDate >= startDate 
-          && eventStartDate <= endDate );
+          && eventStartDate <= endDate);
 
   }
 
@@ -158,8 +159,6 @@ export class CalendarService {
   loadCalendarEvents(){
     let endDateRange : Date = new Date(this.getLastDateOfCalendarMonth());
     endDateRange.setHours(23, 59, 59, 0);
-
-    const choirTypeIdToString = {1 : "Concert", 2 : "Chamber"};
 
     this.eventService.getEventsInRange(this.getFirstDateOfCalendarMonth(), endDateRange)
       .subscribe({

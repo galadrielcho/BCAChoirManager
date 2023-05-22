@@ -18,16 +18,11 @@ export class CalendarUpcomingEventsComponent {
 
   retrieveEvents() {
     let e = this.cs.getEvents();
+    console.log("retrieve");
     this.events = e.map(obj => ({...obj}));
     
     if (this.as.isConcert()) {
       this.events = this.events.filter((event) => (event.choir_type === 0 || event.choir_type == "Concert"));
-    }
-  }
-
-  getEvents() {
-    if(this.events.length == 0 ) {
-      this.retrieveEvents();
     }
     return this.events;
   }

@@ -1,7 +1,6 @@
 export interface VoicepartLimit {
-    voicepart_name : number;
-    event_start_time : string;
-    event_end_time : string;
+    voicepart_name : string;
+    voicepart_number : number;
     limit : number;
   }
   
