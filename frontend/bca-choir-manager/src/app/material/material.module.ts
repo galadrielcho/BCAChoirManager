@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -20,7 +21,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatExpansionModule
   ],
   exports:[
     MatToolbarModule,
@@ -30,7 +32,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatExpansionModule
 
   ]
 })

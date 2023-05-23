@@ -1,0 +1,19 @@
+<ng-container *ngIf="isAuthenticated(); else loggedOut" >
+
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{getUserTag()}}
+      </mat-expansion-panel-header>
+          <a routerLink="/profile">
+          <mat-button mat-menu-item>Profile</mat-button>
+      </a>
+        <mat-button mat-menu-item (click)="logout()">
+          Log out
+        </mat-button>
+      </mat-expansion-panel>
+  </ng-container>
+  
+  <ng-template #loggedOut>
+    <button mat-raised-button (click)="login()">Log in</button>
+  </ng-template>
