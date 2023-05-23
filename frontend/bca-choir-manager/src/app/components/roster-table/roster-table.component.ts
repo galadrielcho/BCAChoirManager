@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RosterUpdateComponent } from 'src/app/components/roster-update/roster-update.component';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { StudentData } from 'src/app/models/student-data.model';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 @Component({
 
@@ -33,6 +34,7 @@ export class RosterTableComponent implements AfterViewInit {
   constructor(private rosterService: RosterService,
     private md: MatDialog,
     private rosterUpdateService: RosterUpdateService,
+    private errorService : ErrorService,
     private authService: AuthenticationService,
     private changeDetectorRefs: ChangeDetectorRef) { 
 
@@ -42,13 +44,16 @@ export class RosterTableComponent implements AfterViewInit {
     this.getAppropiateColumns();
 
     this.rosterService.getRoster().subscribe({
-    next: data => {
-    this.roster = data.roster;
-    this.dataSource = new MatTableDataSource(this.roster);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;   
-    }      
+      next: data => {
+      this.roster = data.roster;
+      this.dataSource = new MatTableDataSource(this.roster);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;   
+      },
+      error: error=>{
+        this.errorService.showErrorDialog("Could not retrieve students from database.")
+      }
     });
 
   }
@@ -73,15 +78,19 @@ export class RosterTableComponent implements AfterViewInit {
       {
         data: student
       }
-    ).afterClosed().subscribe(updatedStudent => {
-      if(updatedStudent != undefined){
-        var index = this.roster.indexOf(student);
-        if (index !== -1) {
-            this.roster[index] = updatedStudent;
+    ).afterClosed()
+      .subscribe(
+        updatedStudent => {
+        if(updatedStudent != undefined)
+          {
+            var index = this.roster.indexOf(student);
+            if (index !== -1) {
+                this.roster[index] = updatedStudent;
+            }
+            this.refresh();
+          }
         }
-        this.refresh();
-      }
-    });
+    );
   }
 
   

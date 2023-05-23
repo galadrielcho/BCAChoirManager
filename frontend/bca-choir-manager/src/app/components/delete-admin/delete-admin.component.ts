@@ -4,6 +4,8 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ErrorService } from 'src/app/services/error-service/error.service';
+
 
 @Component({
   selector: 'app-delete-admin',
@@ -17,7 +19,7 @@ export class DeleteAdminComponent {
   showDNE = false;
   showSelfDeletionError = false;
   showSuccess = false;
-  constructor(private accService: AccountService, private authService: AuthenticationService){
+  constructor(private accService: AccountService, private authService: AuthenticationService, private errorService: ErrorService){
 
   }
   submit(){
@@ -25,7 +27,6 @@ export class DeleteAdminComponent {
     this.showSelfDeletionError = false;
     this.showSuccess = false;
     let data = this.authService.getUserEmail();
-    console.log("this user: " + data);
 
     if(data == this.deleteAdminForm.value.email){
       this.showSelfDeletionError = true;
@@ -42,7 +43,9 @@ export class DeleteAdminComponent {
                 if(info.success){
                   this.showSuccess = true;
                 }
-
+              },
+              error: error =>{
+                this.errorService.showErrorDialog(`Could not delete admin ${this.deleteAdminForm.value.email} from database.`);
               }
             });
           }

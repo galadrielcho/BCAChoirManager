@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventData} from '../../models/event-data.model';
+import { ErrorService } from '../error-service/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class EventService {
   private eventURL = 'api/event/'
   private calendarService : any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errorService : ErrorService) { }
 
   setCalendarService(calendarService : any){
     this.calendarService = calendarService;
@@ -26,9 +27,13 @@ export class EventService {
   
   deleteEvent(e : EventData){
     const startTime = new Date(e.start_time).getTime();
-    console.log(this.eventURL + `${e.event_name}/${startTime}/`);
     const obs = this.http.delete(
-      this.eventURL + `${e.event_name}/${startTime}/`).subscribe();
+      this.eventURL + `${e.event_name}/${startTime}/`)      
+      .subscribe({
+        error: error=>{
+          this.errorService.showErrorDialog("Could not delete event from database.")
+        }
+      });
     this.calendarService.loadCalendarEvents();
     return obs;
   }
@@ -42,7 +47,12 @@ export class EventService {
       orig_event : origEvent,
       new_event : newEvent
     }
-    return this.http.post<any>('/api/event/event-edit/', events).subscribe();
+    return this.http.post<any>('/api/event/event-edit/', events)      
+      .subscribe({
+      error: error=>{
+        this.errorService.showErrorDialog("Could not update event in database.")
+      }
+    });
   }
 
   addStudentToEvent(studentEmail : string, event : EventData, voicepartNumber : number, voicepartName : string){
@@ -53,7 +63,12 @@ export class EventService {
       voicepart_number: voicepartNumber,
       voicepart_name : voicepartName
     }
-    return this.http.post<any>('/api/event/add-student-to-event/', data).subscribe();
+    return this.http.post<any>('/api/event/add-student-to-event/', data)
+      .subscribe({
+        error: error=>{
+          this.errorService.showErrorDialog("Could not add your event signup to the database.")
+        }
+      });
   }
 
   checkStudentInEvent(studentEmail : string, event : EventData){
@@ -75,7 +90,13 @@ export class EventService {
   }
 
   createEvent(event : EventData){
-    return this.http.post<any>('/api/event/event-create', event).subscribe();
+    return this.http.post<any>('/api/event/event-create', event)
+      .subscribe({
+        error: error=>{
+          this.errorService.showErrorDialog("Could not add event to database.")
+        }
+      }
+    );
   }
 
   getEventRegistrees(event : EventData){

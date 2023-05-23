@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-
+import { ErrorService } from '../error-service/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class AccountService {
 
   private statusUrl = '/api/account';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errorService : ErrorService) { }
 
   postStatus(stringArray: string[]) {
     return this.http.post(this.statusUrl, stringArray);
@@ -28,7 +28,12 @@ export class AccountService {
   }
 
   deleteRecords(){
-    this.http.get<any>('/api/delete-old-accounts').subscribe();
+    this.http.get<any>('/api/delete-old-accounts').subscribe(
+      {              
+        error: error =>{
+        this.errorService.showErrorDialog(`Failed to delete records from database.`);
+      }}
+    );
   }
   
 }

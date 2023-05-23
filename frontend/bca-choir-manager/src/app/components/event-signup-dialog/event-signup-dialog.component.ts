@@ -4,6 +4,7 @@ import { EventData } from '../../models/event-data.model';
 import { EventService } from '../../services/event-service/event.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { switchMap } from 'rxjs';
+import { ErrorService } from '../../services/error-service/error.service';
 
 @Component({
   selector: 'app-event-signup-dialog',
@@ -22,6 +23,7 @@ export class EventSignupDialogComponent {
           voicepart : string
         },
     private eventService : EventService,
+    private errorService : ErrorService,
     public authService : AuthenticationService) {
       this.user_email = this.authService.getUserEmail();
     }
@@ -37,7 +39,10 @@ export class EventSignupDialogComponent {
                   if(data.success == true){
                     this.eventService.addStudentToEvent(this.user_email, this.data.event, this.data.partnumber, this.data.voicepart);
                   }
-                }      
+                },
+                error: error=>{
+                  this.errorService.showErrorDialog(`Could not remove student ${this.user_email} from event ${this.data.event.event_name} in database.`);
+                }   
             });
                 
             }
@@ -49,7 +54,11 @@ export class EventSignupDialogComponent {
     }
     
       else {
-      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe();
+      this.eventService.deleteStudentFromEvent(this.user_email, this.data.event).subscribe({
+        error: error=>{
+          this.errorService.showErrorDialog(`Could not remove student ${this.user_email} from event ${this.data.event.event_name} in database.`);  
+        }  
+      });
 
     }
 

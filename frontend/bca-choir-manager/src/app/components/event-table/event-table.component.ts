@@ -9,6 +9,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event-registrees-dialog.component';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class EventTableComponent {
   constructor(private es: EventService,
               public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
               public dialog: MatDialog,
-              private changeDetectorRefs: ChangeDetectorRef
+              private changeDetectorRefs: ChangeDetectorRef,
+              private errorService : ErrorService
     ) { 
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
@@ -53,6 +55,10 @@ export class EventTableComponent {
         }
         this.events = events;
         this.setupTable();
+
+      },
+      error: error=>{
+        this.errorService.showErrorDialog(`Could not get events from database`);
 
       }      
     }); 
@@ -121,8 +127,9 @@ export class EventTableComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result){
               // TO DO : Check if the event has been updated and only update that event
-        this.eventService.getAllEvents().subscribe(
-          (events : EventData[]) => {
+        this.eventService.getAllEvents().subscribe({
+          
+          next: (events : EventData[]) => {
             for(let event in  events){
               events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
               events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
@@ -131,8 +138,12 @@ export class EventTableComponent {
             }
             this.events = events;
             this.refresh();
-          }
-        );
+          },
+          error: error=>{
+            this.errorService.showErrorDialog(`Could not get events from database`);
+    
+          }  
+      });
   
       }
     });
@@ -153,9 +164,8 @@ export class EventTableComponent {
       width: '500px',
       data: event_copy
     }).afterClosed().subscribe(updatedStudent => {
-      // TO DO : Check if the event has changed and only update that event
-      this.eventService.getAllEvents().subscribe(
-        (events : EventData[]) => {
+      this.eventService.getAllEvents().subscribe({
+        next: (events : EventData[]) => {
           for(let event in  events){
             events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
             events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
@@ -165,7 +175,12 @@ export class EventTableComponent {
           
           this.events = events;
           this.refresh();
-        }
+        },
+        error: error=>{
+          this.errorService.showErrorDialog(`Could not get events from database`);
+  
+        }      
+      }
       );
     });
 

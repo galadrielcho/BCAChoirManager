@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { EventData} from '../../models/event-data.model';
 import { CalendarDayData} from '../../models/calendar-day-data.model';
 import { EventService } from '../event-service/event.service';
+import { ErrorService } from '../error-service/error.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,8 @@ export class CalendarService {
   private calendarMonth : CalendarDayData[][] = []; 
   private events : EventData[]= []; 
 
-  constructor(private http: HttpClient, private eventService : EventService){
+  constructor(private http: HttpClient, private eventService : EventService, private errorService :ErrorService){
     this.eventService.setCalendarService(this);
-    this.loadCalendarEvents();
   }
 
   setDate(date : Date) :void{
@@ -58,7 +59,6 @@ export class CalendarService {
   }
       
   getEvents() {
-    console.log(this.events);
     return this.events;
   }
 
@@ -167,6 +167,7 @@ export class CalendarService {
           this.goThroughCalendarMonth();
         },
         error: error=>{
+          this.errorService.showErrorDialog("Could not retrieve events from database.")
           this.goThroughCalendarMonth();
         }
       });

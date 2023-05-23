@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'app-delete-account-dialog',
@@ -17,7 +18,8 @@ export class DeleteAccountDialogComponent  {
     public dialog: MatDialog, 
     private accountService : AccountService,
     private authenticationService : AuthenticationService,
-    private location: Location
+    private location: Location,
+    private errorService : ErrorService
   ) {}
 
   close(): void {
@@ -28,7 +30,13 @@ export class DeleteAccountDialogComponent  {
   deleteAccount() : void {
     let email = this.authenticationService.getUserEmail();
 
-    this.accountService.deleteAdmin(email).subscribe();
+    this.accountService.deleteAdmin(email).subscribe({
+      error: error =>{
+        this.errorService.showErrorDialog(`Could not delete admin ${email} from database.`);
+      }
+    }
+
+    );
     this.dialogRef.close(true);
     this.location.replaceState('/home');
     location.reload();

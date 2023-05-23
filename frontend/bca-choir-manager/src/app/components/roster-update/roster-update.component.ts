@@ -45,7 +45,8 @@ export class RosterUpdateComponent {
     private dialogRef: MatDialogRef<RosterUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_student: StudentData,
     )
-  {}
+  {
+  }
 
   ngOnInit() {
   }

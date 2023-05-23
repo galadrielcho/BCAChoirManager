@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { SlideInterface } from 'src/app/components/photo-slideshow/types/slides.interface';
 import { HomePagePopupComponent } from 'src/app/components/home-page-popup/home-page-popup.component';
 import { HomeService } from 'src/app/services/home-service/home.service';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'app-home-page',
@@ -26,7 +27,7 @@ export class HomePageComponent {
                              {url:"https://drive.google.com/uc?id=1l8WBnO5IYXYUdfMkhq2yS1r_cfNLZGCJ", title: 'photo'},
                              {url:"https://drive.google.com/uc?id=1KWVS7M-Dt8x9qekZ4vvBYZcOrUECid86", title: 'photo'},
                              {url:"https://drive.google.com/uc?id=1rwzN64eWQPAJcfrZuMM1_8UjJSHCzX4m", title: 'photo'},];
-  constructor(private homeService: HomeService, private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService, private authService: AuthenticationService) {
+  constructor(private errorService: ErrorService, private homeService: HomeService, private accountService: AccountService, private md: MatDialog, private signUpService: SignUpService, private auth : AuthenticationService, private authService: AuthenticationService) {
     this.dialog = md;
     this.isUnaccounted = false;
     this.dbCalled = false;
@@ -53,7 +54,10 @@ export class HomePageComponent {
         this.group1 = data.content[1].info;
         this.group2 = data.content[2].info;
         this.conductor = data.content[3].info;
-      }      
+      },
+      error: error=>{
+        this.errorService.showErrorDialog("Could not retrieve text content from database.")
+      }     
       });
   }
 

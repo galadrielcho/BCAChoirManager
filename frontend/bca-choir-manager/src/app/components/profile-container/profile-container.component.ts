@@ -3,6 +3,8 @@ import { StudentData } from 'src/app/models/student-data.model';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { SignUpService } from 'src/app/services/sign-up-service/sign-up.service';
+import { ErrorService } from 'src/app/services/error-service/error.service';
+
 import { RosterUpdateComponent } from '../roster-update/roster-update.component';
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
@@ -27,6 +29,7 @@ export class ProfileContainerComponent {
   constructor(private authService : AuthenticationService,
               private rosterService : RosterUpdateService,
               private signupService : SignUpService,
+              private errorService : ErrorService,
               private md: MatDialog) {
 
     this.dialog = md;
@@ -50,11 +53,15 @@ export class ProfileContainerComponent {
   }
 
   updateStudentProfileDetails() {
-    this.rosterService.getAccountDetails(this.user).subscribe(
-      data => {
-        this.student = data.details;
-        this.fullName = this.student?.first_name + " " + this.student?.last_name;
-        this.voicepart = this.student?.voicepart_name + " " + this.student?.number    
+    this.rosterService.getAccountDetails(this.user).subscribe({
+        next: data => {
+          this.student = data.details;
+          this.fullName = this.student?.first_name + " " + this.student?.last_name;
+          this.voicepart = this.student?.voicepart_name + " " + this.student?.number    
+        },
+        error: error=>{
+          this.errorService.showErrorDialog("Could not get profile from database.")
+        }      
       }
     );
 

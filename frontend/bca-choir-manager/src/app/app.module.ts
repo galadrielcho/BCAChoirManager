@@ -72,6 +72,7 @@ import { SlideshowModule } from './slideshow';
 import { HomePagePopupComponent } from './components/home-page-popup/home-page-popup.component';
 import { RecordsDeleteDialogComponent } from './components/records-delete-dialog/records-delete-dialog.component';
 import { DeleteAccountDialogComponent } from './components/delete-account-dialog/delete-account-dialog.component';
+import { HttpErrorDialogComponent } from './components/http-error-dialog/http-error-dialog.component';
 
 
 
@@ -109,7 +110,8 @@ import { DeleteAccountDialogComponent } from './components/delete-account-dialog
     SidenavComponent,
     HomePagePopupComponent,
     RecordsDeleteDialogComponent,
-    DeleteAccountDialogComponent
+    DeleteAccountDialogComponent,
+    HttpErrorDialogComponent
 
 
 
