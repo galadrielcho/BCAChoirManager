@@ -142,8 +142,6 @@ export class EventEditDialogComponent {
       registration_status : Number(this.eventForm.value.registration_status)
     }
 
-    console.log(new_event);
-
     if (this.eventAction == "Edit"){
       this.eventService.editEvent(this.orig_event, new_event);
       this.dialogRef.close(false);
