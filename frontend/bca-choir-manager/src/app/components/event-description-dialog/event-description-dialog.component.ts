@@ -34,7 +34,6 @@ export class EventDescriptionDialogComponent {
   ) {
     this.admin = false;
     this.seconds = 0;
-
     if (this.authService.isAuthenticated() && !this.authService.isAdmin()) {
       this.eventService.checkStudentInEvent(this.authService.getUserEmail(), event).subscribe(
         (next)=> {
@@ -73,9 +72,6 @@ export class EventDescriptionDialogComponent {
       data: this.event
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
   }
 
   getSignedUp() {

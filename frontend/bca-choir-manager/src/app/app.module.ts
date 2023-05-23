@@ -5,12 +5,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { RoutingModule } from './routing/routing.module';
 import { MaterialModule } from './material/material.module';
 import { AuthModule } from '@auth0/auth0-angular';
+import { ToastrModule } from 'ngx-toastr';
+
 import { UserButtonComponent } from './components/user-button/user-button.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
@@ -113,8 +116,6 @@ import { HttpErrorDialogComponent } from './components/http-error-dialog/http-er
     DeleteAccountDialogComponent,
     HttpErrorDialogComponent
 
-
-
   ],
   imports: [
     BrowserModule,
@@ -142,7 +143,8 @@ import { HttpErrorDialogComponent } from './components/http-error-dialog/http-er
     MatMenuModule,
     MatRadioModule,
     SlideshowModule,
-
+    CommonModule,
+    ToastrModule.forRoot(),
     AuthModule.forRoot({
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,

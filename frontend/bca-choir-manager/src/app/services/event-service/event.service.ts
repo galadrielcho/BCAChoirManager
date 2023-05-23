@@ -56,7 +56,6 @@ export class EventService {
   }
 
   addStudentToEvent(studentEmail : string, event : EventData, voicepartNumber : number, voicepartName : string){
-    
     let data = {
       student_email : studentEmail,
       event : event,

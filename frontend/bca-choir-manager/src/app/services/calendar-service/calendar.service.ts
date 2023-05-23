@@ -15,9 +15,14 @@ export class CalendarService {
   private date : Date = new Date();   
   private calendarMonth : CalendarDayData[][] = []; 
   private events : EventData[]= []; 
+  public displayAttending: boolean = false;
 
   constructor(private http: HttpClient, private eventService : EventService, private errorService :ErrorService){
     this.eventService.setCalendarService(this);
+  }
+
+  setDisplayAttending(value : boolean){
+    this.displayAttending = value;
   }
 
   setDate(date : Date) :void{

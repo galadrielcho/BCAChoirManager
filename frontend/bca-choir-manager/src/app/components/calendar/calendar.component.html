@@ -35,6 +35,9 @@
         </div>
 
     </div> 
+    <div *ngIf="!getAdmin() && isAuthenticated()" class="left">
+        <p><mat-checkbox #checkbox (change)="changed(checkbox.checked)">Display Attending</mat-checkbox></p>
+    </div>
 
     <main class="flex-row">
         <table class="center">

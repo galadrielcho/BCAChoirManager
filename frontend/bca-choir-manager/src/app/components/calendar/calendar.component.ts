@@ -26,10 +26,18 @@ export class CalendarComponent implements OnInit{
   constructor(private calendarService : CalendarService, private dialog: MatDialog, private authService : AuthenticationService){
     this.service = calendarService;
   }
-  
+
   ngOnInit(): void{
     this.currentWindowWidth = window.innerWidth;
     this.calendarService.setDate(new Date());
+  }
+
+  changed(value : boolean){
+    this.calendarService.setDisplayAttending(value);
+  }
+
+  isAuthenticated(){
+    return this.authService.isAuthenticated();
   }
 
   getAdmin() {
