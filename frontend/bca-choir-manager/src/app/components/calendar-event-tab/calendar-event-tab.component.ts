@@ -23,21 +23,13 @@ export class CalendarEventTabComponent {
     public authService: AuthenticationService,
     private calendarService : CalendarService) {
   }
-  /*
+  
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['event'] && changes['event'].currentValue) {
-      
-      if (this.event?.choir_type == "Concert") {
-        this.isConcert = true;
-      } else {
-        this.isConcert = false;
-      }
-    }
     if(changes['date']){
       this.day_number = this.calculateDayNumber();
     }
   }
-  */
+  
 
   checkDisplay(){
     if(this.calendarService.displayAttending == true){
