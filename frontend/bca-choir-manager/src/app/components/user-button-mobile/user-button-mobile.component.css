@@ -1,0 +1,14 @@
+
+a {
+    text-decoration:none;
+}
+
+#arrow-dropdown {
+    bottom: 0px;
+}
+
+button {
+    display:block;
+    position: auto;
+    margin: auto 20px;
+}

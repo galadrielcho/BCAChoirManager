@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentData } from 'src/app/models/student-data.model';
 import { AuthenticationService } from '../authentication-service/authentication.service';
+import { ErrorService } from '../error-service/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class SignUpService {
   private signUpUrl = '/api/sign-up';
 
   constructor(private http: HttpClient,
-              private authService: AuthenticationService) { }
+              private authService: AuthenticationService,
+              private errorService : ErrorService) { }
 
   public send(dialog: MatDialog, location: Location, email: string|undefined){
     this.dialog = dialog;
@@ -32,7 +34,13 @@ export class SignUpService {
   }
 
   public postDetails(student: any[]){
-    this.http.post(this.signUpUrl, student).subscribe();
+    this.http.post(this.signUpUrl, student).subscribe(
+      {
+        error: error =>{
+          this.errorService.showErrorDialog("Could not complete student signup in database.");
+        }
+      }
+    );
   }
 
   public getEmail(email : string|undefined){

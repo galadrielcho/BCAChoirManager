@@ -15,8 +15,10 @@ tr.event-row:not(.event-expanded-row):active {
 }
 
 .event-row td {
-  border-bottom-width: 0;
-  padding: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 30px;
+
 
 }
 
@@ -56,7 +58,6 @@ tr.event-detail-row {
   overflow-x: scroll;
 }
 
-
 .container {
   display: flex;
   align-items: center;
@@ -78,4 +79,18 @@ tr.event-detail-row {
 
 .arrow{
   margin-right: 10%;
+}
+
+mat-chip {
+  padding: 0 !important;
+}
+  
+.event-name {
+  font-size:larger;
+  font-weight: 500;
+}
+
+.column-head {
+  font-style: italic;
+  padding-left: 30px;
 }

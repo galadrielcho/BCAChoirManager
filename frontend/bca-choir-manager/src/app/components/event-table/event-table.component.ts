@@ -9,6 +9,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
 import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event-registrees-dialog.component';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 
 @Component({
@@ -16,19 +17,16 @@ import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog
   selector: 'app-event-table',
   templateUrl: './event-table.component.html',
   styleUrls: ['./event-table.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  animations: []
 })
 
 export class EventTableComponent {
-  displayedColumns = ['event_name', 'choir_type', 'start_time', 'end_time', 'registration_status'];
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'edit', 'delete', 'expand'];
-  expandedEvent : EventData | null = null;
+  generatedColumns = ['start_time', 'end_time', 'registration_status'];
+
+  allColumns = ['event_name', 'choir_type', 'start_time', 'registration_status', 'edit', 'delete'];
+  tableHeader = ['event_name', 'choir_type', 'start_time', 'registration_status'];
+
+
   
   private events : EventData[] = [];
   dataSource: MatTableDataSource<EventData> = new MatTableDataSource<EventData>([]);
@@ -40,19 +38,24 @@ export class EventTableComponent {
   constructor(private es: EventService,
               public dialogRef: MatDialogRef<EventDeleteDialogComponent>,
               public dialog: MatDialog,
-              private changeDetectorRefs: ChangeDetectorRef
+              private changeDetectorRefs: ChangeDetectorRef,
+              private errorService : ErrorService
     ) { 
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
       next: events => {
         for(let eventIndex in  events){
-          events[eventIndex].start_time = this.es.dateISOToLocale(events[eventIndex].start_time);
-          events[eventIndex].end_time = this.es.dateISOToLocale(events[eventIndex].end_time);
+          events[eventIndex].start_time = this.es.dateISOToLocale(events[eventIndex].start_time).replace(":00 ", " ");
+          events[eventIndex].end_time = this.es.dateISOToLocale(events[eventIndex].end_time).replace(":00 ", " ");
           events[eventIndex].registration_status = (events[eventIndex].registration_status == 1) ? "Open" : "Closed";
           
         }
         this.events = events;
         this.setupTable();
+
+      },
+      error: error=>{
+        this.errorService.showErrorDialog(`Could not get events from database`);
 
       }      
     }); 
@@ -67,10 +70,6 @@ export class EventTableComponent {
     this.dataSource = new MatTableDataSource(this.events);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-  }
-
-  expandEvent(event : EventData | null){
-    // console.log(event);
   }
 
   applyFilter(event: Event) {
@@ -121,18 +120,23 @@ export class EventTableComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result){
               // TO DO : Check if the event has been updated and only update that event
-        this.eventService.getAllEvents().subscribe(
-          (events : EventData[]) => {
+        this.eventService.getAllEvents().subscribe({
+          
+          next: (events : EventData[]) => {
             for(let event in  events){
-              events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
-              events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
+              events[event].start_time = this.es.dateISOToLocale(events[event].start_time).replace(":00 ", " ");
+              events[event].end_time = this.es.dateISOToLocale(events[event].end_time).replace(":00 ", " ");
               events[event].registration_status = (events[event].registration_status == 1) ? "Open" : "Closed";
     
             }
             this.events = events;
             this.refresh();
-          }
-        );
+          },
+          error: error=>{
+            this.errorService.showErrorDialog(`Could not get events from database`);
+    
+          }  
+      });
   
       }
     });
@@ -153,9 +157,8 @@ export class EventTableComponent {
       width: '500px',
       data: event_copy
     }).afterClosed().subscribe(updatedStudent => {
-      // TO DO : Check if the event has changed and only update that event
-      this.eventService.getAllEvents().subscribe(
-        (events : EventData[]) => {
+      this.eventService.getAllEvents().subscribe({
+        next: (events : EventData[]) => {
           for(let event in  events){
             events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
             events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
@@ -165,11 +168,29 @@ export class EventTableComponent {
           
           this.events = events;
           this.refresh();
-        }
+        },
+        error: error=>{
+          this.errorService.showErrorDialog(`Could not get events from database`);
+  
+        }      
+      }
       );
     });
 
   }
+
+  getColumnHead(column : string) : string {
+    column = column.split("_")[0];
+
+    return column.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+      }
+    );
+
+  }
+
 
   refresh() {
     this.setupTable();

@@ -3,6 +3,7 @@ import { AccountService } from 'src/app/services/account-service/account.service
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'app-add-admin',
@@ -22,7 +23,7 @@ export class AddAdminComponent {
                         [Validators.required, Validators.pattern('[a-zA-Z -/]*')])
   })
   
-  constructor(private service: AccountService){
+  constructor(private service: AccountService, private errorService: ErrorService){
 
   }
 
@@ -42,6 +43,9 @@ export class AddAdminComponent {
               if(data.added){
                 this.showSuccess = true;
               }
+            },
+            error: error =>{
+              this.errorService.showErrorDialog(`Could not add admin ${this.addAdminForm.value.email} to database.`);
             }
           })
         }
