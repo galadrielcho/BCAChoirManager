@@ -17,16 +17,18 @@ export class CalendarEventTabComponent {
   public attending : string = "";
   public isConcert : boolean = true;
   public day_number: string = "";
+  public executed : boolean = false;
   
   constructor(public dialog: MatDialog, 
     public eventService : EventService,
     public authService: AuthenticationService,
-    private calendarService : CalendarService) {
-  }
+    private calendarService : CalendarService) {}
+  
   
   ngOnChanges(changes: SimpleChanges) {
-    if(changes['date']){
+    if(changes['date'] && !this.executed){
       this.day_number = this.calculateDayNumber();
+      this.executed = true;
     }
   }
   
