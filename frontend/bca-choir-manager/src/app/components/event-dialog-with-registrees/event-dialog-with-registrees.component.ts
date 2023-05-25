@@ -7,11 +7,12 @@ import { EventData } from 'src/app/models/event-data.model';
 import { EventRegistree } from 'src/app/models/event-registree.model';
 import { EventService } from 'src/app/services/event-service/event.service';
 import { ErrorService } from 'src/app/services/error-service/error.service';
+import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 
 @Component({
   selector: 'app-event-registrees-dialog',
-  templateUrl: './event-registrees-dialog.component.html',
-  styleUrls: ['./event-registrees-dialog.component.css']
+  templateUrl: './event-dialog-with-registrees.component.html',
+  styleUrls: ['./event-dialog-with-registrees.component.css']
 })
 export class EventRegistreesDialogComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -20,7 +21,8 @@ export class EventRegistreesDialogComponent {
   dataSource: MatTableDataSource<EventRegistree> = new MatTableDataSource<EventRegistree>([]);
 
   private registrees : EventRegistree[] = [];
-  private editModeOn : boolean = false;
+  eventStart : string;
+  eventEnd : string;
 
   dataColumns = ['first_name', 'last_name', 'voicepart'];
   allColumns = [...this.dataColumns, 'delete'];
@@ -33,6 +35,22 @@ export class EventRegistreesDialogComponent {
     private errorService : ErrorService
 
   ) {
+    this.event.start_time = new Date(this.event.start_time).toISOString();
+    this.event.end_time = new Date(this.event.end_time).toISOString();
+
+    console.log(this.event);
+    const timeFormat : Intl.DateTimeFormatOptions= {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour12: true,
+      hour: 'numeric'
+    };
+  
+    this.eventStart = new Date(event.start_time).toLocaleString('en-US', timeFormat);
+    this.eventEnd = new Date(event.start_time).toLocaleDateString('en-US',timeFormat);
+
     this.eventService.getEventRegistrees(this.event).subscribe({
       next: data => {
         this.registrees = data.registrees;
@@ -58,10 +76,6 @@ export class EventRegistreesDialogComponent {
     this.dialogRef.close();
   }
 
-  editMode() : void {
-    this.editModeOn = true;
-  }
-
   deleteClicked(email: string){
     this.eventService.deleteStudentFromEvent(email, this.event)      
       .subscribe({
@@ -72,5 +86,28 @@ export class EventRegistreesDialogComponent {
     this.close();
   }
 
+  editEvent() : void {
+    let event_copy : EventData = {
+      event_name : this.event.event_name,
+      start_time : this.event.start_time,
+      end_time : this.event.end_time,
+      location : this.event.location,
+      address : this.event.address,
+      choir_type : this.event.choir_type,
+      registration_status : this.event.registration_status
+    }
 
+    this.dialog.closeAll();
+
+    const dialogRef = this.dialog.open(EventEditDialogComponent, {
+      width: '500px',
+      data: event_copy
+    }).afterClosed().subscribe(
+      result => {
+        // If result, then update event table and dialog
+        // Add procedure to database ?
+      }
+    );  
+
+  }
 }

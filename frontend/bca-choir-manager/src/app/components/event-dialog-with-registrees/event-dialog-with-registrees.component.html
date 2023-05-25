@@ -1,0 +1,75 @@
+<h1 mat-dialog-title class="title">{{event.event_name}}</h1>
+<mat-chip-listbox aria-label="Event Registrees">
+  <mat-chip>{{event.choir_type}}</mat-chip>
+</mat-chip-listbox>
+<button class="blue-button event flex-child"
+mat-fab extended color="primary"
+aria-label="Button to edit event"
+(click)="editEvent()">
+<mat-icon>edit</mat-icon>
+</button>
+
+<div mat-dialog-content>
+  <div class="box">
+    <div>
+      <div class="event-detail">
+        <b class="mini-head">Start</b>
+        {{eventStart}}  
+      </div>
+      <div class="event-detail">
+        <b class="mini-head">End</b>
+        {{eventEnd}}
+        </div>
+      <div class="event-detail" *ngIf="event.location">
+        <b class="mini-head">Takes place at</b>
+        {{event.location}}
+      <div>
+      <div class="event-detail" *ngIf="event.address">
+        <b class="mini-head">Address</b>
+        {{event.address}}
+      </div>
+      </div>
+
+      </div>
+    </div>
+    <div class="table-container">
+      <b class="mini-head">Registrees</b>
+
+      <table mat-table
+      class=""
+      matSort
+      aria-label="Event registrees table"
+      multiTemplateDataRows>
+    <!-- First Name Column -->
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of dataColumns">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column}}</th>
+    <td mat-cell *matCellDef="let student">{{student[column]}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let student">
+    <button mat-mini-fab (click)="deleteClicked(student.email)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+    <tr mat-row *matRowDef="let student; columns: allColumns;"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No event registrees</td>
+    </tr>
+  
+      </table>
+  
+    </div>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+  <!-- <button mat-button (click)="editMode()">Edit Registrees</button> -->
+
+</div>

@@ -7,7 +7,7 @@ import { EventService } from 'src/app/services/event-service/event.service';
 import { EventData } from 'src/app/models/event-data.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-dialog.component';
-import { EventRegistreesDialogComponent } from '../event-registrees-dialog/event-registrees-dialog.component';
+import { EventRegistreesDialogComponent } from '../event-dialog-with-registrees/event-dialog-with-registrees.component';
 import { EventEditDialogComponent } from '../event-edit-dialog/event-edit-dialog.component';
 import { ErrorService } from 'src/app/services/error-service/error.service';
 
@@ -23,7 +23,7 @@ import { ErrorService } from 'src/app/services/error-service/error.service';
 export class EventTableComponent {
   generatedColumns = ['start_time', 'end_time', 'registration_status'];
 
-  allColumns = ['event_name', 'choir_type', 'start_time', 'registration_status', 'edit', 'delete'];
+  allColumns = ['event_name', 'choir_type', 'start_time', 'registration_status', 'open-event', 'delete'];
   tableHeader = ['event_name', 'choir_type', 'start_time', 'registration_status'];
 
 
@@ -97,14 +97,10 @@ export class EventTableComponent {
 
   openEventRegistrees(event : EventData): void {
     const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
-      width: '500',
-      data: {event_name: event.event_name,
-              start_time : new Date(event.start_time).toISOString(),
-              choir_type : event.choir_type,
-              end_time : new Date(event.end_time).toISOString(),
-            }
-      }
-    );
+      width: '1000px',
+      height: '500px',
+      data: event
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log("Done");
@@ -113,7 +109,7 @@ export class EventTableComponent {
 
   openCreateEventDialog() : void {
     const dialogRef = this.dialog.open(EventEditDialogComponent, {
-      width: '500px',
+      width: '450px',
       data: null
     });
 

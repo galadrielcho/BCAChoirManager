@@ -64,7 +64,7 @@ import { EventDeleteDialogComponent } from './components/event-delete-dialog/eve
 import { EventTableComponent } from './components/event-table/event-table.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
-import { EventRegistreesDialogComponent } from './components/event-registrees-dialog/event-registrees-dialog.component';
+import { EventRegistreesDialogComponent } from './components/event-dialog-with-registrees/event-dialog-with-registrees.component';
 import { EventSignupDialogComponent } from './components/event-signup-dialog/event-signup-dialog.component';
 import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { DeleteAdminComponent } from './components/delete-admin/delete-admin.component';

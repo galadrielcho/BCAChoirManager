@@ -45,11 +45,11 @@
       <td mat-cell *matCellDef="let event">{{event[column]}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="edit">
+    <ng-container matColumnDef="open-event">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let event">
-        <button mat-mini-fab (click)="editEvent(event)">
-          <mat-icon>edit</mat-icon>
+        <button mat-mini-fab (click)="openEventRegistrees(event);">
+          <mat-icon>exit_to_app</mat-icon>
         </button>
       </td>
     </ng-container>

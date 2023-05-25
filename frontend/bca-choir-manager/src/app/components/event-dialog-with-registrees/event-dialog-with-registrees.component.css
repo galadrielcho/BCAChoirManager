@@ -1,0 +1,54 @@
+.location p {
+    display: inline-block;
+}
+
+mat-chip-listbox {
+    display:inline-block;
+    padding-left: 0;
+}
+
+div mat-dialog-content {
+    padding-top: 0;
+}
+
+h1 {
+    padding-right: .35cm;
+    display: inline-block;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 10px;
+    margin-left: 20px;
+
+}
+
+.mini-head {
+    font-size: large;
+    padding-right: 10px;
+}
+
+/** TO DO : Make dynamic spacing **/
+.second {
+    padding-left: 150px;
+}
+
+.box {
+    display:flex;
+    gap: 5rem;
+    width: auto;
+    margin: 2rem auto;
+
+}
+
+.table-container {
+    overflow: auto;
+    width: 50%;
+
+}
+
+.event-detail {
+    padding-top: 10px;
+    padding-right: 10px;
+}
