@@ -9,7 +9,7 @@ table{
 .center{
     margin:auto;
 }
-.left{
+.right{
     margin-left:66%;
 }
 
@@ -67,3 +67,26 @@ app-calendar-week {
     padding:15px;
 }
 
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+.flex-child:first-child {
+    margin-right: 5%;
+} 
+
+.heading{
+    margin-left:4%;
+}
+
+.shorter-height {
+    height: 77px; /* Adjust the height value as needed */
+}
+
+.lower{
+    margin-top:2%;
+}

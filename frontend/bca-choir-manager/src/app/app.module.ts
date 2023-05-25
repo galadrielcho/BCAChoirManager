@@ -76,7 +76,7 @@ import { HomePagePopupComponent } from './components/home-page-popup/home-page-p
 import { RecordsDeleteDialogComponent } from './components/records-delete-dialog/records-delete-dialog.component';
 import { DeleteAccountDialogComponent } from './components/delete-account-dialog/delete-account-dialog.component';
 import { HttpErrorDialogComponent } from './components/http-error-dialog/http-error-dialog.component';
-
+import { UserButtonMobileComponent } from './components/user-button-mobile/user-button-mobile.component';
 
 
 
@@ -114,8 +114,8 @@ import { HttpErrorDialogComponent } from './components/http-error-dialog/http-er
     HomePagePopupComponent,
     RecordsDeleteDialogComponent,
     DeleteAccountDialogComponent,
-    HttpErrorDialogComponent
-
+    HttpErrorDialogComponent,
+    UserButtonMobileComponent
   ],
   imports: [
     BrowserModule,
