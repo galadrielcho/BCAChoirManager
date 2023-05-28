@@ -1,21 +1,21 @@
 
 
-<div class="flex-container">
-  <div class="flex-child">
+<div class="options">
+  <span>
     <mat-form-field>
       <mat-label>Search for an event...</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Concert" #input>
     </mat-form-field>
-  </div>
-  <div class="flex-child">
-    <button class="blue-button event flex-child"
+  </span>
+  <span>
+    <button class="blue-button"
         mat-fab extended color="primary"
         aria-label="Button to create an event"
         (click)="openCreateEventDialog()">
-      <mat-icon>edit</mat-icon>
-      Create Event
+    <mat-icon>edit</mat-icon>
+    Create Event
     </button>
-  </div>
+  </span>
 </div>
 <div class="mat-elevation-z8 data-table">
 

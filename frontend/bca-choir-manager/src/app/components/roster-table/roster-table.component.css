@@ -19,9 +19,6 @@
   margin: 20px;
 }
 
-.filter {
-  margin-right: 20px;
-}
 .flex-container {
   display: flex;
 }
@@ -31,9 +28,24 @@
 }  
 
 .flex-child:first-child {
-  margin-right: 20px;
+  margin: 10px;
+  margin-bottom: 0;
 } 
 
 .arrow{
   margin-right: 10%;
+}
+
+
+mat-form-field {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.event-row td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 30px;
+
+
 }

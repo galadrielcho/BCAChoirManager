@@ -65,6 +65,18 @@ export class RosterTableComponent implements AfterViewInit {
     }
   }
 
+  getColumnHead(column : string) : string {
+    column = column.split("_")[0];
+
+    return column.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+      }
+    );
+
+  }
+
   deleteClicked(student : StudentData){
     this.rosterService.deleteAccount(student.email);
     let index = this.roster.indexOf(student);

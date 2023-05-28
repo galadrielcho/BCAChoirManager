@@ -94,3 +94,12 @@ mat-chip {
   font-style: italic;
   padding-left: 30px;
 }
+
+.options {
+  display: inline-block;
+  text-align: left;
+}
+
+span {
+  padding-right: 15px;
+}
