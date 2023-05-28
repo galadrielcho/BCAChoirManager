@@ -1,14 +1,9 @@
-<h1 mat-dialog-title class="title">{{event.event_name}}</h1>
-<mat-chip-listbox aria-label="Event Registrees">
-  <mat-chip>{{event.choir_type}}</mat-chip>
-</mat-chip-listbox>
-<button class="blue-button event flex-child"
-mat-fab extended color="primary"
-aria-label="Button to edit event"
-(click)="editEvent()">
-<mat-icon>edit</mat-icon>
-</button>
-
+<div class="header">
+  <h1 mat-dialog-title class="title">{{event.event_name}}</h1>
+  <mat-chip-listbox aria-label="Event Registrees">
+    <mat-chip>{{event.choir_type}}</mat-chip>
+  </mat-chip-listbox>
+</div>
 <div mat-dialog-content>
   <div class="box">
     <div>
@@ -35,32 +30,38 @@ aria-label="Button to edit event"
     <div class="table-container">
       <b class="mini-head">Registrees</b>
 
+      <div class="registree-search">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+        </mat-form-field>
+      </div>
+
       <table mat-table
       class=""
       matSort
       aria-label="Event registrees table"
       multiTemplateDataRows>
-    <!-- First Name Column -->
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of dataColumns">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column}}</th>
-    <td mat-cell *matCellDef="let student">{{student[column]}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let student">
-    <button mat-mini-fab (click)="deleteClicked(student.email)">
-      <mat-icon>delete</mat-icon>
-    </button>
-    </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
-    <tr mat-row *matRowDef="let student; columns: allColumns;"></tr>
-  
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No event registrees</td>
-    </tr>
+        <!-- First Name Column -->
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of dataColumns">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{getColumnHead(column)}}</th>
+        <td mat-cell *matCellDef="let student">{{student[column]}}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let student">
+        <button mat-mini-fab (click)="deleteClicked(student.email)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+        <tr mat-row *matRowDef="let student; columns: allColumns;"></tr>
+      
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No event registrees</td>
+        </tr>
   
       </table>
   
@@ -70,6 +71,6 @@ aria-label="Button to edit event"
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="close()">Close</button>
-  <!-- <button mat-button (click)="editMode()">Edit Registrees</button> -->
+  <button mat-button (click)="editEvent()">Edit event</button>
 
 </div>

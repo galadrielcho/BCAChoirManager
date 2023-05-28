@@ -97,8 +97,6 @@ export class EventTableComponent {
 
   openEventRegistrees(event : EventData): void {
     const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
-      width: '1000px',
-      height: '500px',
       data: event
     });
 
