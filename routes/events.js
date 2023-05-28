@@ -50,6 +50,24 @@ module.exports = function () {
         if (err) throw err;
       });               
   });
+
+
+/*  "/api/event/:name/:starttime/"
+ *   GET: Gets one specific event
+ *   Takes the following parameters:
+ *      name, start time
+*/
+
+router.get('/api/event/:name/:starttime/', function(req, res){
+  startTimeDate = new Date(Number(req.params.starttime)).toISOString();
+  database.execute(
+    'CALL getEvent(?, ?)',
+    [req.params.name, endTimeDate],
+    function (err, results, fields) {
+      if (err) throw err;
+      res.send(results[0]);
+  });      
+});
       
 /*  "/api/event/get-events-in-range/:starttime/:endtime/"
  *   GET: Gets all events within a specific time range
@@ -68,13 +86,13 @@ module.exports = function () {
           if (err) throw err;
           res.send(results[0]);
         });      
-    });
+  });
     
 
-/*  "/api/event/get-events-in-range/:starttime/:endtime/"
- *   GET: Gets all events within a specific time range
+/*  "/api/event/:name/:starttime/
+ *   DELETE: Delete an event
  *   Takes the following parameters:
- *      start time, end time
+ *      name, start time
 */
 
   router.delete('/api/event/:name/:starttime/', auth.checkJwt, (req, res) => {

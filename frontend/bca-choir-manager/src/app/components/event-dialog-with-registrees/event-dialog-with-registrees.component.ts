@@ -97,17 +97,13 @@ export class EventRegistreesDialogComponent {
       registration_status : this.event.registration_status
     }
 
-    this.dialog.closeAll();
-
     const dialogRef = this.dialog.open(EventEditDialogComponent, {
       width: '500px',
       data: event_copy
-    }).afterClosed().subscribe(
-      result => {
-        // If result, then update event table and dialog
-        // Add procedure to database ?
-      }
-    );  
+    });
+
+
+    this.dialogRef.close(dialogRef);
 
   }
 }

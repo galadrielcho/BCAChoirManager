@@ -102,8 +102,27 @@ export class EventTableComponent {
       data: event
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log("Done");
+    dialogRef.afterClosed().subscribe((ref : MatDialogRef<EventEditDialogComponent>) => {
+      ref.afterClosed().subscribe(updatedStudent => {
+        this.eventService.getAllEvents().subscribe({
+          next: (events : EventData[]) => {
+            for(let event in  events){
+              events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
+              events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
+              events[event].registration_status = (events[event].registration_status == 1) ? "Open" : "Closed";
+  
+            }
+            
+            this.events = events;
+            this.refresh();
+          },
+          error: error=>{
+            this.errorService.showErrorDialog(`Could not get events from database`);
+    
+          }      
+        }
+        );
+      });
     });
   }
 
@@ -136,43 +155,6 @@ export class EventTableComponent {
   
       }
     });
-  }
-
-  editEvent(event : EventData) : void {
-    let event_copy : EventData = {
-      event_name : event.event_name,
-      start_time : event.start_time,
-      end_time : event.end_time,
-      location : event.location,
-      address : event.address,
-      choir_type : event.choir_type,
-      registration_status : event.registration_status
-    }
-
-    const dialogRef = this.dialog.open(EventEditDialogComponent, {
-      width: '500px',
-      data: event_copy
-    }).afterClosed().subscribe(updatedStudent => {
-      this.eventService.getAllEvents().subscribe({
-        next: (events : EventData[]) => {
-          for(let event in  events){
-            events[event].start_time = this.es.dateISOToLocale(events[event].start_time);
-            events[event].end_time = this.es.dateISOToLocale(events[event].end_time);
-            events[event].registration_status = (events[event].registration_status == 1) ? "Open" : "Closed";
-
-          }
-          
-          this.events = events;
-          this.refresh();
-        },
-        error: error=>{
-          this.errorService.showErrorDialog(`Could not get events from database`);
-  
-        }      
-      }
-      );
-    });
-
   }
 
   getColumnHead(column : string) : string {

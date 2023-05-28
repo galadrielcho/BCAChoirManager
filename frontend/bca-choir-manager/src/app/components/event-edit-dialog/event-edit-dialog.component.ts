@@ -6,6 +6,7 @@ import {EventService} from '../../services/event-service/event.service'
 import {CalendarService} from '../../services/calendar-service/calendar.service'
 import { Validators } from '@angular/forms';
 import { Token } from '@angular/compiler';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'event-edit-dialog',
@@ -44,7 +45,8 @@ export class EventEditDialogComponent {
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private orig_event: EventData,
     private eventService : EventService,
-    private calendarService : CalendarService
+    private calendarService : CalendarService,
+    private errorService : ErrorService
     ) {
       if (orig_event === null) {
         this.eventAction = "Create";
@@ -84,7 +86,7 @@ export class EventEditDialogComponent {
           choirtype : 0,
           registration_status : 1
         });
-        }
+    }
   }
 
   onNoClick(): void {
@@ -143,7 +145,11 @@ export class EventEditDialogComponent {
     }
 
     if (this.eventAction == "Edit"){
-      this.eventService.editEvent(this.orig_event, new_event);
+      this.eventService.editEvent(this.orig_event, new_event).subscribe({
+        error: error=>{
+          this.errorService.showErrorDialog("Could not update event in database.");
+        }
+      });;
       this.dialogRef.close(false);
     }  
     else {

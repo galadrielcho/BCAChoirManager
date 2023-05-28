@@ -47,12 +47,7 @@ export class EventService {
       orig_event : origEvent,
       new_event : newEvent
     }
-    return this.http.post<any>('/api/event/event-edit/', events)      
-      .subscribe({
-      error: error=>{
-        this.errorService.showErrorDialog("Could not update event in database.")
-      }
-    });
+    return this.http.post<any>('/api/event/event-edit/', events);
   }
 
   addStudentToEvent(studentEmail : string, event : EventData, voicepartNumber : number, voicepartName : string){
