@@ -7,8 +7,9 @@ h1 {
 }
 
 .table {
-    margin-left: 10%;
-    margin-right: 10%;
     padding-bottom: 5%;
+    width: 70%;
+    display: center;
+    margin: auto;
 
 }
