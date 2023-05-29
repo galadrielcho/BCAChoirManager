@@ -134,7 +134,7 @@ router.get('/api/event/:name/:starttime/', function(req, res){
  */
 
   router.post("/api/event/add-student-to-event/", auth.checkJwt, function(req, res){
-    req.body.voicepart_name + " " + req.body.voicepart_number);
+    req.body.voicepart_name + " " + req.body.voicepart_number;
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');                 
     database.execute(
@@ -239,9 +239,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
       function (err, results, fields) {
         if (err) throw err;
         let result = Object.values(JSON.parse(JSON.stringify(results[0])));
-        console.log(results);
-
-        console.log(result);
         res.send(result);
       }
     );   
@@ -257,8 +254,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
 
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-
-    console.log(`CALL updateVoicepartLimit('${event.event_name}, '${startTimeDate}', '${voicepartLimit.voicepart_name}', ${voicepartLimit.number}, ${voicepartLimit.maximum});`);
 
     database.execute(
       "CALL updateVoicepartLimit(?, ?, ?, ?, ?)",
@@ -281,8 +276,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
 
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-
-    console.log(`CALL addVoicepartLimit('${event.event_name}', '${startTimeDate}', '${voicepartLimit.voicepart_name}'. ${voicepartLimit.number}, ${voicepartLimit.maximum})`)
     database.execute(
       "CALL addVoicepartLimit(?, ?, ?, ?, ?)",
       [event.event_name, startTimeDate, voicepartLimit.voicepart_name, voicepartLimit.number, voicepartLimit.maximum],
@@ -305,7 +298,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
 
-    console.log(`CALL deleteVoicepartLimit('${event.event_name}', '${startTimeDate}', '${voicepartLimit.voicepart_name}'. ${voicepartLimit.number})`)
     database.execute(
       "CALL deleteVoicepartLimit(?, ?, ?, ?)",
       [event.event_name, startTimeDate, voicepartLimit.voicepart_name, voicepartLimit.number],
@@ -329,7 +321,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
 
     const startTimeDate = new Date(event.start_time)
     .toLocaleString('sv').replace(' ', 'T'); 
-    console.log(`CALL getSignupCounts(${event.event_name}, ${startTimeDate})`);
     database.execute(
       "CALL getSignupCounts(?, ?)",
       [event.event_name, startTimeDate],

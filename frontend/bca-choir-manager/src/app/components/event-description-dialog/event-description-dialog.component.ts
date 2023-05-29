@@ -9,6 +9,9 @@ import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
 import { VoicepartLimitDialogComponent } from '../voicepart-limit-dialog/voicepart-limit-dialog.component';
+import { SignupCount } from 'src/app/models/signup-count.model';
+import { VoicepartLimit } from 'src/app/models/voicepart-limit.model';
+import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'app-event-description-dialog',
@@ -25,13 +28,17 @@ export class EventDescriptionDialogComponent {
   admin: Boolean | undefined
   seconds: number
 
+  private signupCount : SignupCount[] = [];
+  private voicepartLimit : VoicepartLimit[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public event: EventData,
     public dialog: MatDialog,
     public eventService : EventService,
     public authService: AuthenticationService,
-    public studentService: RosterUpdateService
+    public studentService: RosterUpdateService,
+    public errorService : ErrorService
   ) {
     this.admin = false;
     this.seconds = 0;
@@ -63,7 +70,16 @@ export class EventDescriptionDialogComponent {
           }
         }
     );
-
+      this.eventService.getSignupCounts(this.event).subscribe({
+        next: data=>{
+          this.signupCount = data;
+        }
+      });
+      this.eventService.getVoicepartLimit(this.event).subscribe({
+        next: data=>{
+          this.voicepartLimit = data;
+        }
+      });
     }
   }
 
@@ -101,16 +117,41 @@ export class EventDescriptionDialogComponent {
 
   }
 
+  hasSignupSpace() : boolean{
+    let i, j;
+
+    for (i =0; i < this.signupCount.length; i++){
+      let signup = this.signupCount[i];
+      if (signup.voicepart_name === this.voicepart
+        && signup.voicepart_number === this.partNumber){
+          for (j =0; j < this.voicepartLimit.length; j++){
+            let limit = this.voicepartLimit[j];
+            if (limit.voicepart_name === this.voicepart
+              && limit.number === this.partNumber){
+                return ( signup.signed_up < limit.maximum)
+
+          }
+        }
+    }
+  }
+    return true;
+  }
+
   confirmSignupEvent() : void {
-    this.close();
-    const dialogRef = this.dialog.open(EventSignupDialogComponent, {
-      width: '500px',
-      data: {
-            event: this.event,
-            partnumber: this.partNumber,
-            signupAction: this.signedup? "signup" : "unsignup",
-            voicepart: this.voicepart}
-    });    
+    if (this.hasSignupSpace()){
+      this.close();
+      const dialogRef = this.dialog.open(EventSignupDialogComponent, {
+        width: '500px',
+        data: {
+              event: this.event,
+              partnumber: this.partNumber,
+              signupAction: this.signedup? "signup" : "unsignup",
+              voicepart: this.voicepart}
+      }); 
+    }   
+    else{
+      this.errorService.showErrorDialog(`No more available slots for ${this.voicepart} ${this.partNumber}`);
+    }
   } 
 
   editEvent() : void {
