@@ -9,6 +9,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTable, MatTableDataSource} from '@angular/material/table';
 
 @NgModule({
   declarations: [],

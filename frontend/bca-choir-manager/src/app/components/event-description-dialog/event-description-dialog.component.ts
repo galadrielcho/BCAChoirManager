@@ -8,6 +8,7 @@ import { EventDeleteDialogComponent } from '../event-delete-dialog/event-delete-
 import { EventSignupDialogComponent } from '../event-signup-dialog/event-signup-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { RosterUpdateService } from 'src/app/services/roster-update/roster-update.service';
+import { VoicepartLimitDialogComponent } from '../voicepart-limit-dialog/voicepart-limit-dialog.component';
 
 @Component({
   selector: 'app-event-description-dialog',
@@ -18,8 +19,8 @@ export class EventDescriptionDialogComponent {
   public voiceparts : string[] = ["soprano", "alto", "tenor", "bass"];
   public numbers : number[] = [1, 2];
 
-  public partNumber = 1; //default value
   public signedup = false;
+  public partNumber = 1; //default value
   public voicepart = "soprano"; //default value
   admin: Boolean | undefined
   seconds: number
@@ -121,4 +122,14 @@ export class EventDescriptionDialogComponent {
     });
 
   }
+  voicepartLimits() : void {
+
+    this.close();
+    const dialogRef = this.dialog.open(VoicepartLimitDialogComponent, {
+      width: '600px',
+      data: this.event
+    });
+
+  }
 }
+

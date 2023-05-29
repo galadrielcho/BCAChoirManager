@@ -222,6 +222,127 @@ router.get('/api/event/:name/:starttime/', function(req, res){
     );   
   });
 
+  /*  "/api/event/get-voicepart-limit/"
+ *   POST: Return voicepart limits and signup counts from a specific event
+ *   Retrieves the following information:
+ *      voicepart name, number, maximum 
+ */
+  
+  router.post("/api/event/get-voicepart-limit/", auth.checkJwt, function (req, res) {
+    const event = req.body;
+
+    const startTimeDate = new Date(event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+
+    database.execute(
+      "CALL getVoicepartLimit(?, ?)",
+      [event.event_name, startTimeDate],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        console.log(results);
+
+        console.log(result);
+        res.send(result);
+      }
+    );   
+  });
+
+  /*  "/api/event/update-voicepart-limit/"
+ *   POST: Updates a voicepart limit for an event
+ */
+  
+  router.post("/api/event/update-voicepart-limit/", auth.checkJwt, function (req, res) {
+    const event = req.body.event;
+    const voicepartLimit = req.body.voicepartLimit;
+
+    const startTimeDate = new Date(event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+
+    console.log(`CALL updateVoicepartLimit('${event.event_name}, '${startTimeDate}', '${voicepartLimit.voicepart_name}', ${voicepartLimit.number}, ${voicepartLimit.maximum});`);
+
+    database.execute(
+      "CALL updateVoicepartLimit(?, ?, ?, ?, ?)",
+      [event.event_name, startTimeDate, voicepartLimit.voicepart_name, voicepartLimit.number, voicepartLimit.maximum],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send(result);
+      }
+    );   
+  });
+
+  /*  "/api/event/add-voicepart-limit/"
+ *   POST: Adds a voicepart limit for an event
+ */
+  
+  router.post("/api/event/add-voicepart-limit/", auth.checkJwt, function (req, res) {
+    const event = req.body.event;
+    const voicepartLimit = req.body.voicepartLimit;
+
+    const startTimeDate = new Date(event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+
+    console.log(`CALL addVoicepartLimit('${event.event_name}', '${startTimeDate}', '${voicepartLimit.voicepart_name}'. ${voicepartLimit.number}, ${voicepartLimit.maximum})`)
+    database.execute(
+      "CALL addVoicepartLimit(?, ?, ?, ?, ?)",
+      [event.event_name, startTimeDate, voicepartLimit.voicepart_name, voicepartLimit.number, voicepartLimit.maximum],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send(result);
+      }
+    );   
+  });
+
+  /*  "/api/event/delete-voicepart-limit/"
+ *   POST: Removes a voicepart limit from an event
+ */
+  
+  router.post("/api/event/delete-voicepart-limit/", auth.checkJwt, function (req, res) {
+    const event = req.body.event;
+    const voicepartLimit = req.body.voicepartLimit;
+
+    const startTimeDate = new Date(event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+
+    console.log(`CALL deleteVoicepartLimit('${event.event_name}', '${startTimeDate}', '${voicepartLimit.voicepart_name}'. ${voicepartLimit.number})`)
+    database.execute(
+      "CALL deleteVoicepartLimit(?, ?, ?, ?)",
+      [event.event_name, startTimeDate, voicepartLimit.voicepart_name, voicepartLimit.number],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send(result);
+      }
+    ); 
+      
+  });
+
+  /*  "/api/event/get-signup-counts/"
+ *   POST: Return all signup counts (regardless of any existing limit) from a specific event
+ *   Retrieves the following information:
+ *      voicepart name, voicepart number, signed up count 
+ */
+
+  router.post("/api/event/get-signup-counts/", auth.checkJwt, function (req, res) {
+    const event = req.body;
+
+    const startTimeDate = new Date(event.start_time)
+    .toLocaleString('sv').replace(' ', 'T'); 
+    console.log(`CALL getSignupCounts(${event.event_name}, ${startTimeDate})`);
+    database.execute(
+      "CALL getSignupCounts(?, ?)",
+      [event.event_name, startTimeDate],
+      function (err, results, fields) {
+        if (err) throw err;
+        let result = Object.values(JSON.parse(JSON.stringify(results[0])));
+        res.send(result);
+      }
+    );   
+  });
+
+
   /*  "/api/event/get-voicepart-details/:name/:startime/:email"
  *   GET: Gets voicepart details for a specific student in a specific event
  *   Retrieves the following information:

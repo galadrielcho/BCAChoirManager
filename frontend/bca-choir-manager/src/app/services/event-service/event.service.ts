@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventData} from '../../models/event-data.model';
 import { ErrorService } from '../error-service/error.service';
+import { VoicepartLimit } from 'src/app/models/voicepart-limit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -101,5 +102,24 @@ export class EventService {
     return this.http.get<any>(`/api/event/get-voicepart-details/${event.event_name}/${event.start_time}/${studentEmail}`);
   }
 
+  getVoicepartLimit(event : EventData) {
+    return this.http.post<any>('/api/event/get-voicepart-limit/', event);
+  }
+  
+  getSignupCounts(event : EventData) {
+    return this.http.post<any>('/api/event/get-signup-counts/', event);
+  }
+
+  updateVoicepartLimit(event : EventData, voicepartLimit : VoicepartLimit) {
+    return this.http.post<any>('/api/event/update-voicepart-limit/', {event: event, voicepartLimit : voicepartLimit});
+  }
+
+  addVoicepartLimit(event : EventData, voicepartLimit : VoicepartLimit) {
+    return this.http.post<any>('/api/event/add-voicepart-limit/', {event: event, voicepartLimit : voicepartLimit});
+  }
+
+  deleteVoicepartLimit(event : EventData, voicepartLimit : VoicepartLimit) {
+    return this.http.post<any>('/api/event/delete-voicepart-limit/', {event: event, voicepartLimit : voicepartLimit});
+  }
 
 }

@@ -1,0 +1,14 @@
+<form [formGroup]="maximumForm"> 
+  
+    <h1 mat-dialog-title>New Maximum</h1>
+    <div mat-dialog-content>
+        <mat-form-field style="width:50%;" >
+            <input matInput value="{{voicepartLimit.maximum}}" formControlName="maximum" placeholder="None" type="number">
+        </mat-form-field>
+    </div>
+  
+    <div mat-dialog-actions>
+      <button mat-button  type="submit" [disabled]="!maximumForm.valid" (click)="updateVoicepartLimit()">Save</button>
+      <button mat-button (click)="dialogRef.close()" >Nevermind</button> 
+    </div>
+  </form>

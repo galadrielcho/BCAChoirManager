@@ -1,6 +1,7 @@
 export interface VoicepartLimit {
     voicepart_name : string;
-    voicepart_number : number;
-    limit : number;
+    number : number;
+    signed_up : number;
+    maximum: number;
   }
   

@@ -3,10 +3,12 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog
 import { EventData } from '../../models/event-data.model'
 import { FormGroup, FormControl } from '@angular/forms';
 import {EventService} from '../../services/event-service/event.service'
+import {ErrorService} from '../../services/error-service/error.service'
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import {CalendarService} from '../../services/calendar-service/calendar.service'
 import { Validators } from '@angular/forms';
 import { Token } from '@angular/compiler';
-import { ErrorService } from 'src/app/services/error-service/error.service';
 
 @Component({
   selector: 'event-edit-dialog',
@@ -39,7 +41,6 @@ export class EventEditDialogComponent {
 
   choirTypes : string[] = ['Concert', 'Chamber'];
   eventAction : string;
-  displayedColumns: string[] = ["Voicepart", "Limit"]
 
   constructor(
     public dialogRef: MatDialogRef<EventEditDialogComponent>,
@@ -70,6 +71,7 @@ export class EventEditDialogComponent {
           registration_status: this.orig_event.registration_status
 
         });
+
       }
       else {
         const startTime = new Date();
@@ -86,8 +88,10 @@ export class EventEditDialogComponent {
           choirtype : 0,
           registration_status : 1
         });
+        
     }
   }
+
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -96,6 +100,7 @@ export class EventEditDialogComponent {
   createEvent(): void {
     this.dialogRef.close();
   }
+
 
   getEndTime(){
     if (this.eventAction == "Edit"){

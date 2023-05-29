@@ -77,9 +77,8 @@ import { RecordsDeleteDialogComponent } from './components/records-delete-dialog
 import { DeleteAccountDialogComponent } from './components/delete-account-dialog/delete-account-dialog.component';
 import { HttpErrorDialogComponent } from './components/http-error-dialog/http-error-dialog.component';
 import { UserButtonMobileComponent } from './components/user-button-mobile/user-button-mobile.component';
-
-
-
+import { VoicepartLimitDialogComponent } from './components/voicepart-limit-dialog/voicepart-limit-dialog.component';
+import { NewVoicepartMaximumDialogComponent } from './components/new-voicepart-maximum-dialog/new-voicepart-maximum-dialog.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +114,9 @@ import { UserButtonMobileComponent } from './components/user-button-mobile/user-
     RecordsDeleteDialogComponent,
     DeleteAccountDialogComponent,
     HttpErrorDialogComponent,
-    UserButtonMobileComponent
+    UserButtonMobileComponent,
+    VoicepartLimitDialogComponent,
+    NewVoicepartMaximumDialogComponent
   ],
   imports: [
     BrowserModule,

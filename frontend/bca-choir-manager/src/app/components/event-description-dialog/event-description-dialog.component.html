@@ -37,13 +37,16 @@
  
 </div>
 <div mat-dialog-actions> 
-  <button mat-button (click)="close()">Close</button>
   <div *ngIf="isAuthenticated()">
       <button mat-button (click)="editEvent()" *ngIf="isAdmin()">Edit Event</button>
+      <button mat-button (click)="voicepartLimits()" *ngIf="isAdmin()">Edit/View Voicepart Limits</button>
       <button mat-raised-button color="warn" (click)="deleteEvent()" *ngIf="isAdmin()">Delete Event</button>
     <div *ngIf="!isAdmin()">
       <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Confirm Signup Details</button>
     </div>
   </div>
+
+  <button mat-button (click)="close()">Close</button>
+
 
 </div>
