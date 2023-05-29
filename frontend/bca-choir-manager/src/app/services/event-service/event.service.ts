@@ -27,6 +27,7 @@ export class EventService {
   
   deleteEvent(e : EventData){
     const startTime = new Date(e.start_time).getTime();
+
     const obs = this.http.delete(
       this.eventURL + `${e.event_name}/${startTime}/`)      
       .subscribe({
