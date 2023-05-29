@@ -134,7 +134,6 @@ router.get('/api/event/:name/:starttime/', function(req, res){
  */
 
   router.post("/api/event/add-student-to-event/", auth.checkJwt, function(req, res){
-    console.log("student data: " + req.body.event.event_name + " " + req.body.student_email + " " + 
     req.body.voicepart_name + " " + req.body.voicepart_number);
     const startTimeDate = new Date(req.body.event.start_time)
                                   .toLocaleString('sv').replace(' ', 'T');                 

@@ -38,17 +38,34 @@ h1 {
     display:flex;
     gap: 5rem;
     width: auto;
-    margin: 2rem auto;
+    margin-left: 2rem auto;
+    margin-top: 0;
+
 
 }
 
 .table-container {
     overflow: auto;
-    width: 50%;
+    width: 55%;
 
 }
 
 .event-detail {
     padding-top: 10px;
     padding-right: 10px;
+}
+
+.edit-button {
+    vertical-align:sub;
+    margin-left: 10px;
+}
+
+table {
+    max-height: 300px;
+}
+
+.registree-search {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
 }

@@ -29,6 +29,7 @@ export class EventTableComponent {
 
   
   private events : EventData[] = [];
+  private origEvent : EventData[] = [];
   dataSource: MatTableDataSource<EventData> = new MatTableDataSource<EventData>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,12 +45,6 @@ export class EventTableComponent {
     this.eventService = es;
     this.eventService.getAllEvents().subscribe({
       next: events => {
-        for(let eventIndex in  events){
-          events[eventIndex].start_time = this.es.dateISOToLocale(events[eventIndex].start_time).replace(":00 ", " ");
-          events[eventIndex].end_time = this.es.dateISOToLocale(events[eventIndex].end_time).replace(":00 ", " ");
-          events[eventIndex].registration_status = (events[eventIndex].registration_status == 1) ? "Open" : "Closed";
-          
-        }
         this.events = events;
         this.setupTable();
 
@@ -95,10 +90,17 @@ export class EventTableComponent {
     });
   }
 
+  convertTimeUserFriendly(d : string) : string{
+    return this.es.dateISOToLocale(d).replace(":00 ", " ");
+
+  }
+
+  convertRegStatusUserFriendly(e : EventData) : string {
+    return (e.registration_status == 1) ? "Open" : "Closed";
+  }
+
   openEventRegistrees(event : EventData): void {
     const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
-      width: '1000px',
-      height: '500px',
       data: event
     });
 

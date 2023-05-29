@@ -38,7 +38,6 @@ export class EventRegistreesDialogComponent {
     this.event.start_time = new Date(this.event.start_time).toISOString();
     this.event.end_time = new Date(this.event.end_time).toISOString();
 
-    console.log(this.event);
     const timeFormat : Intl.DateTimeFormatOptions= {
       weekday: 'short',
       year: 'numeric',
@@ -106,4 +105,24 @@ export class EventRegistreesDialogComponent {
     this.dialogRef.close(dialogRef);
 
   }
+
+  applyFilter(event: Event) {
+    if (this.dataSource) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+  }
+
+  getColumnHead(column : string) : string {
+    column = column.split("_")[0];
+
+    return column.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+      }
+    );
+
+  }
+
 }

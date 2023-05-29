@@ -80,7 +80,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
     if (!this.authService.isAuthenticated()) {
-      console.log("User not authenticated, cannot authorize");
       return request;
     }
     else if ((this.authService.isAuthenticated() && this.authService.getAccessToken() == null)) {

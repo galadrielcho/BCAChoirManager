@@ -50,7 +50,6 @@ export class HomePagePopupComponent {
   }
 
   submit(){
-    console.log("in submit");
     this.service.updateContent(this.about, this.group1, this.group2, this.conductor);
     this.dialogRef.close();
   }
