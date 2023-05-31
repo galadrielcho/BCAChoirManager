@@ -79,6 +79,7 @@ import { HttpErrorDialogComponent } from './components/http-error-dialog/http-er
 import { UserButtonMobileComponent } from './components/user-button-mobile/user-button-mobile.component';
 import { VoicepartLimitDialogComponent } from './components/voicepart-limit-dialog/voicepart-limit-dialog.component';
 import { NewVoicepartMaximumDialogComponent } from './components/new-voicepart-maximum-dialog/new-voicepart-maximum-dialog.component';
+import { GenericNotificationComponent } from './components/generic-notification/generic-notification.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { NewVoicepartMaximumDialogComponent } from './components/new-voicepart-m
     HttpErrorDialogComponent,
     UserButtonMobileComponent,
     VoicepartLimitDialogComponent,
-    NewVoicepartMaximumDialogComponent
+    NewVoicepartMaximumDialogComponent,
+    GenericNotificationComponent
   ],
   imports: [
     BrowserModule,

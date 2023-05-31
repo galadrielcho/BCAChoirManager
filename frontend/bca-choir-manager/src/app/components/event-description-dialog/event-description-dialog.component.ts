@@ -12,6 +12,7 @@ import { VoicepartLimitDialogComponent } from '../voicepart-limit-dialog/voicepa
 import { SignupCount } from 'src/app/models/signup-count.model';
 import { VoicepartLimit } from 'src/app/models/voicepart-limit.model';
 import { ErrorService } from 'src/app/services/error-service/error.service';
+import { GenericNotificationComponent } from '../generic-notification/generic-notification.component';
 
 @Component({
   selector: 'app-event-description-dialog',
@@ -23,6 +24,7 @@ export class EventDescriptionDialogComponent {
   public numbers : number[] = [1, 2];
 
   public signedup = false;
+  private signedUpOriginally = false;
   public partNumber = 1; //default value
   public voicepart = "soprano"; //default value
   admin: Boolean | undefined
@@ -46,6 +48,7 @@ export class EventDescriptionDialogComponent {
       this.eventService.checkStudentInEvent(this.authService.getUserEmail(), event).subscribe(
         (next)=> {
           this.signedup = next; 
+          this.signedUpOriginally = next;
           if(this.signedup == true){
             //get voicepart name and number based on event signup data
             this.eventService.getVoicePartDetails(this.authService.getUserEmail(), event).subscribe({
@@ -140,14 +143,22 @@ export class EventDescriptionDialogComponent {
   confirmSignupEvent() : void {
     if (this.hasSignupSpace()){
       this.close();
-      const dialogRef = this.dialog.open(EventSignupDialogComponent, {
-        width: '500px',
-        data: {
-              event: this.event,
-              partnumber: this.partNumber,
-              signupAction: this.signedup? "signup" : "unsignup",
-              voicepart: this.voicepart}
-      }); 
+      if (this.signedUpOriginally == false && this.signedup == false) {
+        const dialogRef = this.dialog.open(GenericNotificationComponent, {
+          width: '500px',
+          data:'No changes were made to sign up.'
+        }); 
+      } else {
+        const dialogRef = this.dialog.open(EventSignupDialogComponent, {
+          width: '500px',
+          data: {
+                event: this.event,
+                partnumber: this.partNumber,
+                signupAction: this.signedup? "signup" : "unsignup",
+                voicepart: this.voicepart}
+        }); 
+  
+      }
     }   
     else{
       this.errorService.showErrorDialog(`No more available slots for ${this.voicepart} ${this.partNumber}`);
