@@ -1,39 +1,36 @@
-tr{
-    border: 0.7px solid #000000c1; 
-}
 
-table{
-    border-collapse:collapse;
-}
-
-.center{
-    margin:auto;
-}
 .right{
     margin-left:66%;
+}
+
+.left{
+    float:left;
 }
 
 .flex-column{
     display:flex;
     justify-content: center;
+    align-items:center;
     justify-items:center;
     flex-direction: column;
-
+    padding: 0 0 40px 40px;
+    margin: 0;
 }
 
 .flex-row{
     display:flex;
     flex-direction:row;
+    justify-content: center;
+    justify-items:center;
 }
 
 table td { 
     border-left: 0.7px solid #000000c1; 
-    width: 145px;
+    width: 100px;
     height: 75px;
     vertical-align:top;
 }
 
-table td:first-child { border-left: none; }
 
 .current-month{
     color:rgba(0, 0, 0, 0.741);
@@ -43,15 +40,10 @@ table td:first-child { border-left: none; }
     color:rgba(128, 128, 128, 0.679);
 }
 
-app-calendar-upcoming-events {
-    width:250px
-}
 
 h1 {
-    font-size: 1.25cm;
+    font-size: 2.7em;
     font-weight: 500;
-    padding: .5cm;
-    padding-top: 1cm;
 }
 
 app-calendar-week {
@@ -59,12 +51,14 @@ app-calendar-week {
 } 
 
 .weekday{
-    font-size:20px;
+    font-size:1.25em;
+    font-weight:400;
     padding:15px;
 }
 
-.padding{
-    padding:15px;
+.datepicker{
+    align-self:flex-end;
+    font-size:12px;
 }
 
 .flex-container {
@@ -80,13 +74,49 @@ app-calendar-week {
 } 
 
 .heading{
-    margin-left:4%;
-}
-
-.shorter-height {
-    height: 77px; /* Adjust the height value as needed */
+    margin-right:auto;
+    align-self:flex-end;
 }
 
 .lower{
     margin-top:2%;
 }
+
+app-calendar-upcoming-events{
+    flex-basis:20%;
+    margin-left:auto;
+    margin-top: 0;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    flex-basis: 100%;
+    padding-right:20px;
+
+  }
+  th {
+    background-color: #6e61ac;
+    color: #FFFFFF;
+  }
+  th, td {
+    padding: 5px;
+    border: 1px solid #2c436d;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  /* required css to make rounded table (below) */
+  tr:first-child th:first-child {
+    border-top-left-radius: 7px;
+  }
+  tr:first-child th:last-child {
+    border-top-right-radius: 7px;
+  }
+  tr:last-child td:first-child {
+    border-bottom-left-radius: 7px;
+  }
+  tr:last-child td:last-child {
+    border-bottom-right-radius: 7px;
+  }

@@ -44,14 +44,13 @@
             </ng-container>
       
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-        
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
           </table>
       
-          <h3>Add New Limit</h3>
+          <br>
+          <h2>Add New Limit</h2>
           <span [formGroup]="limitForm ">
-            <b>Voice Part     </b>
+            <b>Voice Part </b>
             <mat-select style="width:20%" formControlName="voicepart_name">
               <mat-option *ngFor="let voicepart of voiceparts" [value]="voicepart">{{voicepart}}</mat-option>
             </mat-select>

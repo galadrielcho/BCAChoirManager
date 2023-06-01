@@ -1,25 +1,25 @@
-<div class="flex-column">
+<div class="flex-column" style="padding-top:15px">
     <div>
-    <div class="flex-container">
+    <div class="flex-row" style="min-width:0;     justify-content: space-between;    ">
         <h1 class="heading flex-child" [innerHTML]="getCalendarTitle()"></h1>
-        <div class="flex-child lower left flex-row">
-            <div #back (click)="setMonthBackward()">
-                <button class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
+        <div class="flex-child datepicker lower left flex-row">
+            <div #back style="margin-left:auto;" (click)="setMonthBackward()">
+                <button  class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </button>
             </div>
-                <mat-form-field appearance="fill" class="left shorter-height">
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput>
-                
+            <div style="font-size:2px; width:110px">
+                <mat-form-field style="width:100%; font-size:.9rem">                
                     <input matInput 
                             [matDatepicker]="picker"
                             (click)="picker.open()"
-                            (dateInput)="updateCalendar($event.value)"> 
+                            (dateInput)="updateCalendar($event.value)"
+                            placeholder="Date"> 
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 
                 </mat-form-field>
+            </div>
 
             <div #forward (click)="setMonthForward()">
                 <button class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
@@ -65,4 +65,3 @@
 
     </main>
 </div>
-<div class="padding"></div>
