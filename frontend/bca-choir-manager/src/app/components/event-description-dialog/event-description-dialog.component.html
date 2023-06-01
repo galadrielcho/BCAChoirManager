@@ -5,14 +5,16 @@
 <div mat-dialog-content>
   <th>Time</th>
   <p>
-  {{eventService.dateISOToLocale(event.start_time)}} - 
-  {{eventService.dateISOToLocale(event.end_time)}}
+  {{convertTimeToFriendly(event.start_time)}} - 
+  {{convertTimeToFriendly(event.end_time)}}
   </p>
-      <div class = "location">   
-        <b>Location</b>
-        <p>{{event.location}}</p>
-        <b>Address</b>
-        <p>{{event.address}}</p>
+      <div class="location">   
+        <b *ngIf="event.location">Location</b>
+        <p *ngIf="event.location">{{event.location}}</p>
+      </div>  
+      <div class="location">   
+        <b *ngIf="event.address">Address</b>
+        <p *ngIf="event.address">{{event.address}}</p>
       </div>  
       <span *ngIf="isAuthenticated()"> 
         <div *ngIf="!isAdmin()"> 
@@ -33,8 +35,6 @@
           </span>
         </div>
       </span>
-
- 
 </div>
 <div mat-dialog-actions> 
   <div *ngIf="isAuthenticated()">
@@ -45,7 +45,6 @@
       <button mat-raised-button color="primary" (click)="confirmSignupEvent()">Confirm Signup Details</button>
     </div>
   </div>
-
   <button mat-button (click)="close()">Close</button>
 
 

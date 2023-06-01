@@ -1,5 +1,6 @@
-.location p {
+.location p, b {
     display: inline-block;
+    margin-right: 10px;
 }
 
 mat-chip-listbox {
@@ -16,5 +17,10 @@ h1 {
     display: inline-block;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+.location-name, .address {
+    margin-right: 10px;
+    
 }
 
