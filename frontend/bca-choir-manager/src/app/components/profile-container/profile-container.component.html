@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title><h1 class="header">Profile</h1>
-        <button mat-mini-fab (click)="editProfile()">
+        <button mat-mini-fab (click)="editProfile()" *ngIf="!admin">
             <mat-icon>edit</mat-icon>
         </button>
         </mat-card-title>	
@@ -9,6 +9,7 @@
     <mat-card-content>
         <div class="center">
             <mat-icon id="account-circle">account_circle</mat-icon>
+            <h3 *ngIf="admin" class="admin-msg"><i>Admins have no profile to display.</i></h3>
 
             <h1 id="fullName"><b>{{fullName}}</b></h1>
             <h3 id="fullName">{{student?.pronouns}}</h3>

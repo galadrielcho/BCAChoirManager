@@ -8,15 +8,16 @@
 <button mat-button>Create</button>
 -->
 
-<h3>Current Admins</h3> 
-<mat-list *ngFor="let option of admins">
-    <mat-list-item>{{option}}</mat-list-item>
-    <mat-divider></mat-divider>
-</mat-list>
-
-<div class="buttons">
-<button mat-raised-button color="primary" mat-button (click)="addAdmin()" class="button margin">Add Admin</button>
-<button mat-raised-button color="primary" mat-button (click)="deleteAdmin()" class="button margin">Delete Admin</button>
-<button mat-raised-button color="primary" mat-button (click)="deleteRecords()" class="button margin">Delete Student Records</button>
-
+<div class="container">
+    <mat-card>
+        <mat-list>
+            <mat-list-item class="header"><h1>Current Admins</h1></mat-list-item>
+            <mat-list-item *ngFor="let option of admins">{{option}}</mat-list-item>
+        </mat-list>
+        <div class="buttons">
+            <button mat-raised-button color="primary" mat-button (click)="addAdmin()" class="button margin">Add Admin</button>
+            <button mat-raised-button color="primary" mat-button (click)="deleteAdmin()" class="button margin">Delete Admin</button>
+            <button mat-raised-button color="primary" mat-button (click)="deleteRecords()" class="button margin">Delete Student Records</button>
+        </div>
+    </mat-card>
 </div>
