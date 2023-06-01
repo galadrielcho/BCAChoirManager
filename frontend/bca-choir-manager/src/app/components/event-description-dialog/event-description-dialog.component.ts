@@ -188,7 +188,10 @@ export class EventDescriptionDialogComponent {
       width: '600px',
       data: this.event
     });
+  }
 
+  convertTimeToFriendly(time : string) : string {
+    return this.eventService.dateISOToLocale(time).replace(":00 ", " ");
   }
 }
 
