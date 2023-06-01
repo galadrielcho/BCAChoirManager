@@ -137,8 +137,15 @@ export class EventDescriptionDialogComponent {
         }
     }
   }
-    return true;
+  for (j =0; j < this.voicepartLimit.length; j++){
+    let limit = this.voicepartLimit[j];
+    if (limit.voicepart_name === this.voicepart
+      && limit.number === this.partNumber){
+        return ( 0 < limit.maximum);
+      }  
   }
+  return true;
+}
 
   confirmSignupEvent() : void {
     if (this.hasSignupSpace()){
