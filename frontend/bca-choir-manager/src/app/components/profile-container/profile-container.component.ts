@@ -9,6 +9,7 @@ import { RosterUpdateComponent } from '../roster-update/roster-update.component'
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
 import { MatDialog } from '@angular/material/dialog';
+import { GenericNotificationComponent } from '../generic-notification/generic-notification.component';
 
 @Component({
   selector: 'app-profile-container',
@@ -37,7 +38,7 @@ export class ProfileContainerComponent {
     this.user = authService.getUserEmail();
 
     if (!this.admin) {
-      this.updateStudentProfileDetails();
+      this.updateStudentProfileDetails(true);
   
     } else {
       signupService.getEmail(this.user);
@@ -52,9 +53,16 @@ export class ProfileContainerComponent {
     return this.authService.isAdmin();
   }
 
-  updateStudentProfileDetails() {
+  updateStudentProfileDetails(initialRun : boolean) {
     this.rosterService.getAccountDetails(this.user).subscribe({
         next: data => {
+          if (!initialRun && this.student?.choir_name !== data.details.choir_name) {
+            const dialogRef = this.dialog.open(GenericNotificationComponent, {
+              width: '500px',
+              data:'Event visibility dependent on choir status will be updated in next login.'
+            }); 
+    
+          }
           this.student = data.details;
           this.fullName = this.student?.first_name + " " + this.student?.last_name;
           this.voicepart = this.student?.voicepart_name + " " + this.student?.number    
@@ -75,7 +83,7 @@ export class ProfileContainerComponent {
     );
 
     dialogRef.afterClosed().subscribe(updatedStudent => {
-      this.updateStudentProfileDetails();
+      this.updateStudentProfileDetails(false);
     }
     
       );

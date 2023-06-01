@@ -6,7 +6,8 @@ mat-card {
 }
 
 mat-card-header {
-    background-color: #a4a4a4;
+    background-color: #283493c5;
+    color: white;
 }
 
 mat-card-title {
@@ -15,7 +16,7 @@ mat-card-title {
 
 
 mat-card-content {
-    color: #6a6a6a;
+    color: #494b55c5;
 
 }
 
@@ -47,6 +48,11 @@ ul {
     display:inline-block;
 
 
+}
+
+.header {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .info-container {
