@@ -1,7 +1,21 @@
 <div class="flex-column" style="padding-top:15px">
     <div>
     <div class="flex-row" style="min-width:0;     justify-content: space-between;    ">
-        <h1 class="heading flex-child" [innerHTML]="getCalendarTitle()"></h1>
+        <h1 class="heading flex-child" style="align-self: flex-end" [innerHTML]="getCalendarTitle()"></h1>
+        <div *ngIf = "getAdmin()" class="flex-child" style="align-self: flex-end; margin:10px"  >
+            <button class="blue-button"
+                    mat-fab extended color="primary"
+                    aria-label="Button to create an event"
+                    (click)="openCreateEventDialog()">
+                <mat-icon>edit</mat-icon>
+                Create Event
+            </button> 
+        </div> 
+        
+        <div *ngIf="!getAdmin() && isAuthenticated()" class="flex-child" style="align-self: flex-end">
+            <p>Display Attending <mat-checkbox #checkbox (change)="changed(checkbox.checked)"> </mat-checkbox></p>
+        </div>
+        
         <div class="flex-child datepicker lower left flex-row">
             <div #back style="margin-left:auto;" (click)="setMonthBackward()">
                 <button  class="blue-button" mat-mini-fab color="primary" aria-label="Button to create an event">
@@ -27,20 +41,6 @@
                 </button>
             </div>
         </div> 
-    </div>
-
-    <div *ngIf = "getAdmin()" class="right">
-        <button class="blue-button"
-                mat-fab extended color="primary"
-                aria-label="Button to create an event"
-                (click)="openCreateEventDialog()">
-            <mat-icon>edit</mat-icon>
-            Create Event
-        </button>
-    </div> 
-    
-    <div *ngIf="!getAdmin() && isAuthenticated()" class="right">
-        <p><mat-checkbox #checkbox (change)="changed(checkbox.checked)">Display Attending</mat-checkbox></p>
     </div>
 
     <main class="flex-row">
