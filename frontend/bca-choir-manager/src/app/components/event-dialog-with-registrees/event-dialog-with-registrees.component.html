@@ -43,7 +43,7 @@
       multiTemplateDataRows>
         <!-- First Name Column -->
         <ng-container matColumnDef="{{column}}" *ngFor="let column of dataColumns">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{getColumnHead(column)}}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><i>{{getColumnHead(column)}}</i></th>
         <td mat-cell *matCellDef="let student">{{student[column]}}</td>
         </ng-container>
       

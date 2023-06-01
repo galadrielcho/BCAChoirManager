@@ -24,7 +24,7 @@ export class EventRegistreesDialogComponent {
   eventStart : string;
   eventEnd : string;
 
-  dataColumns = ['first_name', 'last_name', 'voicepart'];
+  dataColumns = ['first_name', 'last_name', 'voicepart', 'number'];
   allColumns = [...this.dataColumns, 'delete'];
 
   constructor(

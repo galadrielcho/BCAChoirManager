@@ -90,10 +90,11 @@ mat-chip {
   font-weight: 500;
 }
 
-.column-head {
+th {
   font-style: italic;
   padding-left: 30px;
 }
+
 
 .options {
   display: inline-block;

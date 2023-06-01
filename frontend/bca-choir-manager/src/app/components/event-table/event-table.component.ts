@@ -102,7 +102,7 @@ export class EventTableComponent {
   openEventRegistrees(event : EventData): void {
     const dialogRef = this.dialog.open(EventRegistreesDialogComponent, {
       data: event
-    });
+      });
 
     dialogRef.afterClosed().subscribe((ref : MatDialogRef<EventEditDialogComponent>) => {
       ref.afterClosed().subscribe(updatedStudent => {
