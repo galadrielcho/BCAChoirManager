@@ -2,17 +2,13 @@
 
 This project is a choir management website custom built for the Bergen County Academies Choir.
 
-## Features (implemented or to be implemented)
-
-* Event creation and available sign-up
-* Account creation and customizable settings
-* Choir sections joinable through link
-* Rosters of the two divisions (Chamber and Concert) pulled from database and displayed
-* Email notification system (Event info, invites, reminders, etc.)
-* Music sheet music/audio files available
-
+## Features 
+* Event creation and signup with the option to include limits for certain choral voiceparts
+* Account signup and profile settings (choir division, name, pronouns, emails... etc.) for students
+* Display of student rosters, as well as edit + delete capabilities for admins
+* Calendar event view/signup is adjusted according to the appropriate choir division (chamber, concert)
 
 ## Tech stack
 
-Angular, Express, MySQL database, Google Drive API
+Angular + Angular Material, NodeJS + Express, MySQL database, Google Drive API, Auth0
 
